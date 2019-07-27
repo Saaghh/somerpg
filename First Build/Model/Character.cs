@@ -20,7 +20,7 @@ namespace First_Build.Model
 
         public Character()
         {
-            Name = DependencyProperty.Register("StringToTextBox", typeof(string), typeof(TextBox));
+
         }
 
         public void GetHit(int damage)

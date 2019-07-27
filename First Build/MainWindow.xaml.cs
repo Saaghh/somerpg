@@ -35,9 +35,29 @@ namespace First_Build
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            FillGrid(x, y);
+        }
 
-            var characterControl = new CharacterControl();
-            mainGrid.Children.Add(new CharacterControl());
+        int x = 2;
+        int y = 1;
+        public void FillGrid(int width, int height)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                mainGrid.RowDefinitions.Add(new RowDefinition());
+            }
+            for (int i = 0; i < width; i++)
+            {
+                mainGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                for (int j = 0; j < height; j++)
+                {
+                    CharacterControl UIControl = new CharacterControl();
+                    Grid.SetColumn(UIControl, i);
+                    Grid.SetRow(UIControl, j);
+
+                    mainGrid.Children.Add(UIControl);
+                }
+            }
         }
     }
 }
