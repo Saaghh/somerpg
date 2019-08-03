@@ -21,6 +21,8 @@ namespace First_Build.View
     /// </summary>
     public partial class BattleMapControl : UserControl
     {
+        public (int x, int y) coord;
+
         public BattleMapControl()
         {
             InitializeComponent();

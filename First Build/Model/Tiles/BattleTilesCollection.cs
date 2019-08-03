@@ -23,7 +23,7 @@ namespace First_Build.Model
         {
             TileTypeName = "Forest Tile";
 
-            UriEnd = "Resources/ForestTile.png";
+            UriEnd = "Resources/TestTile.png";
         }
     }
 

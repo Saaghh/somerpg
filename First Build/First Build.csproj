@@ -117,7 +117,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Characters\Character.cs" />
+    <Compile Include="Model\Characters\CharacterBase.cs" />
     <Compile Include="Controller\Game.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

@@ -9,7 +9,7 @@ namespace First_Build.Controller
 {
     public static class Game
     {
-        static public Character player;
+        static public CharacterBase player;
         static public Battle battle;
 
 

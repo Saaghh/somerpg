@@ -21,10 +21,12 @@ namespace First_Build.Model
         {
             mapSize = size;
             battleTiles = new BaseTileController[mapSize.width, mapSize.height];
+
             for (int i = 0; i < mapSize.width; i++)
             {
                 for (int j = 0; j < mapSize.height; j++)
                 {
+                    //Реализуем view карты
                     var control = new BattleMapControl();
                     var image = new BattleMapImage();
                     var character = new CharacterControl();
@@ -44,6 +46,7 @@ namespace First_Build.Model
                     window.imageCanvas.Children.Add(image);
                     window.imageCanvas.Children.Add(character);
 
+                    //Реализуем модель карты
                     BaseTileController btc;
                     switch (r.Next(2))
                     {

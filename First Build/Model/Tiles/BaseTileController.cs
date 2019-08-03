@@ -28,6 +28,7 @@ namespace First_Build.Model
 
             relatedImage.image.Source = new BitmapImage(spriteUri);
             relatedControl.polygon.MouseUp += MouseClickEventHandler;
+            relatedControl.coord = coord;
             relatedImage.text.Text = (coord.ToString());
         }
 

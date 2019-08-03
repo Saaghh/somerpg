@@ -8,28 +8,25 @@ using System.Windows.Controls;
 
 namespace First_Build.Model
 {
-    public class Character
+    public class CharacterBase
     {
-        public bool controlled = false;
-        public string name = "John";
+        static Random r = new Random();
+        public string name = "Empty Name";
         public float health = 200f;
         public int weapon = 10;
-        public float weaponSpeed = 0.5f;
         public int armor = 1;
 
-        public DependencyProperty Name;
-
-        public Character()
+        public CharacterBase()
         {
-
+            name = "Char" + r.Next(100).ToString();
         }
 
-        public void GetHit(int damage)
+        public virtual void GetHit(int damage)
         {
             health -= weapon - armor;
         }
 
-        public void Attack(Character target)
+        public virtual void Attack(CharacterBase target)
         {
             target.GetHit(weapon);
         }
