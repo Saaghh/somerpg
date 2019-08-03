@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2EDBE06C-5F73-4AFD-8F87-B2600DBE4316}</ProjectGuid>
+    <ProjectGuid>{F3E5E56E-D6E0-4085-9F0A-235260326642}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>First_Build</RootNamespace>
-    <AssemblyName>First Build</AssemblyName>
+    <RootNamespace>DataCreator</RootNamespace>
+    <AssemblyName>DataCreator</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -37,7 +37,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -56,45 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Controller\Battle.cs" />
-    <Compile Include="Controller\HexMap.cs" />
-    <Compile Include="Model\BattleMap.cs" />
-    <Compile Include="Model\Tiles\BaseTile.cs" />
-    <Compile Include="Model\Tiles\BattleTilesCollection.cs" />
-    <Compile Include="Model\Tiles\BaseTileController.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="View\BattleControls\BattleMapControl.xaml.cs">
-      <DependentUpon>BattleMapControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\BattleControls\BattleMapImage.xaml.cs">
-      <DependentUpon>BattleMapImage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\BattleWindow.xaml.cs">
-      <DependentUpon>BattleWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\BattleControls\CharacterControl.xaml.cs">
-      <DependentUpon>CharacterControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Archive\HexControl.xaml.cs">
-      <DependentUpon>HexControl.xaml</DependentUpon>
-    </Compile>
-    <Page Include="View\BattleControls\BattleMapControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\BattleControls\BattleMapImage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\BattleWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Archive\MainWindow.xaml">
+    <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -102,24 +63,19 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Archive\MainWindow.xaml.cs">
+    <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\BattleControls\CharacterControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Archive\HexControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Character.cs" />
-    <Compile Include="Controller\Game.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -127,29 +83,16 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
+      <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="TileDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\ForestTile.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\TestTile.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\WaterTile.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\ErrorTile.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

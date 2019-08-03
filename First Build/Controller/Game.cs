@@ -1,19 +1,26 @@
-﻿using System;
+﻿using First_Build.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace First_Build.Model
+namespace First_Build.Controller
 {
-    public class Game
+    public static class Game
     {
-        Character player = new Character();
-        Character mob1 = new Character();
+        static public Character player;
+        static public Battle battle;
 
-        public Game()
+
+        public static void IniGame()
         {
-            mob1.name = "Zombie";
+            battle = new Battle();
         }
+    }
+
+    public static class GameVisualiser
+    {
+        
     }
 }

@@ -1,4 +1,6 @@
 ﻿using First_Build.Model;
+using First_Build.Controller;
+using First_Build.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +24,6 @@ namespace First_Build
     /// </summary>
     public partial class MainWindow : Window
     {
-        Game game;
         public MainWindow()
         {
             InitializeComponent();
@@ -30,16 +31,21 @@ namespace First_Build
 
         public void StartGame()
         {
-            game = new Game();
+            Game.IniGame();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            FillGrid(x, y);
+            CreateMap();
         }
 
-        int x = 2;
-        int y = 1;
+        public void CreateMap()
+        {
+            mainGrid.Children.Add(new CharacterControl());
+            var control = mainGrid.Children[1] as CharacterControl;
+            control.Margin = new Thickness(300, 300, 0, 0);
+        }
+
         public void FillGrid(int width, int height)
         {
             for (int j = 0; j < height; j++)
@@ -58,6 +64,20 @@ namespace First_Build
                     mainGrid.Children.Add(UIControl);
                 }
             }
+        }
+
+        private void Button1_Click(object sender, RoutedEventArgs e)
+        {
+            var b = new BattleWindow();
+            b.Show();
+            Close();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var b = new BattleWindow();
+            b.Show();
+            Close();
         }
     }
 }
