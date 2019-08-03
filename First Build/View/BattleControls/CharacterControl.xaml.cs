@@ -21,27 +21,9 @@ namespace First_Build
     /// </summary>
     public partial class CharacterControl : UserControl
     {
-        public Character character = new Character();
-
-        public Character target;
-
         public CharacterControl()
         {
             InitializeComponent();
-        }
-        public CharacterControl(Character trgt): this()
-        {
-            target = trgt;
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            character.Attack(target);
-        }
-
-        private void Button_Click1(object sender, RoutedEventArgs e)
-        {
-            textBox.Text = character.name + ": " +character.health.ToString();
         }
     }
 }

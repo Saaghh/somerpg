@@ -16,13 +16,15 @@ namespace First_Build.Model
 
         BattleMapImage relatedImage;
         BattleMapControl relatedControl;
+        CharacterControl relatedCharacterImage;
 
-        public BaseTileController((int x, int y) coordiats, BattleMapImage image, BattleMapControl control) : base(coordiats)
+        public BaseTileController((int x, int y) coordiats, BattleMapImage image, BattleMapControl control, CharacterControl character) : base(coordiats)
         {
             Ini();
             spriteUri = new Uri(UriBase + UriEnd);
             relatedImage = image;
             relatedControl = control;
+            relatedCharacterImage = character;
 
             relatedImage.image.Source = new BitmapImage(spriteUri);
             relatedControl.polygon.MouseUp += MouseClickEventHandler;
@@ -32,6 +34,12 @@ namespace First_Build.Model
         protected virtual void Ini()
         {
 
+        }
+
+        public void PutCharacter(CharacterController character)
+        {
+            containedCharacter = character;
+            containedCharacter.DrawCharacter(relatedCharacterImage);
         }
 
         protected virtual void MouseClickEventHandler(object sender, EventArgs args)

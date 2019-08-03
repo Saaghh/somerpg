@@ -42,6 +42,27 @@ namespace First_Build.Controller
 
             return result;
         }
+
+        public static (int x, int y) GetCharacterStarterPosition((int w, int h) mapSize, int order, int team)
+        {
+            (int x, int y) position;
+
+            switch (team)
+            {
+                case 0:
+                    position.x = mapSize.w / 8 * 3;
+                    position.y = mapSize.h / 8 * 3 + order;
+                    break;
+                case 1:
+                    position.x = mapSize.w / 8 * 5;
+                    position.y = mapSize.h / 8 * 3 + order;
+                    break;
+                default:
+                    throw new Exception("Сражаться могут лишь 2 команды");
+            }
+
+            return position;
+        }
     }
 
 }

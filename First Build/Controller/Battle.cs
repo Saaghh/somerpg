@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using First_Build.Model;
 using static First_Build.Model.Character.ActionCommands;
+using System.Windows;
+using First_Build.View;
 
 namespace First_Build.Controller
 {
@@ -98,6 +100,41 @@ namespace First_Build.Controller
         {
             public readonly string stringCommand;
             public readonly Character target;
+        }
+    }
+
+    public class Battle1
+    {
+        BattleMap battleMap;
+
+        CharacterController[] playerParty;
+        CharacterController[] opponentParty;
+
+        readonly (int w, int h) battlefieldSize = (12, 12);
+
+        public Battle1(BattleWindow window)
+        {
+            battleMap = new BattleMap(battlefieldSize, window);
+
+            playerParty = new CharacterController[3];
+            opponentParty = new CharacterController[5];
+
+            IniParty(playerParty, 0);
+            IniParty(opponentParty, 1);
+        }
+
+        void IniParty(CharacterController[] characters, int number)
+        {
+            for (int i = 0; i < characters.Length; i++)
+            {
+                characters[i] = new CharacterController();
+            }
+
+            for (int i = 0; i < characters.Length; i++)
+            {
+                var coord = HexMapMath.GetCharacterStarterPosition(battlefieldSize, i, number);
+                battleMap[coord.x, coord.y].PutCharacter(characters[i]);
+            }
         }
     }
 }

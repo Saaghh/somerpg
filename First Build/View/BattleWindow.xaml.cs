@@ -21,13 +21,13 @@ namespace First_Build.View
     /// </summary>
     public partial class BattleWindow : Window
     {
-        static readonly (int x, int y) mapSize = (x: 20, y: 20);
+        static readonly (int x, int y) mapSize = (x: 40, y: 40);
 
 
         float currentScrollOffsetX = 0;
         float currentScrollOffsetY = 0;
 
-        public BattleMap battleMap;
+        public Battle1 batteController;
 
         public float CurrentScrollOffsetY
         {
@@ -63,7 +63,7 @@ namespace First_Build.View
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            battleMap = new BattleMap(mapSize, this);
+            batteController = new Battle1(this);
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)

@@ -27,6 +27,7 @@ namespace First_Build.Model
                 {
                     var control = new BattleMapControl();
                     var image = new BattleMapImage();
+                    var character = new CharacterControl();
                     var (x, y) = HexMapMath.GetHexCoordinate(i, j);
 
                     Canvas.SetTop(control, y);
@@ -35,36 +36,35 @@ namespace First_Build.Model
                     Canvas.SetTop(image, y);
                     Canvas.SetLeft(image, x);
 
+                    Canvas.SetTop(character, y);
+                    Canvas.SetLeft(character, x);
+
 
                     window.controlCanvas.Children.Add(control);
                     window.imageCanvas.Children.Add(image);
+                    window.imageCanvas.Children.Add(character);
 
                     BaseTileController btc;
                     switch (r.Next(2))
                     {
                         case 0:
-                            btc = new ForestTile((i, j), image, control);
+                            btc = new ForestTile((i, j), image, control, character);
                             break;
                         case 1:
-                            btc = new WaterTile((i, j), image, control);
+                            btc = new WaterTile((i, j), image, control, character);
                             break;
                         default:
-                            btc = new BaseTileController((i, j), image, control);
+                            btc = new BaseTileController((i, j), image, control, character);
                             break;
                     }
                     battleTiles[i, j] = btc;
                 }
             }
         }
-        void AddChildren(Canvas canvas, Control control, int x, int y)
+
+        public BaseTileController this[int x, int y]
         {
-            var h = control;
-            var m = HexMapMath.GetHexCoordinate(x, y);
-
-            Canvas.SetTop(h, m.y);
-            Canvas.SetLeft(h, m.x);
-
-            canvas.Children.Add(h);
+            get { return battleTiles[x, y]; }
         }
     }
 }

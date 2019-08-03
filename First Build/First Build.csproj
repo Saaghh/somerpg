@@ -59,6 +59,7 @@
     <Compile Include="Controller\Battle.cs" />
     <Compile Include="Controller\HexMapMath.cs" />
     <Compile Include="Model\BattleMap.cs" />
+    <Compile Include="Model\Characters\CharacterController.cs" />
     <Compile Include="Model\Tiles\BaseTile.cs" />
     <Compile Include="Model\Tiles\BattleTilesCollection.cs" />
     <Compile Include="Model\Tiles\BaseTileController.cs" />
@@ -116,7 +117,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Character.cs" />
+    <Compile Include="Model\Characters\Character.cs" />
     <Compile Include="Controller\Game.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -150,6 +151,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\ErrorTile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\TestCharacter.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

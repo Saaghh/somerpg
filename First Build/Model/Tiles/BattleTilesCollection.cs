@@ -9,7 +9,7 @@ namespace First_Build.Model
 {
     class ForestTile : BaseTileController
     {
-        public ForestTile((int x, int y) coordiats, BattleMapImage image, BattleMapControl control) : base (coordiats, image, control)
+        public ForestTile((int x, int y) coordiats, BattleMapImage image, BattleMapControl control, CharacterControl character) : base (coordiats, image, control, character)
         {
             
         }
@@ -29,7 +29,7 @@ namespace First_Build.Model
 
     class WaterTile : BaseTileController
     {
-        public WaterTile((int x, int y) coordiats, BattleMapImage image, BattleMapControl control) : base(coordiats, image, control)
+        public WaterTile((int x, int y) coordiats, BattleMapImage image, BattleMapControl control, CharacterControl character) : base(coordiats, image, control, character)
         {
             
         }
