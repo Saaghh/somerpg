@@ -57,7 +57,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controller\Battle.cs" />
-    <Compile Include="Controller\HexMap.cs" />
+    <Compile Include="Controller\HexMapMath.cs" />
     <Compile Include="Model\BattleMap.cs" />
     <Compile Include="Model\Tiles\BaseTile.cs" />
     <Compile Include="Model\Tiles\BattleTilesCollection.cs" />

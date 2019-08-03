@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace First_Build.Controller
 {
-    public static class HexMap
+    public static class HexMapMath
     {
         public const int HEXWIDTH = 200;
         public const int HEXHEIGHT = 160;
@@ -37,8 +37,8 @@ namespace First_Build.Controller
         public static (int width, int height) GetMapPixelSize((int x, int y) dataSize)
         {
             (int width, int height) result;
-            result.width = (150 * dataSize.x) + 50;
-            result.height = (200 * dataSize.y);
+            result.width = ((HEXWIDTH / 4 * 3) * dataSize.x) + (HEXWIDTH / 4);
+            result.height = (HEXHEIGHT * dataSize.y) + (HEXHEIGHT / 2);
 
             return result;
         }

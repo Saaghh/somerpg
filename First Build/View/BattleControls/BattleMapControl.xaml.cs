@@ -27,17 +27,22 @@ namespace First_Build.View
         }
         private void Polygon_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            polygon.Fill = Brushes.ForestGreen;
+            polygon.Fill = Brushes.Gray;
         }
 
         private void Polygon_MouseLeave(object sender, MouseEventArgs e)
         {
-            polygon.Fill = Brushes.IndianRed;
+            polygon.Fill = new SolidColorBrush(Color.FromArgb(0,0,0,0));
         }
 
         private void Polygon_MouseEnter(object sender, MouseEventArgs e)
         {
-            polygon.Fill = Brushes.Azure;
+            polygon.Fill = Brushes.Gray;
+        }
+
+        private void Polygon_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            polygon.Fill = Brushes.WhiteSmoke;
         }
     }
 }

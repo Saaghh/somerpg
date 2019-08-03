@@ -27,7 +27,7 @@ namespace First_Build.Model
                 {
                     var control = new BattleMapControl();
                     var image = new BattleMapImage();
-                    var (x, y) = HexMap.GetHexCoordinate(i, j);
+                    var (x, y) = HexMapMath.GetHexCoordinate(i, j);
 
                     Canvas.SetTop(control, y);
                     Canvas.SetLeft(control, x);
@@ -59,7 +59,7 @@ namespace First_Build.Model
         void AddChildren(Canvas canvas, Control control, int x, int y)
         {
             var h = control;
-            var m = HexMap.GetHexCoordinate(x, y);
+            var m = HexMapMath.GetHexCoordinate(x, y);
 
             Canvas.SetTop(h, m.y);
             Canvas.SetLeft(h, m.x);

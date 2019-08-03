@@ -23,13 +23,40 @@ namespace First_Build.View
     {
         static readonly (int x, int y) mapSize = (x: 20, y: 20);
 
+
+        float currentScrollOffsetX = 0;
+        float currentScrollOffsetY = 0;
+
         public BattleMap battleMap;
+
+        public float CurrentScrollOffsetY
+        {
+            get => currentScrollOffsetY;
+            set
+            {
+                currentScrollOffsetY = value;
+                if (currentScrollOffsetY < 0) { currentScrollOffsetY = 0; }
+                if (currentScrollOffsetY > scrollViewer.ScrollableHeight) { currentScrollOffsetY = (float)scrollViewer.ScrollableHeight; }
+
+            }
+        }
+        public float CurrentScrollOffsetX
+        {
+            get => currentScrollOffsetX;
+            set
+            {
+                currentScrollOffsetX = value;
+                if (currentScrollOffsetX < 0) { currentScrollOffsetX = 0; }
+
+                if (currentScrollOffsetX > scrollViewer.ScrollableWidth) { currentScrollOffsetX = (float)scrollViewer.ScrollableWidth; }
+            }
+        }
 
         public BattleWindow()
         {
             InitializeComponent();
 
-            var size = HexMap.GetMapPixelSize(mapSize);
+            var size = HexMapMath.GetMapPixelSize(mapSize);
             mapContainer.Width = size.width;
             mapContainer.Height = size.height;
         }
@@ -37,6 +64,29 @@ namespace First_Build.View
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             battleMap = new BattleMap(mapSize, this);
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.W:
+                    CurrentScrollOffsetY -= 50;
+                    scrollViewer.ScrollToVerticalOffset(CurrentScrollOffsetY);
+                    break;
+                case Key.A:
+                    CurrentScrollOffsetX -= 50;
+                    scrollViewer.ScrollToHorizontalOffset(CurrentScrollOffsetX);
+                    break;
+                case Key.S:
+                    CurrentScrollOffsetY += 50;
+                    scrollViewer.ScrollToVerticalOffset(CurrentScrollOffsetY);
+                    break;
+                case Key.D:
+                    CurrentScrollOffsetX += 50;
+                    scrollViewer.ScrollToHorizontalOffset(CurrentScrollOffsetX);
+                    break;
+            }
         }
     }
 }

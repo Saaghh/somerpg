@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:First_Build.View"
         mc:Ignorable="d"
-        Title="BattleWindow" Height="1080" Width="1920" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+        Title="BattleWindow" Height="1080" Width="1920" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" WindowState="Maximized" KeyDown="Window_KeyDown">
     <Grid Margin="0">
         <ScrollViewer x:Name="scrollViewer" HorizontalAlignment="Left" VerticalAlignment="Top" CanContentScroll="True" HorizontalScrollBarVisibility="Visible" Width="1912" Height="1049" PanningMode="Both" AllowDrop="True" >
-            <Canvas x:Name="mapContainer" HorizontalAlignment="Center" VerticalAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <Canvas x:Name="mapContainer" HorizontalAlignment="Center" VerticalAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" Background="#FF361B0F">
                 <Canvas x:Name="controlCanvas" HorizontalAlignment="Center" VerticalAlignment="Center" Panel.ZIndex="1" ScrollViewer.CanContentScroll="True"/>
                 <Canvas x:Name="imageCanvas" HorizontalAlignment="Center" VerticalAlignment="Center" ScrollViewer.CanContentScroll="True" />
             </Canvas>
