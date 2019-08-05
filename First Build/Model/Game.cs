@@ -10,12 +10,12 @@ namespace First_Build.Controller
     public static class Game
     {
         static public CharacterBase player;
-        static public Battle battle;
+        static public BattleUseless battle;
 
 
         public static void IniGame()
         {
-            battle = new Battle();
+            battle = new BattleUseless();
         }
     }
 

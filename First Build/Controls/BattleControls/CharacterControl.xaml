@@ -10,6 +10,6 @@
         <Grid Width="200" Height="200" Panel.ZIndex="1">
             <TextBlock x:Name="textBlock" TextWrapping="Wrap" Panel.ZIndex="1" HorizontalAlignment="Center" Margin="0,50,0,0" VerticalAlignment="Top" Background="#7FFFFFFF"/>
         </Grid>
-        <Image x:Name="image" Height="200" Width="200"/>
+        <Image x:Name="image" Height="200" Width="200" RenderTransformOrigin="0.5,0.5"/>
     </Canvas>
 </UserControl>

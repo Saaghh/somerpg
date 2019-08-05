@@ -38,6 +38,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -56,42 +57,53 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Controller\Battle.cs" />
-    <Compile Include="Controller\HexMapMath.cs" />
-    <Compile Include="Model\BattleMap.cs" />
+    <Compile Include="Model\Battle.cs" />
+    <Compile Include="Archive\BattleUseless.cs" />
+    <Compile Include="Model\HexMapMath.cs" />
+    <Compile Include="Model\BattleMap\BattleMapController.cs" />
+    <Compile Include="Model\BattleMap\BattleMapModel.cs" />
+    <Compile Include="Model\BattleMap\BattleMapVisual.cs" />
+    <Compile Include="Archive\Old_BattleMap\BattleMap.cs" />
     <Compile Include="Model\Characters\CharacterController.cs" />
-    <Compile Include="Model\Tiles\BaseTile.cs" />
-    <Compile Include="Model\Tiles\BattleTilesCollection.cs" />
-    <Compile Include="Model\Tiles\BaseTileController.cs" />
+    <Compile Include="Model\Characters\CharacterVisual.cs" />
+    <Compile Include="Archive\Old_Character\Old_CharacterController.cs" />
+    <Compile Include="Model\Characters\CharacterModel.cs" />
+    <Compile Include="Archive\Old_Tile\BaseTile.cs" />
+    <Compile Include="Archive\Old_Tile\BattleTilesCollection.cs" />
+    <Compile Include="Archive\Old_Tile\BaseTileController.cs" />
+    <Compile Include="Model\Tiles\TileController.cs" />
+    <Compile Include="Model\Tiles\TileModel.cs" />
+    <Compile Include="Model\Tiles\TileVisual.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="View\BattleControls\BattleMapControl.xaml.cs">
+    <Compile Include="Controls\BattleControls\BattleMapControl.xaml.cs">
       <DependentUpon>BattleMapControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\BattleControls\BattleMapImage.xaml.cs">
+    <Compile Include="Controls\BattleControls\BattleMapImage.xaml.cs">
       <DependentUpon>BattleMapImage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\BattleWindow.xaml.cs">
+    <Compile Include="Controls\BattleWindow.xaml.cs">
       <DependentUpon>BattleWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\BattleControls\CharacterControl.xaml.cs">
+    <Compile Include="Controls\BattleControls\CharacterControl.xaml.cs">
       <DependentUpon>CharacterControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Archive\HexControl.xaml.cs">
       <DependentUpon>HexControl.xaml</DependentUpon>
     </Compile>
-    <Page Include="View\BattleControls\BattleMapControl.xaml">
+    <Compile Include="Controls\ViewCommon.cs" />
+    <Page Include="Controls\BattleControls\BattleMapControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\BattleControls\BattleMapImage.xaml">
+    <Page Include="Controls\BattleControls\BattleMapImage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\BattleWindow.xaml">
+    <Page Include="Controls\BattleWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -107,7 +119,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\BattleControls\CharacterControl.xaml">
+    <Page Include="Controls\BattleControls\CharacterControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -117,8 +129,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Characters\CharacterBase.cs" />
-    <Compile Include="Controller\Game.cs" />
+    <Compile Include="Archive\Old_Character\CharacterBase.cs" />
+    <Compile Include="Model\Game.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -1,46 +1,71 @@
-﻿using System;
+﻿using First_Build.Model.Tiles;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
 
-namespace First_Build.Model
+namespace First_Build.Model.Characters
 {
-    public class CharacterController : CharacterBase
+    public class CharacterController : CharacterModel
     {
-        const string UriBase = "pack://application:,,,/First Build;component/";
-        protected string UriEnd = "Resources/TestCharacter.png";
-        public Uri spriteUri;
+        public CharacterController(TileModel position) : base(position) { }
 
-        CharacterControl control;
-
-        public CharacterController() : base()
+        public void Act(string command, object target)
         {
-            spriteUri = new Uri(UriBase + UriEnd);
+            switch (command)
+            {
+                case ActionCommands.ATTACK:
+                    if(!(target is CharacterController)) { throw new ArgumentException("Only character can be attacked", "target"); }
+                    Attack(target as CharacterController);
+                    break;
+                case ActionCommands.MOVE:
+                    if (!(target is TileModel)) { throw new ArgumentException("Can move only to tiles", "target"); }
+                    Move(target as TileController);
+                    break;
+                default:
+                    throw new ArgumentException("Unknown command", "command");
+            }
         }
 
-        public void DrawCharacter(CharacterControl characterControl)
+        protected virtual void Move(TileController target)
         {
-            control = characterControl;
-            control.image.Source = new BitmapImage(spriteUri);
-            control.textBlock.Text = name + ": " + health.ToString();
+            var p = position as TileController;
+            if (MovePossible(target))
+            {
+                p.Leave();
+                target.Enter(this);
+            }
         }
 
-        public Uri GetSpriteUri()
+        protected virtual bool MovePossible(TileController target)
         {
-            return spriteUri;
+            var cost = target.GetEnterCost();
+
+            if (cost > actionPoints) { return false; }
+            return true;
         }
 
-        public override void Attack(CharacterBase target)
+        protected virtual void Attack(CharacterController target)
         {
-            base.Attack(target);
-            control.textBlock.Text = name + ": " + health.ToString();
+            Console.WriteLine(name + " attacks " + target.name);
+            target.GetAttacked(this);
         }
-        public override void GetHit(int damage)
+
+        protected virtual void GetAttacked(CharacterController actor)
         {
-            base.GetHit(damage);
-            control.textBlock.Text = name + ": " + health.ToString();
+            if (clothing <= actor.weapon)
+            {
+                health -= (actor.weapon - clothing);
+            }
+            Console.WriteLine(name + " was attacked by " + actor.name);
         }
     }
+
+    public static class ActionCommands
+    {
+        public const string ATTACK = "Attack";
+        public const string MOVE = "Move";
+    }
+
 }

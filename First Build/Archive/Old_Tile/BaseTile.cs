@@ -22,7 +22,7 @@ namespace First_Build.Model
         public readonly int id = amount++;
         public readonly (int x, int y) coord;
 
-        public CharacterController containedCharacter;
+        public CharacterController1 containedCharacter;
 
         public string TileTypeName { get => tileTypeName; protected set => tileTypeName = value; }
 

@@ -27,7 +27,7 @@ namespace First_Build.View
         float currentScrollOffsetX = 0;
         float currentScrollOffsetY = 0;
 
-        public BattleController batteController;
+        public BattleVisualController batteController;
 
         public float CurrentScrollOffsetY
         {
@@ -63,7 +63,7 @@ namespace First_Build.View
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            batteController = new BattleController(this);
+            batteController = new BattleVisualController(this);
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)

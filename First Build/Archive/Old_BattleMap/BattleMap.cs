@@ -9,7 +9,7 @@ using System.Windows.Controls;
 
 namespace First_Build.Model
 {
-    public class BattleMap
+    public class BattleMap1
     {
         public BaseTileController[,] battleTiles;
 
@@ -17,7 +17,7 @@ namespace First_Build.Model
 
         Random r = new Random();
 
-        public BattleMap((int width, int height) size, BattleWindow window)
+        public BattleMap1((int width, int height) size, BattleWindow window)
         {
             mapSize = size;
             battleTiles = new BaseTileController[mapSize.width, mapSize.height];
@@ -27,7 +27,7 @@ namespace First_Build.Model
                 for (int j = 0; j < mapSize.height; j++)
                 {
                     //Реализуем view карты
-                    var control = new BattleMapControl();
+                    var control = new BattleMapControl((i, j));
                     var image = new BattleMapImage();
                     var character = new CharacterControl();
                     var (x, y) = HexMapMath.GetHexCoordinate(i, j);

@@ -23,9 +23,10 @@ namespace First_Build.View
     {
         public (int x, int y) coord;
 
-        public BattleMapControl()
+        public BattleMapControl((int x, int y) position)
         {
             InitializeComponent();
+            coord = position;
         }
         private void Polygon_MouseUp(object sender, MouseButtonEventArgs e)
         {

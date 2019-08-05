@@ -37,7 +37,7 @@ namespace First_Build.Model
 
         }
 
-        public void PutCharacter(CharacterController character)
+        public void PutCharacter(CharacterController1 character)
         {
             containedCharacter = character;
             containedCharacter.DrawCharacter(relatedCharacterImage);
