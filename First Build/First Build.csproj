@@ -58,19 +58,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\Battle.cs" />
-    <Compile Include="Archive\BattleUseless.cs" />
     <Compile Include="Model\HexMapMath.cs" />
     <Compile Include="Model\BattleMap\BattleMapController.cs" />
     <Compile Include="Model\BattleMap\BattleMapModel.cs" />
     <Compile Include="Model\BattleMap\BattleMapVisual.cs" />
-    <Compile Include="Archive\Old_BattleMap\BattleMap.cs" />
     <Compile Include="Model\Characters\CharacterController.cs" />
     <Compile Include="Model\Characters\CharacterVisual.cs" />
-    <Compile Include="Archive\Old_Character\Old_CharacterController.cs" />
     <Compile Include="Model\Characters\CharacterModel.cs" />
-    <Compile Include="Archive\Old_Tile\BaseTile.cs" />
-    <Compile Include="Archive\Old_Tile\BattleTilesCollection.cs" />
-    <Compile Include="Archive\Old_Tile\BaseTileController.cs" />
     <Compile Include="Model\Tiles\TileController.cs" />
     <Compile Include="Model\Tiles\TileModel.cs" />
     <Compile Include="Model\Tiles\TileVisual.cs" />
@@ -91,9 +85,6 @@
     <Compile Include="Controls\BattleControls\CharacterControl.xaml.cs">
       <DependentUpon>CharacterControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Archive\HexControl.xaml.cs">
-      <DependentUpon>HexControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\ViewCommon.cs" />
     <Page Include="Controls\BattleControls\BattleMapControl.xaml">
       <SubType>Designer</SubType>
@@ -107,29 +98,16 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Archive\MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Archive\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Controls\BattleControls\CharacterControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Archive\HexControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Archive\Old_Character\CharacterBase.cs" />
     <Compile Include="Model\Game.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -166,6 +144,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\TestCharacter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Archive\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

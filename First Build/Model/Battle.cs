@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using First_Build.Model;
-using static First_Build.Model.CharacterBase.ActionCommands;
 using System.Windows;
 using First_Build.View;
 using First_Build.Model.BattleMap;
