@@ -6,6 +6,6 @@
              xmlns:local="clr-namespace:First_Build.View"
              mc:Ignorable="d" >
     <Canvas HorizontalAlignment="Left" Height="200" VerticalAlignment="Top" Width="200">
-        <Polygon x:Name="polygon" Points="0,120 50,40 150,40 200,120 150,200 50,200" MouseUp="Polygon_MouseUp" Opacity="0.3" Panel.ZIndex="1000" Height="200" Width="200" MouseLeave="Polygon_MouseLeave" MouseEnter="Polygon_MouseEnter" MouseDown="Polygon_MouseDown" Fill="#00000000" />
+        <Polygon x:Name="polygon" Points="0,120 50,40 150,40 200,120 150,200 50,200" MouseUp="Polygon_MouseUp" Opacity="0.25" Panel.ZIndex="1000" Height="200" Width="200" MouseLeave="Polygon_MouseLeave" MouseEnter="Polygon_MouseEnter" MouseDown="Polygon_MouseDown" Fill="#00000000" />
     </Canvas>
 </UserControl>

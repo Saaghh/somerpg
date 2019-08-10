@@ -82,6 +82,16 @@ namespace First_Build.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap FlatTile {
+            get {
+                object obj = ResourceManager.GetObject("FlatTile", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap ForestTile {
             get {
                 object obj = ResourceManager.GetObject("ForestTile", resourceCulture);

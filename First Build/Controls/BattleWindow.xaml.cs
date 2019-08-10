@@ -1,4 +1,5 @@
-﻿using First_Build.Controller;
+﻿using First_Build.BetterModel;
+using First_Build.Controller;
 using First_Build.Model;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace First_Build.View
     /// </summary>
     public partial class BattleWindow : Window
     {
-        static readonly (int x, int y) mapSize = (x: 40, y: 40);
+        static readonly (int x, int y) mapSize = (x: 20, y: 20);
 
 
         float currentScrollOffsetX = 0;
@@ -59,11 +60,15 @@ namespace First_Build.View
             var size = HexMapMath.GetMapPixelSize(mapSize);
             mapContainer.Width = size.width;
             mapContainer.Height = size.height;
+
+            var b = new Battle(mapSize, this);
+
+            image.Source = b.textureSource;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            batteController = new BattleVisualController(this);
+            //batteController = new BattleVisualController(this);
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)

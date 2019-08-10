@@ -7,6 +7,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using First_Build.BetterModel;
 
 namespace First_Build.Model.Tiles
 {
@@ -36,17 +37,5 @@ namespace First_Build.Model.Tiles
         {
             return terrain.moveCost;
         }
-
-        [DataContract]
-        public class Terrain
-        {
-            [DataMember]
-            public int moveCost;
-            [DataMember]
-            public string type;
-            [DataMember]
-            public bool walkable;
-        }
-
     }
 }

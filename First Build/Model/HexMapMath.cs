@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace First_Build.Controller
                 resultX = (HEXWIDTH / 4 * 3) * x;
                 resultY = (HEXHEIGHT / 2) + (HEXHEIGHT * y);
             }
-            else
+            else //если нечетный столбец
             {
                 resultX = (HEXWIDTH / 4 * 3) * x;
                 resultY = HEXHEIGHT * y;
@@ -29,6 +30,27 @@ namespace First_Build.Controller
 
             return result;
         }
+
+        public static Point GetHexCoordinate(int x, int y, Point isPoint)
+        {
+            int resultX, resultY;
+            if (x % 2 != 1) //если четный столбец
+            {
+                resultX = (HEXWIDTH / 4 * 3) * x;
+                resultY = (HEXHEIGHT / 2) + (HEXHEIGHT * y);
+            }
+            else //если нечетный столбец
+            {
+                resultX = (HEXWIDTH / 4 * 3) * x;
+                resultY = HEXHEIGHT * y;
+            }
+
+            var result = new Point(resultX, resultY);
+
+            return result;
+        }
+
+
         /// <summary>
         /// 
         /// </summary>
@@ -38,7 +60,7 @@ namespace First_Build.Controller
         {
             (int width, int height) result;
             result.width = ((HEXWIDTH / 4 * 3) * dataSize.x) + (HEXWIDTH / 4);
-            result.height = (HEXHEIGHT * dataSize.y) + (HEXHEIGHT / 2);
+            result.height = (HEXHEIGHT * dataSize.y) + (HEXHEIGHT);
 
             return result;
         }
@@ -63,6 +85,7 @@ namespace First_Build.Controller
 
             return position;
         }
+
     }
 
 }

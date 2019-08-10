@@ -9,9 +9,7 @@
     <Grid Margin="0">
         <ScrollViewer x:Name="scrollViewer" HorizontalAlignment="Left" VerticalAlignment="Top" CanContentScroll="True" HorizontalScrollBarVisibility="Visible" Width="1912" Height="1049" PanningMode="Both" AllowDrop="True" >
             <Canvas x:Name="mapContainer" HorizontalAlignment="Center" VerticalAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" Background="#FF361B0F">
-                <Canvas x:Name="controlCanvas" HorizontalAlignment="Center" VerticalAlignment="Center" Panel.ZIndex="1" ScrollViewer.CanContentScroll="True"/>
-                <Canvas x:Name="imageCanvas" HorizontalAlignment="Center" VerticalAlignment="Center" ScrollViewer.CanContentScroll="True" />
-                <Canvas x:Name="characterCanvas" HorizontalAlignment="Center" VerticalAlignment="Center" ScrollViewer.CanContentScroll="True" />
+                <Image x:Name="image" HorizontalAlignment="Left"  VerticalAlignment="Top" Stretch="None"/>
             </Canvas>
         </ScrollViewer>
     </Grid>
