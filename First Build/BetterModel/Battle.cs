@@ -33,11 +33,8 @@ namespace First_Build.BetterModel
             battleMapSize = size;
             tiles = new Tile[size.w, size.h];
             GenerateMap();
-            PrepareMapTexture();
-
-            window.image.Source = textureSource;
-
             GenerateControls(window.mapContainer);
+            DrawAllGraphics(window);
         }
 
         protected void GenerateMap()
@@ -67,7 +64,7 @@ namespace First_Build.BetterModel
             }
         }
 
-        public void PrepareMapTexture()
+        public BitmapSource PrepareMapTexture()
         {
             var textureSize = HexMapMath.GetMapPixelSize(battleMapSize);
             texture = new Bitmap(textureSize.width, textureSize.height);
@@ -79,9 +76,15 @@ namespace First_Build.BetterModel
                 g.DrawImage(item.terrain.texture, pixelCoord);
             }
 
-            texture.Save("BattleMap-" + id+".png");
+            texture.Save("BattleMap-" + id + ".png");
 
-            textureSource = Imaging.CreateBitmapSourceFromHBitmap(texture.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+            return textureSource = Imaging.CreateBitmapSourceFromHBitmap(texture.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+        }
+
+        public void DrawAllGraphics(BattleWindow window)
+        {
+            PrepareMapTexture();
+            window.image.Source = textureSource;
         }
     }
 }
