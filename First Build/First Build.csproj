@@ -146,7 +146,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="TileDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

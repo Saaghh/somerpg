@@ -36,7 +36,7 @@ namespace First_Build.Controller
         public BattleVisualController(BattleWindow battleWindow)
         {
             window = battleWindow;
-            battleMap = new BattleMapVisual(battlefieldSize, window.imageCanvas);
+            //battleMap = new BattleMapVisual(battlefieldSize, window.imageCanvas);
 
             playerParty = new CharacterVisual[5];
             opponentParty = new CharacterVisual[5];
@@ -64,7 +64,7 @@ namespace First_Build.Controller
                     Canvas.SetTop(control, y);
                     Canvas.SetLeft(control, x);
 
-                    window.controlCanvas.Children.Add(control);
+                    //window.controlCanvas.Children.Add(control);
                 }
             }
         }
@@ -73,7 +73,7 @@ namespace First_Build.Controller
         {
             for (int i = 0; i < characters.Length; i++)
             {
-                var (x, y) = HexMapMath.GetCharacterStarterPosition(battlefieldSize, i, number);
+                var (x, y) = HexMapMath.GetCharacterStarterTilePosition(battlefieldSize, i, number);
                 characters[i] = new CharacterVisual("Resources/TestCharacter.png", (TileVisual)battleMap[x, y]);
                 var t = battleMap[x, y] as TileController;
                 t.Enter(characters[i]);

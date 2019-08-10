@@ -65,7 +65,7 @@ namespace First_Build.BetterModel
                     moveCost = 1,
                     type = "Flat",
                     walkable = true,
-                    texture = Properties.Resources.ErrorTile
+                    texture = Properties.Resources.FlatTile
                 };
                 return x;
             }

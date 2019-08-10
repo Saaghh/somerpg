@@ -67,7 +67,6 @@ namespace First_Build.BetterModel
 
         public void Leave()
         {
-            Console.WriteLine(character.name + " has left " + coord);
             character = null;
         }
     }

@@ -60,12 +60,12 @@ namespace First_Build.Controller
         {
             (int width, int height) result;
             result.width = ((HEXWIDTH / 4 * 3) * dataSize.x) + (HEXWIDTH / 4);
-            result.height = (HEXHEIGHT * dataSize.y) + (HEXHEIGHT);
+            result.height = (HEXHEIGHT * dataSize.y) + (HEXHEIGHT / 2);
 
             return result;
         }
 
-        public static (int x, int y) GetCharacterStarterPosition((int w, int h) mapSize, int order, int team)
+        public static (int x, int y) GetCharacterStarterTilePosition((int w, int h) mapSize, int order, int team)
         {
             (int x, int y) position;
 
@@ -87,5 +87,4 @@ namespace First_Build.Controller
         }
 
     }
-
 }

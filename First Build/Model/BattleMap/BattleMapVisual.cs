@@ -1,4 +1,5 @@
-﻿using First_Build.Controller;
+﻿using First_Build.BetterModel;
+using First_Build.Controller;
 using First_Build.Model.Tiles;
 using First_Build.View;
 using System;
@@ -30,7 +31,7 @@ namespace First_Build.Model.BattleMap
                 {
                     //Реализуем view карты
                     var image = new BattleMapImage();
-                    var character = new CharacterControl();
+                    var character = new CharacterControl(new Character());
 
                     var (x, y) = HexMapMath.GetHexCoordinate(i, j);
 

@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="BattleWindow" Height="1080" Width="1920" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" WindowState="Maximized" KeyDown="Window_KeyDown">
     <Grid Margin="0">
-        <ScrollViewer x:Name="scrollViewer" HorizontalAlignment="Left" VerticalAlignment="Top" CanContentScroll="True" HorizontalScrollBarVisibility="Visible" Width="1912" Height="1049" PanningMode="Both" AllowDrop="True" >
+        <ScrollViewer x:Name="scrollViewer" HorizontalAlignment="Left" VerticalAlignment="Top" CanContentScroll="True" Width="1912" Height="1049" AllowDrop="True" PanningMode="Both" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" Background="#00000000" >
             <Canvas x:Name="mapContainer" HorizontalAlignment="Center" VerticalAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" Background="#FF361B0F">
                 <Image x:Name="image" HorizontalAlignment="Left"  VerticalAlignment="Top" Stretch="None"/>
             </Canvas>

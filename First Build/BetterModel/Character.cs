@@ -28,27 +28,30 @@ namespace First_Build.BetterModel
 
         public Tile position;
 
-        public Bitmap texture;
-        public BitmapSource controlTexture;
+        public event EventHandler<MoveEventArgs> Moved;
+        public event EventHandler<AttackedEventArgs> Attacked;
 
+        public Bitmap texture   = Properties.Resources.TestCharacter;
+        public BitmapSource textureSource;
         public Character()
         {
-            texture = Properties.Resources.TestCharacter.Clone() as Bitmap;
+            textureSource = Imaging.CreateBitmapSourceFromHBitmap(texture.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
         }
 
         protected virtual void GetReadyForBattle()
         {
             ap = maxAP;
-            PrepareTexture();
         }
 
         public virtual void EngageBattle(Tile position)
         {
-            if (!TryToMove(position)) { throw new ArgumentException("Unexpected position"); };
+            GetReadyForBattle();
+            //if (!TryToMove(position)) { throw new ArgumentException("Unexpected position"); };
+            this.position = position;
             Console.WriteLine(name + "has engaged battle");
         }
 
-        protected virtual bool TryToMove(Tile target)
+        public virtual bool TryToMove(Tile target)
         {
             if (target.character == null & ap >= target.GetEnterCost())
             {
@@ -56,74 +59,46 @@ namespace First_Build.BetterModel
                 target.Enter(this);
                 position = target;
                 ap -= target.GetEnterCost();
+                Moved(this, new MoveEventArgs(target));
                 return true;
             }
             return false;
         }
 
-        protected virtual void Attack(Character target)
+        public virtual void Attack(Character target)
         {
             Console.WriteLine(name + " attacks " + target.name);
             target.GetAttacked(this);
         }
 
-        protected virtual void GetAttacked(Character actor)
+        public virtual void GetAttacked(Character attacker)
         {
-            if (armor <= actor.weapon)
+            if (armor <= attacker.weapon)
             {
-                health -= (actor.weapon - armor);
+                health -= (attacker.weapon - armor);
             }
-            Console.WriteLine(name + " was attacked by " + actor.name);
+            Attacked(this, new AttackedEventArgs(attacker));
+            Console.WriteLine(name + " was attacked by " + attacker.name);
         }
 
-        public BitmapSource PrepareTexture()
-        {
-            controlTexture = Imaging.CreateBitmapSourceFromHBitmap(texture.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
 
-            return controlTexture;
-        }
-
-        private static Bitmap MergeBitmaps(Bitmap bmp1, Bitmap bmp2)
+        public class AttackedEventArgs : EventArgs
         {
-            Bitmap result = new Bitmap(Math.Max(bmp1.Width, bmp2.Width),
-                                       Math.Max(bmp1.Height, bmp2.Height));
-            using (Graphics g = Graphics.FromImage(result))
+            public Character attacker;
+            public AttackedEventArgs(Character character)
             {
-                g.DrawImage(bmp2, System.Drawing.Point.Empty);
-                g.DrawImage(bmp1, System.Drawing.Point.Empty);
+                attacker = character;
             }
-            return result;
         }
 
-        //public static byte[] ImageToByte2(Image img)
-        //{
-        //    using (var stream = new MemoryStream())
-        //    {
-        //        img.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-        //        return stream.ToArray();
-        //    }
-        //}
+        public class MoveEventArgs : EventArgs
+        {
+            public Tile target;
 
-        //public static BitmapSource ConvertBitmap(Bitmap source)
-        //{
-        //    return System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
-        //                  source.GetHbitmap(),
-        //                  IntPtr.Zero,
-        //                  Int32Rect.Empty,
-        //                  BitmapSizeOptions.FromEmptyOptions());
-        //}
-
-        //public static Bitmap BitmapFromSource(BitmapSource bitmapsource)
-        //{
-        //    Bitmap bitmap;
-        //    using (var outStream = new MemoryStream())
-        //    {
-        //        BitmapEncoder enc = new BmpBitmapEncoder();
-        //        enc.Frames.Add(BitmapFrame.Create(bitmapsource));
-        //        enc.Save(outStream);
-        //        bitmap = new Bitmap(outStream);
-        //    }
-        //    return bitmap;
-        //}
+            public MoveEventArgs(Tile tile)
+            {
+                target = tile;
+            }
+        }
     }
 }
