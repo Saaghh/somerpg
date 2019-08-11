@@ -1,7 +1,4 @@
-﻿using First_Build.BetterModel;
-using First_Build.Controller;
-using First_Build.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,20 +21,35 @@ namespace First_Build
     public partial class CharacterControl : UserControl
     {
         public readonly Character character;
+
         public CharacterControl(Character character)
         {
             InitializeComponent();
             this.character = character;
 
             character.Moved += Character_Moved;
-            character.Attacked += Character_Attacked;
+            character.GotAttacked += Character_GotAttacked;
+            character.RoundStarter += Character_RoundStarter;
 
-            textBlock.Text = character.name + ": " + character.health + "/" + character.maxHealth;
+            SetTexture();
+
+            ShowData();
         }
 
-        private void Character_Attacked(object sender, Character.AttackedEventArgs e)
+        private void SetTexture()
         {
-            textBlock.Text = character.name + ": " + character.health + "/" + character.maxHealth;
+            image.Source = character.PrepareTexture();
+        }
+
+        private void Character_RoundStarter(object sender, EventArgs e)
+        {
+            ShowData();
+        }
+
+        private void Character_GotAttacked(object sender, Character.AttackedEventArgs e)
+        {
+            ShowData();
+            if (!character.isAlive) { canvas.Visibility = Visibility.Hidden; }
         }
 
         private void Character_Moved(object sender, Character.MoveEventArgs e)
@@ -45,6 +57,41 @@ namespace First_Build
             (int x, int y) = HexMapMath.GetHexCoordinate(e.target.coord.x, e.target.coord.y);
             Canvas.SetTop(this, y);
             Canvas.SetLeft(this, x);
+
+            ShowData();
+        }
+
+        public void ShowData()
+        {
+            ShowHealth();
+            ShowAP();
+            ShowName();
+        }
+
+        public void ShowHealth()
+        {
+            double pixelsPerHealth = healthBarBackground.Width / character.maxHealth;
+
+            if (character.isAlive)
+            {
+                healthBar.Width = pixelsPerHealth * character.health;
+            }
+
+            healthText.Text = character.health + " / " + character.maxHealth;
+        }
+
+        public void ShowAP()
+        {
+            double pixelsPerAP = apBarBackground.Width / character.maxAP;
+
+            apBar.Width = pixelsPerAP * character.ap;
+
+            apText.Text = character.ap + " / " + character.maxAP;
+        }
+
+        public void ShowName()
+        {
+            nameText.Text = character.name;
         }
     }
 }

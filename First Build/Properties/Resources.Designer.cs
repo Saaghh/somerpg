@@ -131,9 +131,29 @@ namespace First_Build.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap Warrior {
+            get {
+                object obj = ResourceManager.GetObject("Warrior", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap WaterTile {
             get {
                 object obj = ResourceManager.GetObject("WaterTile", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Zombie {
+            get {
+                object obj = ResourceManager.GetObject("Zombie", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

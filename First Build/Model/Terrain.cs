@@ -9,7 +9,7 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 
-namespace First_Build.BetterModel
+namespace First_Build
 {
     [DataContract]
     public class Terrain

@@ -11,7 +11,7 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 
-namespace First_Build.BetterModel
+namespace First_Build
 {
     [DataContract]
     public class Tile
@@ -62,12 +62,22 @@ namespace First_Build.BetterModel
         {
             if(!terrain.walkable) { throw new Exception("Tile can't be entered"); }
             character = actor;
+            character.Died += Actor_Died;
             Console.WriteLine(actor.name + " has entered " + coord);
+        }
+
+        private void Actor_Died(object sender, EventArgs e)
+        {
+            Leave();
         }
 
         public void Leave()
         {
-            character = null;
+            if (character != null)
+            {
+                character.Died -= Actor_Died;
+                character = null;
+            }
         }
     }
 }

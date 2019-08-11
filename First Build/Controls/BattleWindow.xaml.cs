@@ -1,7 +1,4 @@
-﻿using First_Build.BetterModel;
-using First_Build.Controller;
-using First_Build.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,6 +34,14 @@ namespace First_Build.View
             battle = new Battle(mapSize, this);
 
             image.Source = battle.textureSource;
+
+            battle.BattleEnded += Battle_BattleEnded;
+        }
+
+        private void Battle_BattleEnded(object sender, Battle.BattleEndEventArgs e)
+        {
+            MessageBox.Show(e.message);
+            this.Close();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

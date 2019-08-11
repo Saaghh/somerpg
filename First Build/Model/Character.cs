@@ -1,5 +1,4 @@
-﻿using First_Build.Controller;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -11,7 +10,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace First_Build.BetterModel
+namespace First_Build
 {
     public class Character
     {
@@ -26,16 +25,28 @@ namespace First_Build.BetterModel
         public int maxAP        = 13;
         public int ap;
 
+        public bool isAlive     = true;
+
         public Tile position;
 
         public event EventHandler<MoveEventArgs> Moved;
-        public event EventHandler<AttackedEventArgs> Attacked;
+        public event EventHandler<AttackedEventArgs> GotAttacked;
+        public event EventHandler<EventArgs> RoundStarter;
+        public event EventHandler<EventArgs> Died;
 
         public Bitmap texture   = Properties.Resources.TestCharacter;
         public BitmapSource textureSource;
+
         public Character()
         {
             textureSource = Imaging.CreateBitmapSourceFromHBitmap(texture.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+        }
+
+        public BitmapSource PrepareTexture()
+        {
+            textureSource = Imaging.CreateBitmapSourceFromHBitmap(texture.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+
+            return textureSource;
         }
 
         protected virtual void GetReadyForBattle()
@@ -43,12 +54,18 @@ namespace First_Build.BetterModel
             ap = maxAP;
         }
 
+        public virtual void GetReadyForNewRound()
+        {
+            ap = maxAP;
+
+            RoundStarter(this, new EventArgs());
+        }
+
         public virtual void EngageBattle(Tile position)
         {
             GetReadyForBattle();
-            //if (!TryToMove(position)) { throw new ArgumentException("Unexpected position"); };
             this.position = position;
-            Console.WriteLine(name + "has engaged battle");
+            this.position.Enter(this);
         }
 
         public virtual bool TryToMove(Tile target)
@@ -67,7 +84,6 @@ namespace First_Build.BetterModel
 
         public virtual void Attack(Character target)
         {
-            Console.WriteLine(name + " attacks " + target.name);
             target.GetAttacked(this);
         }
 
@@ -77,8 +93,12 @@ namespace First_Build.BetterModel
             {
                 health -= (attacker.weapon - armor);
             }
-            Attacked(this, new AttackedEventArgs(attacker));
-            Console.WriteLine(name + " was attacked by " + attacker.name);
+            if (health <= 0)
+            {
+                isAlive = false;
+                Died(this, new EventArgs());
+            }
+            GotAttacked(this, new AttackedEventArgs(attacker));
         }
 
 
@@ -90,7 +110,6 @@ namespace First_Build.BetterModel
                 attacker = character;
             }
         }
-
         public class MoveEventArgs : EventArgs
         {
             public Tile target;
@@ -100,5 +119,52 @@ namespace First_Build.BetterModel
                 target = tile;
             }
         }
+
+        public static Character Warrior
+        {
+            get
+            {
+                return new Character
+                {
+                    armor = 20,
+                    maxHealth = 300,
+                    health = 300,
+                    name = "Warrior #" + amount,
+                    texture = Properties.Resources.Warrior
+                };
+            }
+        }
+        public static Character Zombie
+        {
+            get
+            {
+                return new Character
+                {
+                    armor = 0,
+                    weapon = 30,
+                    maxHealth = 500,
+                    health = 500,
+                    name = "Zombie #" + amount,
+                    texture = Properties.Resources.Zombie
+                };
+            }
+        }
+        public static Character Test
+        {
+            get
+            {
+                return new Character
+                {
+                    armor = 0,
+                    weapon = 1,
+                    maxHealth = 3,
+                    health = 1,
+                    maxAP = 1,
+                    name = "Test #" + amount,
+                    texture = Properties.Resources.TestCharacter
+                };
+            }
+        }
+
     }
 }

@@ -5,11 +5,20 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:First_Build"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Width="200" Height="200" Margin="0" BorderThickness="1">
-    <Canvas HorizontalAlignment="Center" Height="200" Margin="0" VerticalAlignment="Center" Width="200">
+             d:DesignHeight="450" d:DesignWidth="800" Width="200" Height="200" Margin="0" BorderThickness="1" RenderTransformOrigin="0.5,0.5">
+    <Canvas x:Name="canvas" HorizontalAlignment="Center" Height="200" Margin="0" VerticalAlignment="Center" Width="200">
         <Grid Width="200" Height="200" Panel.ZIndex="1">
-            <TextBlock x:Name="textBlock" TextWrapping="Wrap" Panel.ZIndex="1" HorizontalAlignment="Center" Margin="0,50,0,0" VerticalAlignment="Top" Background="#7FFFFFFF"/>
+            <TextBlock x:Name="nameText" TextWrapping="Wrap" Panel.ZIndex="1" HorizontalAlignment="Center" Margin="0,8,0,0" VerticalAlignment="Top" Text="john" IsEnabled="False" Foreground="#00000000"/>
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Width="200" Background="#26000000" Panel.ZIndex="2">
+                <Rectangle x:Name="healthBarBackground" Fill="#FF491313" HorizontalAlignment="Left" Height="8" VerticalAlignment="Top" Width="160" Margin="20,16,0,0" Panel.ZIndex="1"/>
+                <Rectangle x:Name="healthBar" HorizontalAlignment="Left" Height="8" VerticalAlignment="Top" Width="100" Margin="20,16,0,0" Panel.ZIndex="1" Fill="#FFA42222"/>
+                <TextBlock x:Name="healthText" HorizontalAlignment="Center" Margin="0,16,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="16" Panel.ZIndex="1" Foreground="White"/>
+                <Rectangle x:Name="apBarBackground" Fill="#FF181349" HorizontalAlignment="Left" Height="8" VerticalAlignment="Top" Width="160" Margin="20,8,-80,0"/>
+                <Rectangle x:Name="apBar" HorizontalAlignment="Left" Height="8" VerticalAlignment="Top" Width="100" Margin="20,8,-20,0" Fill="#FF202099"/>
+                <TextBlock x:Name="apText" HorizontalAlignment="Center" Margin="0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="16" Foreground="White"/>
+            </Grid>
         </Grid>
-        <Image x:Name="image" Height="200" Width="200" RenderTransformOrigin="0.5,0.5"/>
+        <Image x:Name="image" Height="200" Width="200" RenderTransformOrigin="0.5,0.5" Source="/First Build;component/Resources/TestCharacter.png" Panel.ZIndex="1"/>
+        <Ellipse Fill="#33000000" Height="54" Canvas.Left="30" Canvas.Top="146" Width="140" Panel.ZIndex="-1"/>
     </Canvas>
 </UserControl>

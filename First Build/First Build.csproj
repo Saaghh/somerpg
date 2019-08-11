@@ -72,21 +72,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BetterModel\Battle.cs" />
     <Compile Include="Model\Battle.cs" />
-    <Compile Include="BetterModel\Character.cs" />
-    <Compile Include="BetterModel\Terrain.cs" />
-    <Compile Include="BetterModel\Tile.cs" />
+    <Compile Include="Model\Character.cs" />
+    <Compile Include="Model\Party.cs" />
+    <Compile Include="Model\Terrain.cs" />
+    <Compile Include="Model\Tile.cs" />
     <Compile Include="Model\HexMapMath.cs" />
-    <Compile Include="Model\BattleMap\BattleMapController.cs" />
-    <Compile Include="Model\BattleMap\BattleMapModel.cs" />
-    <Compile Include="Model\BattleMap\BattleMapVisual.cs" />
-    <Compile Include="Model\Characters\CharacterController.cs" />
-    <Compile Include="Model\Characters\CharacterVisual.cs" />
-    <Compile Include="Model\Characters\CharacterModel.cs" />
-    <Compile Include="Model\Tiles\TileController.cs" />
-    <Compile Include="Model\Tiles\TileModel.cs" />
-    <Compile Include="Model\Tiles\TileVisual.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -95,21 +86,13 @@
     <Compile Include="Controls\BattleControls\BattleMapControl.xaml.cs">
       <DependentUpon>BattleMapControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\BattleControls\BattleMapImage.xaml.cs">
-      <DependentUpon>BattleMapImage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\BattleWindow.xaml.cs">
       <DependentUpon>BattleWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\BattleControls\CharacterControl.xaml.cs">
       <DependentUpon>CharacterControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ViewCommon.cs" />
     <Page Include="Controls\BattleControls\BattleMapControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\BattleControls\BattleMapImage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -179,6 +162,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\FlatTile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Warrior.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Zombie.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

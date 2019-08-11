@@ -1,135 +1,209 @@
-﻿using System;
+﻿using First_Build.View;
+using System;
 using System.Collections.Generic;
-using System.Collections;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using First_Build.Model;
 using System.Windows;
-using First_Build.View;
-using First_Build.Model.BattleMap;
-using First_Build.Model.Characters;
 using System.Windows.Controls;
-using First_Build.Model.Tiles;
+using System.Windows.Interop;
+using System.Windows.Media.Imaging;
 
-namespace First_Build.Controller
+namespace First_Build
 {
-    public abstract class BattleVisualModel
+    public class Battle
     {
-        static protected Random r = new Random();
+        public static int amount = 0;
+        public readonly string id = amount++.ToString();
 
-        protected BattleMapVisual battleMap;
+        public (int width, int height) battleMapSize;
 
-        protected CharacterVisual[] playerParty;
-        protected CharacterVisual[] opponentParty;
+        public Tile[,] tiles;
 
-        protected BattleWindow window;
+        public Party playerTeam;
+        public Party opponentTeam;
 
-        protected readonly (int width, int height) battlefieldSize = (40, 40);
+        public Bitmap texture;
+        public BitmapSource textureSource;
 
-        public Queue<CharacterVisual> turnOrder = new Queue<CharacterVisual>();
-    }
+        public Queue<Character> turnOrder = new Queue<Character>();
 
-    public class BattleVisualController : BattleVisualModel
-    {
+        public event EventHandler<BattleEndEventArgs> BattleEnded;
 
-        public BattleVisualController(BattleWindow battleWindow)
+        public Battle((int w, int h) size, BattleWindow window)
         {
-            window = battleWindow;
-            //battleMap = new BattleMapVisual(battlefieldSize, window.imageCanvas);
+            battleMapSize = size;
+            tiles = new Tile[size.w, size.h];
+            GenerateMap();
 
-            playerParty = new CharacterVisual[5];
-            opponentParty = new CharacterVisual[5];
+            IniTeams();
+            GenerateAllCharactedControls(window);
 
-            IniControlCanvas();
+            GenerateHexControls(window.mapContainer);
+            DrawAllGraphics(window);
 
-            IniParty(playerParty, 0);
-            IniParty(opponentParty, 1);
-
-            FormQueue();
+            FillQueue();
         }
 
-        void IniControlCanvas()
+        protected void FillQueue()
         {
-            for (int i = 0; i < battlefieldSize.width; i++)
+            foreach (var item in playerTeam)
             {
-                for (int j = 0; j < battlefieldSize.height; j++)
+                if (item.isAlive)
                 {
-                    var (x, y) = HexMapMath.GetHexCoordinate(i, j);
+                    turnOrder.Enqueue(item);
+                    item.GetReadyForNewRound();
+                }
+            }
 
-                    var control = new BattleMapControl((i, j));
-
-                    control.MouseUp += ClickEventHandler;
-
-                    Canvas.SetTop(control, y);
-                    Canvas.SetLeft(control, x);
-
-                    //window.controlCanvas.Children.Add(control);
+            foreach (var item in opponentTeam)
+            {
+                if (item.isAlive)
+                {
+                    turnOrder.Enqueue(item);
+                    item.GetReadyForNewRound();
                 }
             }
         }
 
-        void IniParty(CharacterVisual[] characters, int number)
+        protected void IniTeams()
         {
-            for (int i = 0; i < characters.Length; i++)
+            playerTeam = new Party();
+            opponentTeam = new Party();
+
+            for (int i = 0; i < playerTeam.Count; i++)
             {
-                var (x, y) = HexMapMath.GetCharacterStarterTilePosition(battlefieldSize, i, number);
-                characters[i] = new CharacterVisual("Resources/TestCharacter.png", (TileVisual)battleMap[x, y]);
-                var t = battleMap[x, y] as TileController;
-                t.Enter(characters[i]);
+                playerTeam[i] = Character.Warrior;
+                var (x, y) = HexMapMath.GetCharacterStarterTilePosition(battleMapSize, i, 0);
+                playerTeam[i].EngageBattle(tiles[x, y]);
+            }
+
+            for (int i = 0; i < opponentTeam.Count; i++)
+            {
+                opponentTeam[i] = Character.Zombie;
+                var (x, y) = HexMapMath.GetCharacterStarterTilePosition(battleMapSize, i, 1);
+                opponentTeam[i].EngageBattle(tiles[x, y]);
             }
         }
 
-        void FormQueue()
+        protected void GenerateAllCharactedControls(BattleWindow window)
         {
-            foreach (var item in playerParty)
+            GenerateTeamControls(playerTeam, window);
+            GenerateTeamControls(opponentTeam, window);
+        }
+
+        protected void GenerateTeamControls(Party team, BattleWindow window)
+        {
+            foreach (var item in team)
             {
-                turnOrder.Enqueue(item);
-            }
-            foreach (var item in opponentParty)
-            {
-                turnOrder.Enqueue(item);
+                var control = new CharacterControl(item);
+
+                var coord = HexMapMath.GetHexCoordinate(item.position.coord.x, item.position.coord.y);
+
+                Canvas.SetTop(control, coord.y);
+                Canvas.SetLeft(control, coord.x);
+
+                window.mapContainer.Children.Add(control);
             }
         }
 
-        private void ClickEventHandler(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        protected void GenerateMap()
         {
-
-            var s = sender as BattleMapControl;
-
-            if (battleMap[s.coord.x, s.coord.y].character != null)
+            for (int i = 0; i < battleMapSize.width; i++)
             {
-                var target = battleMap[s.coord.x, s.coord.y].character;
-                var attacker = turnOrder.Dequeue();
-                attacker.Act(ActionCommands.ATTACK, target);
+                for (int j = 0; j < battleMapSize.height; j++)
+                {
+                    tiles[i, j] = new Tile((i, j));
+                    tiles[i, j].terrain = Terrain.Flat;
+                }
+            }
+        }
+
+        protected void GenerateHexControls(Canvas canvas)
+        {
+            foreach (var item in tiles)
+            {
+                var control = new BattleMapControl(item.coord);
+
+                var (x, y) = HexMapMath.GetHexCoordinate(item.coord.x, item.coord.y);
+
+                Canvas.SetTop(control, y);
+                Canvas.SetLeft(control, x);
+
+                control.MouseUp += OnTileClick;
+
+                canvas.Children.Add(control);
+            }
+        }
+
+        private void OnTileClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var control = sender as BattleMapControl;
+            var coord = control.coord;
+
+            var tile = tiles[coord.x, coord.y];
+
+            if (turnOrder.Count == 0) { FillQueue(); }
+            var character = turnOrder.Peek();
+
+            if (tile.character == null)
+            {
+                if (!character.TryToMove(tile)) { Console.WriteLine("Can't move here"); }
+                else { turnOrder.Dequeue(); }
             }
             else
             {
-                var target = battleMap[s.coord.x, s.coord.y] as TileController;
-                var actor = turnOrder.Dequeue();
-                actor.Act(ActionCommands.MOVE, target);
+                character.Attack(tile.character);
+                turnOrder.Dequeue();
             }
 
-            AutoAttack();
+            CheckForEndGame();
         }
 
-        void AutoAttack()
+        public void CheckForEndGame()
         {
-            CheckQueueForEmptyness();
-
-            if (opponentParty.Contains(turnOrder.Peek()))
+            if (!playerTeam.IsAlive)
             {
-                var attacker = turnOrder.Dequeue();
-
-                attacker.Act(ActionCommands.ATTACK, playerParty[r.Next(playerParty.Length)]);
-
-                AutoAttack();
+                BattleEnded(this, new BattleEndEventArgs("Zombie"));
+            }
+            if (!opponentTeam.IsAlive)
+            {
+                BattleEnded(this, new BattleEndEventArgs("Battle Bros"));
             }
         }
 
-        void CheckQueueForEmptyness()
+        public BitmapSource PrepareMapTexture()
         {
-            if (turnOrder.Count == 0) { FormQueue(); }
+            var textureSize = HexMapMath.GetMapPixelSize(battleMapSize);
+            texture = new Bitmap(textureSize.width, textureSize.height);
+
+            Graphics g = Graphics.FromImage(texture);
+            foreach (var item in tiles)
+            {
+                var pixelCoord = HexMapMath.GetHexCoordinate(item.coord.x, item.coord.y, System.Drawing.Point.Empty);
+                g.DrawImage(item.terrain.texture, pixelCoord);
+            }
+
+            texture.Save("BattleMap-" + id + ".png");
+
+            return textureSource = Imaging.CreateBitmapSourceFromHBitmap(texture.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+        }
+
+        public void DrawAllGraphics(BattleWindow window)
+        {
+            PrepareMapTexture();
+            window.image.Source = textureSource;
+        }
+
+        public class BattleEndEventArgs
+        {
+            public string message;
+
+            public BattleEndEventArgs(string winnerTeam)
+            {
+                message = winnerTeam + " has won the battle!";
+            }
         }
     }
 }
