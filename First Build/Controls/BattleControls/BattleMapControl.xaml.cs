@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Drawing;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Brushes = System.Windows.Media.Brushes;
 
 namespace First_Build.View
 {
@@ -20,9 +22,9 @@ namespace First_Build.View
     /// </summary>
     public partial class BattleMapControl : UserControl
     {
-        public (int x, int y) coord;
+        public System.Drawing.Point coord;
 
-        public BattleMapControl((int x, int y) position)
+        public BattleMapControl(System.Drawing.Point position)
         {
             InitializeComponent();
             coord = position;
@@ -34,7 +36,7 @@ namespace First_Build.View
 
         private void Polygon_MouseLeave(object sender, MouseEventArgs e)
         {
-            polygon.Fill = new SolidColorBrush(Color.FromArgb(0,0,0,0));
+            polygon.Fill = new SolidColorBrush(System.Windows.Media.Color.FromArgb(0,0,0,0));
         }
 
         private void Polygon_MouseEnter(object sender, MouseEventArgs e)

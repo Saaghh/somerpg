@@ -26,8 +26,11 @@ namespace First_Build
                 return PathLengthFromStart + HeuristicEstimatePathLength;
             }
         }
+    }
 
-        public static List<Point> FindPath(int[,] field, Point start, Point goal)
+    public static class AStar
+    {
+        public static List<Point> FindPath(HexMap field, Point start, Point goal)
         {
             // Шаг 1.
             var closedSet = new Collection<PathNode>();
@@ -76,47 +79,56 @@ namespace First_Build
             return null;
         }
 
-        private static int GetDistanceBetweenNeighbours()
+        private static int GetDistanceBetweenNeighbours(Point to, HexMap field)
         {
-            return 1;
+            return field.GetTileFromPoint(to).terrain.moveCost;
         }
 
         private static int GetHeuristicPathLength(Point from, Point to)
         {
+            from =  HexMap.GetHexCoordinate(from.X, from.Y);
+            to =  HexMap.GetHexCoordinate(to.X, to.Y);
+
             return Math.Abs(from.X - to.X) + Math.Abs(from.Y - to.Y);
         }
 
-        private static Collection<PathNode> GetNeighbours(PathNode currentNode, Point goal, int[,] field)
+        private static Collection<PathNode> GetNeighbours(PathNode currentNode, Point goal, HexMap field)
         {
             var result = new Collection<PathNode>();
 
-            // Соседними точками являются соседние по стороне клетки.
-            Point[] neighbourPoints = new Point[4];
-            neighbourPoints[0] = new Point(currentNode.Position.X + 1, currentNode.Position.Y);
-            neighbourPoints[1] = new Point(currentNode.Position.X - 1, currentNode.Position.Y);
-            neighbourPoints[2] = new Point(currentNode.Position.X, currentNode.Position.Y + 1);
-            neighbourPoints[3] = new Point(currentNode.Position.X, currentNode.Position.Y - 1);
-
-            Collection<Point> neighborPoints = new Collection<Point>();
-            neighborPoints.Add(new Point());
+            // Соседние клетки определяются с помощью четности столбца
+            Collection<Point> neighbourPoints = new Collection<Point>();
+            neighbourPoints.Add(new Point(currentNode.Position.X + 1, currentNode.Position.Y));
+            neighbourPoints.Add(new Point(currentNode.Position.X - 1, currentNode.Position.Y));
+            neighbourPoints.Add(new Point(currentNode.Position.X, currentNode.Position.Y + 1));
+            neighbourPoints.Add(new Point(currentNode.Position.X, currentNode.Position.Y - 1));
+            if (currentNode.Position.X % 2 == 0) //если четный столблец
+            {
+                neighbourPoints.Add(new Point(currentNode.Position.X + 1, currentNode.Position.Y + 1));
+                neighbourPoints.Add(new Point(currentNode.Position.X - 1, currentNode.Position.Y + 1));
+            }
+            else //если столбец нечетный
+            {
+                neighbourPoints.Add(new Point(currentNode.Position.X - 1, currentNode.Position.Y - 1));
+                neighbourPoints.Add(new Point(currentNode.Position.X + 1, currentNode.Position.Y - 1));
+            }
 
             foreach (var point in neighbourPoints)
             {
                 // Проверяем, что не вышли за границы карты.
-                if (point.X < 0 || point.X >= field.GetLength(0))
+                if (point.X < 0 || point.X >= field.tiles.GetLength(0))
                     continue;
-                if (point.Y < 0 || point.Y >= field.GetLength(1))
+                if (point.Y < 0 || point.Y >= field.tiles.GetLength(1))
                     continue;
                 // Проверяем, что по клетке можно ходить.
-                if ((field[point.X, point.Y] != 0) && (field[point.X, point.Y] != 1))
+                if (!field[point.X, point.Y].terrain.walkable)
                     continue;
                 // Заполняем данные для точки маршрута.
                 var neighbourNode = new PathNode()
                 {
                     Position = point,
                     CameFrom = currentNode,
-                    PathLengthFromStart = currentNode.PathLengthFromStart +
-                    GetDistanceBetweenNeighbours(),
+                    PathLengthFromStart = currentNode.PathLengthFromStart + GetDistanceBetweenNeighbours(point, field),
                     HeuristicEstimatePathLength = GetHeuristicPathLength(point, goal)
                 };
                 result.Add(neighbourNode);

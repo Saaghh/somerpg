@@ -1,4 +1,5 @@
-﻿using First_Build.View;
+﻿using First_Build.Controls.BattleControls;
+using First_Build.View;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -27,12 +28,17 @@ namespace First_Build
         public Bitmap texture;
         public BitmapSource textureSource;
 
+        public (List<Tile> tiles, List<HighlightedTile> highlightedTiles, bool isEmpty) desiredPath = (null, null, true);
+
         public Queue<Character> turnOrder = new Queue<Character>();
 
         public event EventHandler<BattleEndEventArgs> BattleEnded;
 
+        BattleWindow window;
+
         public Battle((int w, int h) size, BattleWindow window)
         {
+            this.window = window;
             battleMapSize = size;
 
             IniTeams();
@@ -97,10 +103,10 @@ namespace First_Build
             {
                 var control = new CharacterControl(item);
 
-                var coord = HexMap.GetHexCoordinate(item.position.coord.x, item.position.coord.y);
+                var coord = HexMap.GetHexCoordinate(item.position.coord.X, item.position.coord.Y);
 
-                Canvas.SetTop(control, coord.y);
-                Canvas.SetLeft(control, coord.x);
+                Canvas.SetTop(control, coord.Y);
+                Canvas.SetLeft(control, coord.X);
 
                 window.mapContainer.Children.Add(control);
             }
@@ -108,14 +114,14 @@ namespace First_Build
 
         protected void GenerateHexControls(Canvas canvas)
         {
-            foreach (var item in tiles.GetArray())
+            foreach (Tile item in tiles)
             {
                 var control = new BattleMapControl(item.coord);
 
-                var (x, y) = HexMap.GetHexCoordinate(item.coord.x, item.coord.y);
+                var point = HexMap.GetHexCoordinate(item.coord.X, item.coord.Y);
 
-                Canvas.SetTop(control, y);
-                Canvas.SetLeft(control, x);
+                Canvas.SetTop(control, point.Y);
+                Canvas.SetLeft(control, point.X);
 
                 control.MouseUp += OnTileClick;
 
@@ -128,19 +134,30 @@ namespace First_Build
             var control = sender as BattleMapControl;
             var coord = control.coord;
 
-            var tile = tiles[coord.x, coord.y];
+            var target = tiles[coord.X, coord.Y];
 
             if (turnOrder.Count == 0) { FillQueue(); }
             var character = turnOrder.Peek();
 
-            if (tile.character == null)
+            if (target.character == null)
             {
-                if (!character.TryToMove(tile)) { Console.WriteLine("Can't move here"); }
-                else { turnOrder.Dequeue(); }
+                if (desiredPath.isEmpty || target != desiredPath.tiles.Last())
+                {
+                    ChoosePath(character.position, target);
+                }
+                else
+                {
+                    if (!character.TryToMove(target, tiles)) { Console.WriteLine("Can't move here"); }
+                    else
+                    {
+                        turnOrder.Dequeue();
+                        ClearDesiredPath();
+                    }
+                }
             }
             else
             {
-                character.Attack(tile.character);
+                character.Attack(target.character);
                 turnOrder.Dequeue();
             }
 
@@ -165,9 +182,9 @@ namespace First_Build
             texture = new Bitmap(textureSize.width, textureSize.height);
 
             Graphics g = Graphics.FromImage(texture);
-            foreach (var item in tiles.GetArray())
+            foreach (Tile item in tiles)
             {
-                var pixelCoord = HexMap.GetHexCoordinate(item.coord.x, item.coord.y, System.Drawing.Point.Empty);
+                var pixelCoord = HexMap.GetHexCoordinate(item.coord.X, item.coord.Y);
                 g.DrawImage(item.terrain.texture, pixelCoord);
             }
 
@@ -190,6 +207,43 @@ namespace First_Build
             {
                 message = winnerTeam + " has won the battle!";
             }
+        }
+
+        public void ChoosePath(Tile tile1, Tile tile2)
+        {
+            ClearDesiredPath();
+
+            desiredPath.tiles = tiles.GetTilesFromPoints(AStar.FindPath(tiles, tile1.coord, tile2.coord));
+
+            desiredPath.highlightedTiles = new List<HighlightedTile>();
+
+            foreach (Tile item in desiredPath.tiles)
+            {
+                var control = new HighlightedTile();
+                var coord = HexMap.GetHexCoordinate(item.coord.X, item.coord.Y);
+
+                Canvas.SetLeft(control, coord.X);
+                Canvas.SetTop(control, coord.Y);
+
+                Panel.SetZIndex(control, -2);
+
+                window.mapContainer.Children.Add(control);
+                desiredPath.highlightedTiles.Add(control);
+            }
+            desiredPath.isEmpty = false;
+
+        }
+
+        public void ClearDesiredPath()
+        {
+            if(desiredPath.highlightedTiles != null)
+            {
+                foreach (HighlightedTile item in desiredPath.highlightedTiles)
+                {
+                    window.mapContainer.Children.Remove(item);
+                }
+            }
+            desiredPath = (null, null, true);
         }
     }
 }

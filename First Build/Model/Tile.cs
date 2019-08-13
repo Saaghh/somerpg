@@ -10,24 +10,24 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
+using Point = System.Drawing.Point;
 
 namespace First_Build
 {
     [DataContract]
-    public class Tile
+    public class Tile : IEquatable<Tile>
     {
         [DataMember]
-        public (int x, int y) coord;
+        public Point coord;
 
         [DataMember]
         public Terrain terrain;
 
         public Character character;
 
-
         public Tile((int x, int y) coord)
         {
-            this.coord = coord;
+            this.coord = new Point(coord.x, coord.y);
         }
 
         //TODO: Сделать ивент, который заставит карту обновиться
@@ -78,6 +78,32 @@ namespace First_Build
                 character.Died -= Actor_Died;
                 character = null;
             }
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Tile);
+        }
+
+        public bool Equals(Tile other)
+        {
+            return other != null &&
+                   EqualityComparer<Point>.Default.Equals(coord, other.coord);
+        }
+
+        public override int GetHashCode()
+        {
+            return -1469483106 + EqualityComparer<Point>.Default.GetHashCode(coord);
+        }
+
+        public static bool operator ==(Tile left, Tile right)
+        {
+            return EqualityComparer<Tile>.Default.Equals(left, right);
+        }
+
+        public static bool operator !=(Tile left, Tile right)
+        {
+            return !(left == right);
         }
     }
 }

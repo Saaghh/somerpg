@@ -68,10 +68,9 @@ namespace First_Build
             this.position.Enter(this);
         }
 
-        public virtual bool TryToMove(Tile target)
+        public virtual bool TryToMove(Tile target, HexMap hexMap)
         {
-            //var x = HexMap.GetHexDistance(position, target);
-            if (HexMap.GetHexDistance(position, target) > 2) { return false; }
+            if (HexMap.GetHexDistance(position, target, hexMap) > 6) { return false; }
 
             if (target.character == null & ap >= target.GetEnterCost())
             {

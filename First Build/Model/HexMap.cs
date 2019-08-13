@@ -5,10 +5,11 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace First_Build
 {
-    public class HexMap
+    public class HexMap : IEnumerable
     {
         public const int HEXPIXELWIDTH = 200;
         public const int HEXPIXELHEIGHT = 160;
@@ -58,8 +59,25 @@ namespace First_Build
                 }
             }
         }
+        public IEnumerator GetEnumerator()
+        {
+            return tiles.GetEnumerator();
+        }
+        public Tile GetTileFromPoint(Point point)
+        {
+            return tiles[point.X, point.Y];
+        }
+        public List<Tile> GetTilesFromPoints(List<Point> points)
+        {
+            List<Tile> result = new List<Tile>();
+            foreach (Point item in points)
+            {
+                result.Add(tiles[item.X, item.Y]);
+            }
+            return result;
+        }
 
-        public static (int x, int y) GetHexCoordinate(int x, int y)
+        public static Point GetHexCoordinate(int x, int y)
         {
             int resultX, resultY;
             if (x % 2 != 1) //если четный столбец
@@ -73,31 +91,8 @@ namespace First_Build
                 resultY = HEXPIXELHEIGHT * y;
             }
 
-            var result = (resultX, resultY);
-
-            return result;
+            return new Point(resultX, resultY);
         }
-
-        public static Point GetHexCoordinate(int x, int y, Point isPoint)
-        {
-            int resultX, resultY;
-            if (x % 2 != 1) //если четный столбец
-            {
-                resultX = (HEXPIXELWIDTH / 4 * 3) * x;
-                resultY = (HEXPIXELHEIGHT / 2) + (HEXPIXELHEIGHT * y);
-            }
-            else //если нечетный столбец
-            {
-                resultX = (HEXPIXELWIDTH / 4 * 3) * x;
-                resultY = HEXPIXELHEIGHT * y;
-            }
-
-            var result = new Point(resultX, resultY);
-
-            return result;
-        }
-
-
         public static (int width, int height) GetMapPixelSize((int x, int y) dataSize)
         {
             (int width, int height) result;
@@ -106,7 +101,6 @@ namespace First_Build
 
             return result;
         }
-
         public static (int x, int y) GetCharacterStarterTilePosition((int w, int h) mapSize, int order, int team)
         {
             (int x, int y) position;
@@ -127,32 +121,10 @@ namespace First_Build
 
             return position;
         }
-
-        public static int GetHexDistance(Tile tile1, Tile tile2)
+        public static int GetHexDistance(Tile tile1, Tile tile2, HexMap hexMap)
         {
-            var (width1, height1) = GetMapPixelSize(tile1.coord);
-            //width1 += HEXPIXELWIDTH / 2;
-            //height1 += HEXPIXELHEIGHT / 2;
-
-            var (width2, height2) = GetMapPixelSize(tile2.coord);
-            //width2 += HEXPIXELWIDTH / 2;
-            //height2 += HEXPIXELHEIGHT / 2;
-
-            var x = Math.Pow((width1 - width2), 2);
-            var y = Math.Pow((height1 - height2), 2);
-
-            var z = x + y;
-
-            var t = Math.Sqrt(z);
-
-            //var pixelDistance = Math.Sqrt(((width1 - width2) ^ 2) + ((height1 - height2) ^ 2));
-
-            return (int)Math.Round(t / PIXELDISTANCE, 0);
-        }
-
-        public Tile[,] GetArray()
-        {
-            return tiles;
+            return AStar.FindPath(hexMap, tile1.coord, tile2.coord).Count;
         }
     }
 }
+

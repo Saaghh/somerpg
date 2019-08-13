@@ -54,9 +54,9 @@ namespace First_Build
 
         private void Character_Moved(object sender, Character.MoveEventArgs e)
         {
-            (int x, int y) = HexMap.GetHexCoordinate(e.target.coord.x, e.target.coord.y);
-            Canvas.SetTop(this, y);
-            Canvas.SetLeft(this, x);
+            var point = HexMap.GetHexCoordinate(e.target.coord.X, e.target.coord.Y);
+            Canvas.SetTop(this, point.Y);
+            Canvas.SetLeft(this, point.X);
 
             ShowData();
         }

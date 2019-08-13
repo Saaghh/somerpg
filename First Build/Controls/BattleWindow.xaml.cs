@@ -19,7 +19,7 @@ namespace First_Build.View
     /// </summary>
     public partial class BattleWindow : Window
     {
-        static readonly (int x, int y) mapSize = (x: 20, y: 20);
+        static readonly (int x, int y) mapSize = (x: HexMap.MAPWIDTH, y: HexMap.MAPHEIGHT);
 
         public Battle battle;
 
