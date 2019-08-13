@@ -29,13 +29,13 @@ namespace First_Build
 
         public Tile position;
 
+        public Bitmap texture   = Properties.Resources.TestCharacter;
+        public BitmapSource textureSource;
+
         public event EventHandler<MoveEventArgs> Moved;
         public event EventHandler<AttackedEventArgs> GotAttacked;
         public event EventHandler<EventArgs> RoundStarter;
         public event EventHandler<EventArgs> Died;
-
-        public Bitmap texture   = Properties.Resources.TestCharacter;
-        public BitmapSource textureSource;
 
         public Character()
         {
@@ -70,6 +70,9 @@ namespace First_Build
 
         public virtual bool TryToMove(Tile target)
         {
+            //var x = HexMap.GetHexDistance(position, target);
+            if (HexMap.GetHexDistance(position, target) > 2) { return false; }
+
             if (target.character == null & ap >= target.GetEnterCost())
             {
                 position.Leave();

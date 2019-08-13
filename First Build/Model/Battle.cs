@@ -19,7 +19,7 @@ namespace First_Build
 
         public (int width, int height) battleMapSize;
 
-        public Tile[,] tiles;
+        public HexMap tiles = new HexMap();
 
         public Party playerTeam;
         public Party opponentTeam;
@@ -34,8 +34,6 @@ namespace First_Build
         public Battle((int w, int h) size, BattleWindow window)
         {
             battleMapSize = size;
-            tiles = new Tile[size.w, size.h];
-            GenerateMap();
 
             IniTeams();
             GenerateAllCharactedControls(window);
@@ -75,14 +73,14 @@ namespace First_Build
             for (int i = 0; i < playerTeam.Count; i++)
             {
                 playerTeam[i] = Character.Warrior;
-                var (x, y) = HexMapMath.GetCharacterStarterTilePosition(battleMapSize, i, 0);
+                var (x, y) = HexMap.GetCharacterStarterTilePosition(battleMapSize, i, 0);
                 playerTeam[i].EngageBattle(tiles[x, y]);
             }
 
             for (int i = 0; i < opponentTeam.Count; i++)
             {
                 opponentTeam[i] = Character.Zombie;
-                var (x, y) = HexMapMath.GetCharacterStarterTilePosition(battleMapSize, i, 1);
+                var (x, y) = HexMap.GetCharacterStarterTilePosition(battleMapSize, i, 1);
                 opponentTeam[i].EngageBattle(tiles[x, y]);
             }
         }
@@ -99,7 +97,7 @@ namespace First_Build
             {
                 var control = new CharacterControl(item);
 
-                var coord = HexMapMath.GetHexCoordinate(item.position.coord.x, item.position.coord.y);
+                var coord = HexMap.GetHexCoordinate(item.position.coord.x, item.position.coord.y);
 
                 Canvas.SetTop(control, coord.y);
                 Canvas.SetLeft(control, coord.x);
@@ -108,25 +106,13 @@ namespace First_Build
             }
         }
 
-        protected void GenerateMap()
-        {
-            for (int i = 0; i < battleMapSize.width; i++)
-            {
-                for (int j = 0; j < battleMapSize.height; j++)
-                {
-                    tiles[i, j] = new Tile((i, j));
-                    tiles[i, j].terrain = Terrain.Flat;
-                }
-            }
-        }
-
         protected void GenerateHexControls(Canvas canvas)
         {
-            foreach (var item in tiles)
+            foreach (var item in tiles.GetArray())
             {
                 var control = new BattleMapControl(item.coord);
 
-                var (x, y) = HexMapMath.GetHexCoordinate(item.coord.x, item.coord.y);
+                var (x, y) = HexMap.GetHexCoordinate(item.coord.x, item.coord.y);
 
                 Canvas.SetTop(control, y);
                 Canvas.SetLeft(control, x);
@@ -175,13 +161,13 @@ namespace First_Build
 
         public BitmapSource PrepareMapTexture()
         {
-            var textureSize = HexMapMath.GetMapPixelSize(battleMapSize);
+            var textureSize = HexMap.GetMapPixelSize(battleMapSize);
             texture = new Bitmap(textureSize.width, textureSize.height);
 
             Graphics g = Graphics.FromImage(texture);
-            foreach (var item in tiles)
+            foreach (var item in tiles.GetArray())
             {
-                var pixelCoord = HexMapMath.GetHexCoordinate(item.coord.x, item.coord.y, System.Drawing.Point.Empty);
+                var pixelCoord = HexMap.GetHexCoordinate(item.coord.x, item.coord.y, System.Drawing.Point.Empty);
                 g.DrawImage(item.terrain.texture, pixelCoord);
             }
 

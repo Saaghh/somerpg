@@ -72,12 +72,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\AStar.cs" />
     <Compile Include="Model\Battle.cs" />
     <Compile Include="Model\Character.cs" />
     <Compile Include="Model\Party.cs" />
     <Compile Include="Model\Terrain.cs" />
     <Compile Include="Model\Tile.cs" />
-    <Compile Include="Model\HexMapMath.cs" />
+    <Compile Include="Model\HexMap.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -27,7 +27,7 @@ namespace First_Build.View
         {
             InitializeComponent();
 
-            var size = HexMapMath.GetMapPixelSize(mapSize);
+            var size = HexMap.GetMapPixelSize(mapSize);
             mapContainer.Width = size.width;
             mapContainer.Height = size.height;
 
