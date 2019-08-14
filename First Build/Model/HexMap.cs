@@ -6,6 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
+using System.Windows.Media.Imaging;
+using System.Windows.Interop;
+using System.Windows;
+using Point = System.Drawing.Point;
 
 namespace First_Build
 {
@@ -39,6 +43,27 @@ namespace First_Build
             GenerateMap();
         }
 
+        public Bitmap GetMapTexture()
+        {
+            var textureSize = GetMapPixelSize((MAPWIDTH, MAPHEIGHT));
+            var texture = new Bitmap(textureSize.width, textureSize.height);
+
+            Graphics g = Graphics.FromImage(texture);
+            for (int i = 0; i < tiles.GetLength(1); i++)
+            {
+                for (int j = 0; j < tiles.GetLength(0); j++)
+                {
+                    var item = tiles[j, i];
+                    var pixelCoord = GetHexCoordinate(j, i);
+                    g.DrawImage(item.terrain.texture, pixelCoord);
+                }
+            }
+
+            texture.Save("BattleMap" + ".png");
+
+            return texture;
+        }
+
         protected void GenerateMap()
         {
             tiles = new Tile[MAPWIDTH, MAPHEIGHT];
@@ -48,9 +73,9 @@ namespace First_Build
                 for (int j = 0; j < MAPHEIGHT; j++)
                 {
                     tiles[i, j] = new Tile((i, j));
-                    if (r.Next(10) == 0)
+                    if (r.Next(15) == 0)
                     {
-                        tiles[i, j].terrain = Terrain.Forest;
+                        tiles[i, j].terrain = Terrain.Tree;
                     }
                     else
                     {
@@ -121,9 +146,10 @@ namespace First_Build
 
             return position;
         }
+
         public static int GetHexDistance(Tile tile1, Tile tile2, HexMap hexMap)
         {
-            return AStar.FindPath(hexMap, tile1.coord, tile2.coord).Count;
+            return AStar.FindPath(hexMap, tile1.coord, tile2.coord, true).Count;
         }
     }
 }

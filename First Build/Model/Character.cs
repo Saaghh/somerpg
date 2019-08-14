@@ -37,6 +37,15 @@ namespace First_Build
         public event EventHandler<EventArgs> RoundStarter;
         public event EventHandler<EventArgs> Died;
 
+        public bool HasActionPoints
+        {
+            get
+            {
+                if (ap > 0) { return true; }
+                else { return false; }
+            }
+        }
+
         public Character()
         {
             textureSource = Imaging.CreateBitmapSourceFromHBitmap(texture.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
@@ -68,20 +77,30 @@ namespace First_Build
             this.position.Enter(this);
         }
 
-        public virtual bool TryToMove(Tile target, HexMap hexMap)
+        public virtual bool TryToMove(Path path)
         {
-            if (HexMap.GetHexDistance(position, target, hexMap) > 6) { return false; }
+            var p = position;
 
-            if (target.character == null & ap >= target.GetEnterCost())
+            for (int i = 1; i < path.Length; i++)
             {
-                position.Leave();
-                target.Enter(this);
-                position = target;
-                ap -= target.GetEnterCost();
-                Moved(this, new MoveEventArgs(target));
+                if (ap >= path[i].GetEnterCost())
+                {
+                    position.Leave();
+                    path[i].Enter(this);
+                    position = path[i];
+                    ap -= path[i].GetEnterCost();
+                    Moved(this, new MoveEventArgs(path[i]));
+
+                }
+            }
+            if (position == p)
+            {
+                return false;
+            }
+            else
+            {
                 return true;
             }
-            return false;
         }
 
         public virtual void Attack(Character target)

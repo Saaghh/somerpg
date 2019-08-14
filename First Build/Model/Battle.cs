@@ -26,15 +26,17 @@ namespace First_Build
         public Party opponentTeam;
 
         public Bitmap texture;
-        public BitmapSource textureSource;
-
-        public (List<Tile> tiles, List<HighlightedTile> highlightedTiles, bool isEmpty) desiredPath = (null, null, true);
 
         public Queue<Character> turnOrder = new Queue<Character>();
 
         public event EventHandler<BattleEndEventArgs> BattleEnded;
+        public event EventHandler<EventArgs> ActionChanged;
+
+        Action action = new EmptyAction();
 
         BattleWindow window;
+
+        Tile clickedTile;
 
         public Battle((int w, int h) size, BattleWindow window)
         {
@@ -131,37 +133,37 @@ namespace First_Build
 
         private void OnTileClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            var control = sender as BattleMapControl;
-            var coord = control.coord;
+            var coord = ((BattleMapControl)sender).coord;
 
-            var target = tiles[coord.X, coord.Y];
+            Tile target = tiles[coord.X, coord.Y];
 
-            if (turnOrder.Count == 0) { FillQueue(); }
-            var character = turnOrder.Peek();
+            bool turnEnded = false;
 
-            if (target.character == null)
+            if (action.IsAvaliable && target == clickedTile)
             {
-                if (desiredPath.isEmpty || target != desiredPath.tiles.Last())
-                {
-                    ChoosePath(character.position, target);
-                }
-                else
-                {
-                    if (!character.TryToMove(target, tiles)) { Console.WriteLine("Can't move here"); }
-                    else
-                    {
-                        turnOrder.Dequeue();
-                        ClearDesiredPath();
-                    }
-                }
+                turnEnded = !action.Do();
+                window.HideChoiceHighlight();
+            }
+            else if (target.ContainsCharacter)
+            {
+                ActionChanged(this, new EventArgs());
+                action = new AttackAction(turnOrder.Peek(), target.character);
+                window.Highlight(target);
             }
             else
             {
-                character.Attack(target.character);
-                turnOrder.Dequeue();
+                ActionChanged(this, new EventArgs());
+                var character = turnOrder.Peek();
+                action = new MoveAction(character, new Path(character.position, target, tiles, window));
+                window.Highlight(target);
             }
 
-            CheckForEndGame();
+            if (turnEnded)
+            {
+                EndTurn();
+            }
+
+            clickedTile = target;
         }
 
         public void CheckForEndGame()
@@ -176,27 +178,9 @@ namespace First_Build
             }
         }
 
-        public BitmapSource PrepareMapTexture()
-        {
-            var textureSize = HexMap.GetMapPixelSize(battleMapSize);
-            texture = new Bitmap(textureSize.width, textureSize.height);
-
-            Graphics g = Graphics.FromImage(texture);
-            foreach (Tile item in tiles)
-            {
-                var pixelCoord = HexMap.GetHexCoordinate(item.coord.X, item.coord.Y);
-                g.DrawImage(item.terrain.texture, pixelCoord);
-            }
-
-            texture.Save("BattleMap-" + id + ".png");
-
-            return textureSource = Imaging.CreateBitmapSourceFromHBitmap(texture.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
-        }
-
         public void DrawAllGraphics(BattleWindow window)
         {
-            PrepareMapTexture();
-            window.image.Source = textureSource;
+            window.image.Source = Imaging.CreateBitmapSourceFromHBitmap(tiles.GetMapTexture().GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
         }
 
         public class BattleEndEventArgs
@@ -209,41 +193,15 @@ namespace First_Build
             }
         }
 
-        public void ChoosePath(Tile tile1, Tile tile2)
+        public void EndTurn()
         {
-            ClearDesiredPath();
+            ActionChanged(this, new EventArgs());
 
-            desiredPath.tiles = tiles.GetTilesFromPoints(AStar.FindPath(tiles, tile1.coord, tile2.coord));
+            action = new EmptyAction();
 
-            desiredPath.highlightedTiles = new List<HighlightedTile>();
+            turnOrder.Dequeue();
 
-            foreach (Tile item in desiredPath.tiles)
-            {
-                var control = new HighlightedTile();
-                var coord = HexMap.GetHexCoordinate(item.coord.X, item.coord.Y);
-
-                Canvas.SetLeft(control, coord.X);
-                Canvas.SetTop(control, coord.Y);
-
-                Panel.SetZIndex(control, -2);
-
-                window.mapContainer.Children.Add(control);
-                desiredPath.highlightedTiles.Add(control);
-            }
-            desiredPath.isEmpty = false;
-
-        }
-
-        public void ClearDesiredPath()
-        {
-            if(desiredPath.highlightedTiles != null)
-            {
-                foreach (HighlightedTile item in desiredPath.highlightedTiles)
-                {
-                    window.mapContainer.Children.Remove(item);
-                }
-            }
-            desiredPath = (null, null, true);
+            CheckForEndGame();
         }
     }
 }

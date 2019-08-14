@@ -30,7 +30,7 @@ namespace First_Build
 
     public static class AStar
     {
-        public static List<Point> FindPath(HexMap field, Point start, Point goal)
+        public static List<Point> FindPath(HexMap field, Point start, Point goal, bool straight)
         {
             // Шаг 1.
             var closedSet = new Collection<PathNode>();
@@ -56,7 +56,7 @@ namespace First_Build
                 openSet.Remove(currentNode);
                 closedSet.Add(currentNode);
                 // Шаг 6.
-                foreach (var neighbourNode in GetNeighbours(currentNode, goal, field))
+                foreach (var neighbourNode in GetNeighbours(currentNode, goal, field, straight))
                 {
                     // Шаг 7.
                     if (closedSet.Count(node => node.Position == neighbourNode.Position) > 0)
@@ -92,7 +92,7 @@ namespace First_Build
             return Math.Abs(from.X - to.X) + Math.Abs(from.Y - to.Y);
         }
 
-        private static Collection<PathNode> GetNeighbours(PathNode currentNode, Point goal, HexMap field)
+        private static Collection<PathNode> GetNeighbours(PathNode currentNode, Point goal, HexMap field, bool straight)
         {
             var result = new Collection<PathNode>();
 
@@ -131,6 +131,12 @@ namespace First_Build
                     PathLengthFromStart = currentNode.PathLengthFromStart + GetDistanceBetweenNeighbours(point, field),
                     HeuristicEstimatePathLength = GetHeuristicPathLength(point, goal)
                 };
+
+                if (straight)
+                {
+                    neighbourNode.PathLengthFromStart = currentNode.PathLengthFromStart;
+                }
+
                 result.Add(neighbourNode);
             }
             return result;

@@ -23,21 +23,16 @@ namespace First_Build
         [DataMember]
         public Bitmap texture = Properties.Resources.TestTile;
 
-        public void dmth()
-        {
-
-        }
-
-        public static Terrain Forest
+        public static Terrain Tree
         {
             get
             {
                 var x = new Terrain
                 {
-                    moveCost = 2,
-                    type = "Forest",
+                    moveCost = 1000,
+                    type = "Tree",
                     walkable = true,
-                    texture = Properties.Resources.ForestTile
+                    texture = Properties.Resources.TreeTile
                 };
                 return x;
             }

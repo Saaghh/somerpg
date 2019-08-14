@@ -20,9 +20,10 @@ namespace First_Build.Controls.BattleControls
     /// </summary>
     public partial class HighlightedTile : UserControl
     {
-        public HighlightedTile()
+        public HighlightedTile(Brush brush)
         {
             InitializeComponent();
+            polygon.Fill = brush;
         }
     }
 }

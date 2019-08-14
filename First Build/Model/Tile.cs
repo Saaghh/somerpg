@@ -25,6 +25,21 @@ namespace First_Build
 
         public Character character;
 
+        public bool ContainsCharacter
+        {
+            get
+            {
+                if (character != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
         public Tile((int x, int y) coord)
         {
             this.coord = new Point(coord.x, coord.y);

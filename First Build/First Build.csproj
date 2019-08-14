@@ -75,10 +75,12 @@
     <Compile Include="Controls\BattleControls\HighlightedTile.xaml.cs">
       <DependentUpon>HighlightedTile.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\Action.cs" />
     <Compile Include="Model\AStar.cs" />
     <Compile Include="Model\Battle.cs" />
     <Compile Include="Model\Character.cs" />
     <Compile Include="Model\Party.cs" />
+    <Compile Include="Model\Path.cs" />
     <Compile Include="Model\Terrain.cs" />
     <Compile Include="Model\Tile.cs" />
     <Compile Include="Model\HexMap.cs" />
@@ -176,6 +178,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Zombie.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\TreeTile.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

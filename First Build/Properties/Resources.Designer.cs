@@ -120,6 +120,16 @@ namespace First_Build.Properties {
         }
         
         /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap TreeTile {
+            get {
+                object obj = ResourceManager.GetObject("TreeTile", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на pack://application:,,,/First Build;component/.
         /// </summary>
         public static string UriBase {
