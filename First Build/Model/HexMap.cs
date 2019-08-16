@@ -17,7 +17,6 @@ namespace First_Build
     {
         public const int HEXPIXELWIDTH = 200;
         public const int HEXPIXELHEIGHT = 160;
-        public readonly static int PIXELDISTANCE = Math.Abs(HEXPIXELWIDTH - HEXPIXELWIDTH / 2);
 
         public const int MAPWIDTH = 20;
         public const int MAPHEIGHT = 20;
@@ -45,16 +44,16 @@ namespace First_Build
 
         public Bitmap GetMapTexture()
         {
-            var textureSize = GetMapPixelSize((MAPWIDTH, MAPHEIGHT));
-            var texture = new Bitmap(textureSize.width, textureSize.height);
+            var (width, height) = GetMapPixelSize((MAPWIDTH, MAPHEIGHT));
+            var texture = new Bitmap(width, height);
 
             Graphics g = Graphics.FromImage(texture);
             for (int i = 0; i < tiles.GetLength(1); i++)
             {
                 for (int j = 0; j < tiles.GetLength(0); j++)
                 {
-                    var item = tiles[j, i];
-                    var pixelCoord = GetHexCoordinate(j, i);
+                    var item = tiles[i, j];
+                    var pixelCoord = HexToPixel(new Point(i, j));
                     g.DrawImage(item.terrain.texture, pixelCoord);
                 }
             }
@@ -63,7 +62,6 @@ namespace First_Build
 
             return texture;
         }
-
         protected void GenerateMap()
         {
             tiles = new Tile[MAPWIDTH, MAPHEIGHT];
@@ -102,21 +100,39 @@ namespace First_Build
             return result;
         }
 
-        public static Point GetHexCoordinate(int x, int y)
+
+
+        public static double GetDistanceBetweenPoints(PointF point1, PointF point2)
         {
-            int resultX, resultY;
-            if (x % 2 != 1) //если четный столбец
+            float x1 = point1.X, x2 = point2.X, y1 = point1.X, y2 = point2.Y;
+
+            return Math.Sqrt(Math.Pow(x1 - x2, 2) + Math.Pow(y1 - y2, 2));
+        }
+        public static Point HexToPixel(Point hexCoord) => SquareToPixel(HexToSquare(hexCoord));
+        public static PointF HexToSquare(Point hexCoord)
+        {
+            var p = new PointF
             {
-                resultX = (HEXPIXELWIDTH / 4 * 3) * x;
-                resultY = (HEXPIXELHEIGHT / 2) + (HEXPIXELHEIGHT * y);
-            }
-            else //если нечетный столбец
+                X = 0.75f * hexCoord.X,
+                Y = hexCoord.Y
+            };
+
+            if (hexCoord.X % 2 != 1) //если столбец четный
             {
-                resultX = (HEXPIXELWIDTH / 4 * 3) * x;
-                resultY = HEXPIXELHEIGHT * y;
+                p.Y += 0.5f;
             }
 
-            return new Point(resultX, resultY);
+            return p;
+        }
+        public static Point SquareToPixel(PointF squareCoord)
+        {
+            Point p = new Point
+            {
+                X = Convert.ToInt32(squareCoord.X * HEXPIXELWIDTH),
+                Y = Convert.ToInt32(squareCoord.Y * HEXPIXELHEIGHT)
+            };
+
+            return p;
         }
         public static (int width, int height) GetMapPixelSize((int x, int y) dataSize)
         {

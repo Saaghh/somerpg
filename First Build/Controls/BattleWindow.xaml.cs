@@ -33,9 +33,9 @@ namespace First_Build.View
         {
             InitializeComponent();
 
-            var size = HexMap.GetMapPixelSize(mapSize);
-            mapContainer.Width = size.width;
-            mapContainer.Height = size.height;
+            var (width, height) = HexMap.GetMapPixelSize(mapSize);
+            mapContainer.Width = width;
+            mapContainer.Height = height;
 
             battle = new Battle(mapSize, this);
 
@@ -58,7 +58,7 @@ namespace First_Build.View
             {
                 var b = new SolidColorBrush(Color.FromArgb(50, 0, 0, 255));
                 var control = new HighlightedTile(b);
-                var coord = HexMap.GetHexCoordinate(item.coord.X, item.coord.Y);
+                var coord = HexMap.HexToPixel(item.coord);
 
                 Canvas.SetLeft(control, coord.X);
                 Canvas.SetTop(control, coord.Y);
@@ -87,7 +87,7 @@ namespace First_Build.View
 
             var b = new SolidColorBrush(Color.FromArgb(50, 255, 0, 0));
             var control = new HighlightedTile(b);
-            var coord = HexMap.GetHexCoordinate(tile.coord.X, tile.coord.Y);
+            var coord = HexMap.HexToPixel(tile.coord);
 
             Canvas.SetLeft(control, coord.X);
             Canvas.SetTop(control, coord.Y);

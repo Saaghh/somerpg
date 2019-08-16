@@ -105,7 +105,7 @@ namespace First_Build
             {
                 var control = new CharacterControl(item);
 
-                var coord = HexMap.GetHexCoordinate(item.position.coord.X, item.position.coord.Y);
+                var coord = HexMap.HexToPixel(item.position.coord);
 
                 Canvas.SetTop(control, coord.Y);
                 Canvas.SetLeft(control, coord.X);
@@ -120,7 +120,7 @@ namespace First_Build
             {
                 var control = new BattleMapControl(item.coord);
 
-                var point = HexMap.GetHexCoordinate(item.coord.X, item.coord.Y);
+                var point = HexMap.HexToPixel(item.coord);
 
                 Canvas.SetTop(control, point.Y);
                 Canvas.SetLeft(control, point.X);
@@ -183,16 +183,6 @@ namespace First_Build
             window.image.Source = Imaging.CreateBitmapSourceFromHBitmap(tiles.GetMapTexture().GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
         }
 
-        public class BattleEndEventArgs
-        {
-            public string message;
-
-            public BattleEndEventArgs(string winnerTeam)
-            {
-                message = winnerTeam + " has won the battle!";
-            }
-        }
-
         public void EndTurn()
         {
             ActionChanged(this, new EventArgs());
@@ -201,7 +191,22 @@ namespace First_Build
 
             turnOrder.Dequeue();
 
+            if (turnOrder.Count == 0)
+            {
+                FillQueue();
+            }
+
             CheckForEndGame();
+        }
+
+        public class BattleEndEventArgs
+        {
+            public string message;
+
+            public BattleEndEventArgs(string winnerTeam)
+            {
+                message = winnerTeam + " has won the battle!";
+            }
         }
     }
 }

@@ -86,10 +86,10 @@ namespace First_Build
 
         private static int GetHeuristicPathLength(Point from, Point to)
         {
-            from =  HexMap.GetHexCoordinate(from.X, from.Y);
-            to =  HexMap.GetHexCoordinate(to.X, to.Y);
+            var _from =  HexMap.HexToSquare(from);
+            var _to =  HexMap.HexToSquare(to);
 
-            return Math.Abs(from.X - to.X) + Math.Abs(from.Y - to.Y);
+            return Convert.ToInt32(Math.Abs(_from.X - _to.X) + Math.Abs(_from.Y - _to.Y));
         }
 
         private static Collection<PathNode> GetNeighbours(PathNode currentNode, Point goal, HexMap field, bool straight)
@@ -97,11 +97,13 @@ namespace First_Build
             var result = new Collection<PathNode>();
 
             // Соседние клетки определяются с помощью четности столбца
-            Collection<Point> neighbourPoints = new Collection<Point>();
-            neighbourPoints.Add(new Point(currentNode.Position.X + 1, currentNode.Position.Y));
-            neighbourPoints.Add(new Point(currentNode.Position.X - 1, currentNode.Position.Y));
-            neighbourPoints.Add(new Point(currentNode.Position.X, currentNode.Position.Y + 1));
-            neighbourPoints.Add(new Point(currentNode.Position.X, currentNode.Position.Y - 1));
+            Collection<Point> neighbourPoints = new Collection<Point>
+            {
+                new Point(currentNode.Position.X + 1, currentNode.Position.Y),
+                new Point(currentNode.Position.X - 1, currentNode.Position.Y),
+                new Point(currentNode.Position.X, currentNode.Position.Y + 1),
+                new Point(currentNode.Position.X, currentNode.Position.Y - 1)
+            };
             if (currentNode.Position.X % 2 == 0) //если четный столблец
             {
                 neighbourPoints.Add(new Point(currentNode.Position.X + 1, currentNode.Position.Y + 1));
