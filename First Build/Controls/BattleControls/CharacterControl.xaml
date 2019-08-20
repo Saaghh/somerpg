@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:First_Build"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Width="200" Height="200" Margin="0" BorderThickness="1" RenderTransformOrigin="0.5,0.5">
-    <Canvas x:Name="canvas" HorizontalAlignment="Center" Height="200" Margin="0" VerticalAlignment="Center" Width="200">
+             d:DesignHeight="450" Width="468.5" Height="200" Margin="0" BorderThickness="1" RenderTransformOrigin="0.5,0.5">
+    <Canvas x:Name="canvas" HorizontalAlignment="Left" Height="200" Margin="0" VerticalAlignment="Center">
         <Grid Width="200" Height="200" Panel.ZIndex="1">
             <TextBlock x:Name="nameText" TextWrapping="Wrap" Panel.ZIndex="1" HorizontalAlignment="Center" Margin="0,8,0,0" VerticalAlignment="Top" Text="john" IsEnabled="False" Foreground="#00000000"/>
             <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Width="200" Background="#26000000" Panel.ZIndex="2">
@@ -20,5 +20,6 @@
         </Grid>
         <Image x:Name="image" Height="200" Width="200" RenderTransformOrigin="0.5,0.5" Source="/First Build;component/Resources/TestCharacter.png" Panel.ZIndex="1"/>
         <Ellipse Fill="#33000000" Height="54" Canvas.Left="30" Canvas.Top="146" Width="140" Panel.ZIndex="-1"/>
+        <ListBox x:Name="listBox" Canvas.Left="200" Height="200" BorderBrush="{x:Null}" Background="#26000000" Width="200" RenderTransformOrigin="0.5,0.5"/>
     </Canvas>
 </UserControl>

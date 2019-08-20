@@ -29,7 +29,7 @@ namespace First_Build
 
         public Party()
         {
-            characters = new Character[5];
+            characters = new Character[1];
             for (int i = 0; i < Count; i++)
             {
                 characters[i] = Character.Test;

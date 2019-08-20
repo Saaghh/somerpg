@@ -43,6 +43,27 @@ namespace First_Build.View
 
             battle.BattleEnded += Battle_BattleEnded;
             battle.ActionChanged += Battle_ActionChanged;
+            battle.TurnDone += Battle_TurnDone;
+
+            Battle_TurnDone(null, null);
+        }
+
+        private void Battle_TurnDone(object sender, EventArgs e)
+        {
+            ShowCurrentCharacter();
+        }
+
+        private void ShowCurrentCharacter()
+        {
+            listBox.Items.Clear();
+            var c = battle.turnOrder.Peek();
+
+            listBox.Items.Add(c.name);
+
+            foreach (var item in c.Status)
+            {
+                listBox.Items.Add(item);
+            }
         }
 
         private void Battle_ActionChanged(object sender, EventArgs e)

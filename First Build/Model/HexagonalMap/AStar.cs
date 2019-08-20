@@ -81,6 +81,7 @@ namespace First_Build
 
         private static int GetDistanceBetweenNeighbours(Point to, HexMap field)
         {
+            if (field.GetTileFromPoint(to).ContainsCharacter) { return 100000; }
             return field.GetTileFromPoint(to).terrain.moveCost;
         }
 
@@ -96,24 +97,7 @@ namespace First_Build
         {
             var result = new Collection<PathNode>();
 
-            // Соседние клетки определяются с помощью четности столбца
-            Collection<Point> neighbourPoints = new Collection<Point>
-            {
-                new Point(currentNode.Position.X + 1, currentNode.Position.Y),
-                new Point(currentNode.Position.X - 1, currentNode.Position.Y),
-                new Point(currentNode.Position.X, currentNode.Position.Y + 1),
-                new Point(currentNode.Position.X, currentNode.Position.Y - 1)
-            };
-            if (currentNode.Position.X % 2 == 0) //если четный столблец
-            {
-                neighbourPoints.Add(new Point(currentNode.Position.X + 1, currentNode.Position.Y + 1));
-                neighbourPoints.Add(new Point(currentNode.Position.X - 1, currentNode.Position.Y + 1));
-            }
-            else //если столбец нечетный
-            {
-                neighbourPoints.Add(new Point(currentNode.Position.X - 1, currentNode.Position.Y - 1));
-                neighbourPoints.Add(new Point(currentNode.Position.X + 1, currentNode.Position.Y - 1));
-            }
+            List<Point> neighbourPoints = HexMap.GetNeighbourPoints(currentNode.Position);
 
             foreach (var point in neighbourPoints)
             {

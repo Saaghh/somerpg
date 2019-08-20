@@ -31,6 +31,8 @@ namespace First_Build
 
         public event EventHandler<BattleEndEventArgs> BattleEnded;
         public event EventHandler<EventArgs> ActionChanged;
+        public event EventHandler<EventArgs> TurnDone;
+
 
         Action action = new EmptyAction();
 
@@ -50,6 +52,7 @@ namespace First_Build
             DrawAllGraphics(window);
 
             FillQueue();
+
         }
 
         protected void FillQueue()
@@ -139,16 +142,26 @@ namespace First_Build
 
             bool turnEnded = false;
 
-            if (action.IsAvaliable && target == clickedTile)
+            var previousTile = clickedTile;
+            clickedTile = target;
+
+            if (action.IsAvaliable && clickedTile == previousTile)
             {
                 turnEnded = !action.Do();
                 window.HideChoiceHighlight();
             }
             else if (target.ContainsCharacter)
             {
-                ActionChanged(this, new EventArgs());
-                action = new AttackAction(turnOrder.Peek(), target.character);
-                window.Highlight(target);
+                if (tiles.GetDistanceBetweenTiles(turnOrder.Peek().position, target) <= 2)
+                {
+                    ActionChanged(this, new EventArgs());
+                    action = new AttackAction(turnOrder.Peek(), target.character);
+                    window.Highlight(target);
+                }
+                else
+                {
+                    clickedTile = previousTile;
+                }
             }
             else
             {
@@ -162,8 +175,6 @@ namespace First_Build
             {
                 EndTurn();
             }
-
-            clickedTile = target;
         }
 
         public void CheckForEndGame()
@@ -195,7 +206,7 @@ namespace First_Build
             {
                 FillQueue();
             }
-
+            TurnDone(this, new EventArgs());
             CheckForEndGame();
         }
 

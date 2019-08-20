@@ -16,7 +16,7 @@ namespace First_Build
     public class HexMap : IEnumerable
     {
         public const int HEXPIXELWIDTH = 200;
-        public const int HEXPIXELHEIGHT = 160;
+        public const int HEXPIXELHEIGHT = 120;
 
         public const int MAPWIDTH = 20;
         public const int MAPHEIGHT = 20;
@@ -73,7 +73,7 @@ namespace First_Build
                     tiles[i, j] = new Tile((i, j));
                     if (r.Next(15) == 0)
                     {
-                        tiles[i, j].terrain = Terrain.Tree;
+                        tiles[i, j].terrain = Terrain.Stone;
                     }
                     else
                     {
@@ -99,9 +99,53 @@ namespace First_Build
             }
             return result;
         }
+        public List<Tile> GetNeighbourTiles(Tile tile)
+        {
+            var points = GetNeighbourPoints(tile.coord);
+            var result = new List<Tile>();
+
+            foreach (var point in points)
+            {
+                if (point.X < 0 || point.X >= tiles.GetLength(0))
+                    continue;
+                if (point.Y < 0 || point.Y >= tiles.GetLength(1))
+                    continue;
+
+                result.Add(GetTileFromPoint(point));
+            }
+
+            return result;
+        }
+        public int GetDistanceBetweenTiles(Tile tile1, Tile tile2)
+        {
+            var x = AStar.FindPath(this, tile1.coord, tile2.coord, true);
+
+            return x.Count - 1;
+        }
 
 
+        public static List<Point> GetNeighbourPoints(Point coord)
+        {
+            List<Point> neighbourPoints = new List<Point>
+            {
+                new Point(coord.X + 1, coord.Y),
+                new Point(coord.X - 1, coord.Y),
+                new Point(coord.X, coord.Y + 1),
+                new Point(coord.X, coord.Y - 1)
+            };
+            if (coord.X % 2 == 0) //если четный столблец
+            {
+                neighbourPoints.Add(new Point(coord.X + 1, coord.Y + 1));
+                neighbourPoints.Add(new Point(coord.X - 1, coord.Y + 1));
+            }
+            else //если столбец нечетный
+            {
+                neighbourPoints.Add(new Point(coord.X - 1, coord.Y - 1));
+                neighbourPoints.Add(new Point(coord.X + 1, coord.Y - 1));
+            }
 
+            return neighbourPoints;
+        }
         public static double GetDistanceBetweenPoints(PointF point1, PointF point2)
         {
             float x1 = point1.X, x2 = point2.X, y1 = point1.X, y2 = point2.Y;
@@ -161,11 +205,6 @@ namespace First_Build
             }
 
             return position;
-        }
-
-        public static int GetHexDistance(Tile tile1, Tile tile2, HexMap hexMap)
-        {
-            return AStar.FindPath(hexMap, tile1.coord, tile2.coord, true).Count;
         }
     }
 }

@@ -46,11 +46,4 @@ namespace First_Build
             }
         }
     }
-
-    class BattlePath : Path
-    {
-        public BattlePath(Tile start, Tile target, HexMap map, BattleWindow window) : base(start, target, map, window)
-        {
-        }
-    }
 }

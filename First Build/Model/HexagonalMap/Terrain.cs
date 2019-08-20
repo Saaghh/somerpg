@@ -23,16 +23,16 @@ namespace First_Build
         [DataMember]
         public Bitmap texture = Properties.Resources.TestTile;
 
-        public static Terrain Tree
+        public static Terrain Stone
         {
             get
             {
                 var x = new Terrain
                 {
                     moveCost = 1000,
-                    type = "Tree",
+                    type = "Stone",
                     walkable = true,
-                    texture = Properties.Resources.TreeTile
+                    texture = Properties.Resources.StoneTile
                 };
                 return x;
             }

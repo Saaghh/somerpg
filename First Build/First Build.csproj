@@ -75,15 +75,24 @@
     <Compile Include="Controls\BattleControls\HighlightedTile.xaml.cs">
       <DependentUpon>HighlightedTile.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\Characters\CharacterEquipment.cs" />
     <Compile Include="Model\Action.cs" />
-    <Compile Include="Model\AStar.cs" />
+    <Compile Include="Model\Characters\Body.cs" />
+    <Compile Include="Model\Equipment\Armor\CoveringEquipment.cs" />
+    <Compile Include="Model\Equipment\Weapons\EquipmentObject.cs" />
+    <Compile Include="Model\Equipment\Weapons\Spear.cs" />
+    <Compile Include="Model\Equipment\Weapons\Swords.cs" />
+    <Compile Include="Model\HexagonalMap\AStar.cs" />
+    <Compile Include="Model\Equipment\Weapons\Weapon.cs" />
+    <Compile Include="Model\Attack\AttackParams.cs" />
+    <Compile Include="Model\Attack\AttackType.cs" />
     <Compile Include="Model\Battle.cs" />
-    <Compile Include="Model\Character.cs" />
-    <Compile Include="Model\Party.cs" />
-    <Compile Include="Model\Path.cs" />
-    <Compile Include="Model\Terrain.cs" />
-    <Compile Include="Model\Tile.cs" />
-    <Compile Include="Model\HexMap.cs" />
+    <Compile Include="Model\Characters\Character.cs" />
+    <Compile Include="Model\Characters\Party.cs" />
+    <Compile Include="Model\HexagonalMap\Path.cs" />
+    <Compile Include="Model\HexagonalMap\Terrain.cs" />
+    <Compile Include="Model\HexagonalMap\Tile.cs" />
+    <Compile Include="Model\HexagonalMap\HexMap.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -139,6 +148,7 @@
     </EmbeddedResource>
     <None Include="JSONs\ForestTile.json" />
     <None Include="JSONs\WaterTile.json" />
+    <None Include="Model\Equipment\WholeProject.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -185,6 +195,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\TreeTile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Sounds\HitSound.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\StoneTile.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

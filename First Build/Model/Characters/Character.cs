@@ -14,13 +14,28 @@ namespace First_Build
 {
     public class Character
     {
+        CharacterEquipment equipment;
+        Body body = new HumanBody();
+
         static int amount       = 0;
         public string name      = "Nameless #" + amount++;
 
-        public float maxHealth  = 200;
-        public float health     = 200;
-        public float weapon     = 17;
-        public float armor      = 5;
+        public float maxHealth
+        {
+            get
+            {
+                return body.MaxHealth;
+            }
+        }
+        public float health
+        {
+            get
+            {
+                return body.Health;
+            }
+        }
+
+        public float swiftness  = 10f;
 
         public int maxAP        = 13;
         public int ap;
@@ -34,8 +49,23 @@ namespace First_Build
 
         public event EventHandler<MoveEventArgs> Moved;
         public event EventHandler<AttackedEventArgs> GotAttacked;
-        public event EventHandler<EventArgs> RoundStarter;
+        public event EventHandler<EventArgs> RoundStarted;
         public event EventHandler<EventArgs> Died;
+
+        public List<string> Status
+        {
+            get
+            {
+                return body.Status;
+            }
+        }
+        public List<string> EquipmentStats
+        {
+            get
+            {
+                return equipment.Stats;
+            }
+        }
 
         public bool HasActionPoints
         {
@@ -49,6 +79,7 @@ namespace First_Build
         public Character()
         {
             textureSource = Imaging.CreateBitmapSourceFromHBitmap(texture.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+            equipment = new CharacterEquipment(this);
         }
 
         public BitmapSource PrepareTexture()
@@ -67,7 +98,7 @@ namespace First_Build
         {
             ap = maxAP;
 
-            RoundStarter(this, new EventArgs());
+            RoundStarted(this, new EventArgs());
         }
 
         public virtual void EngageBattle(Tile position)
@@ -105,23 +136,30 @@ namespace First_Build
 
         public virtual void Attack(Character target)
         {
-            target.GetAttacked(this);
+            Random r = new Random();
+            var aTs = equipment.rightHand.avaliableAttackTypes;
+            var aT = aTs[r.Next(aTs.Count)];
+            target.GetAttacked(equipment.rightHand.GetAttack(aT));
         }
 
-        public virtual void GetAttacked(Character attacker)
+        public virtual void GetAttacked(AttackParams attack)
         {
-            if (armor <= attacker.weapon)
+            equipment.Protect(attack);
+
+            body.TakeAttack(attack);
+
+            GotAttacked(this, new AttackedEventArgs(attack.attacker));
+
+            CheckForDeath();
+        }
+
+        void CheckForDeath()
+        {
+            if (!body.IsAlive)
             {
-                health -= (attacker.weapon - armor);
-            }
-            if (health <= 0)
-            {
-                isAlive = false;
                 Died(this, new EventArgs());
             }
-            GotAttacked(this, new AttackedEventArgs(attacker));
         }
-
 
         public class AttackedEventArgs : EventArgs
         {
@@ -147,9 +185,6 @@ namespace First_Build
             {
                 return new Character
                 {
-                    armor = 20,
-                    maxHealth = 300,
-                    health = 300,
                     name = "Warrior #" + amount,
                     texture = Properties.Resources.Warrior
                 };
@@ -161,10 +196,6 @@ namespace First_Build
             {
                 return new Character
                 {
-                    armor = 0,
-                    weapon = 30,
-                    maxHealth = 500,
-                    health = 500,
                     name = "Zombie #" + amount,
                     texture = Properties.Resources.Zombie
                 };
@@ -176,15 +207,16 @@ namespace First_Build
             {
                 return new Character
                 {
-                    armor = 0,
-                    weapon = 1,
-                    maxHealth = 3,
-                    health = 1,
                     maxAP = 1,
                     name = "Test #" + amount,
                     texture = Properties.Resources.TestCharacter
                 };
             }
+        }
+
+        public override string ToString()
+        {
+            return name;
         }
 
     }

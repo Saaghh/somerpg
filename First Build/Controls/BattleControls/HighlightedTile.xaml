@@ -7,6 +7,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Width="200" Height="200">
     <Grid>
-        <Polygon x:Name="polygon" Points="0,120 50,40 150,40 200,120 150,200 50,200" Fill="#66293791" />
+        <Polygon x:Name="polygon" Points="0,140 50,80 150,80 200,140 150,200 50,200" Fill="#66293791" />
     </Grid>
 </UserControl>

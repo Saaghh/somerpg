@@ -21,6 +21,8 @@ namespace First_Build
     public partial class CharacterControl : UserControl
     {
         public readonly Character character;
+        MediaPlayer player = new MediaPlayer();
+
 
         public CharacterControl(Character character)
         {
@@ -29,11 +31,16 @@ namespace First_Build
 
             character.Moved += Character_Moved;
             character.GotAttacked += Character_GotAttacked;
-            character.RoundStarter += Character_RoundStarter;
-
+            character.RoundStarted += Character_RoundStarter;
+            character.Died += Character_Died;
             SetTexture();
 
             ShowData();
+        }
+
+        private void Character_Died(object sender, EventArgs e)
+        {
+            canvas.Visibility = Visibility.Hidden; 
         }
 
         private void SetTexture()
@@ -49,7 +56,28 @@ namespace First_Build
         private void Character_GotAttacked(object sender, Character.AttackedEventArgs e)
         {
             ShowData();
-            if (!character.isAlive) { canvas.Visibility = Visibility.Hidden; }
+            PlayHitSound();
+        }
+
+        private void ShowStats()
+        {
+            listBox.Items.Clear();
+
+            foreach (var item in character.Status)
+            {
+                listBox.Items.Add(item);
+            }
+
+            foreach (var item in character.EquipmentStats)
+            {
+                listBox.Items.Add(item);
+            }
+        }
+
+        private void PlayHitSound()
+        {
+            player.Open(new Uri("pack://siteoforigin:,,,/Resources/Sounds/HitSound.wav"));
+            player.Play();
         }
 
         private void Character_Moved(object sender, Character.MoveEventArgs e)
@@ -66,6 +94,7 @@ namespace First_Build
             ShowHealth();
             ShowAP();
             ShowName();
+            ShowStats();
         }
 
         public void ShowHealth()
