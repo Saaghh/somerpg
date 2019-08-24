@@ -13,27 +13,30 @@ using Point = System.Drawing.Point;
 
 namespace First_Build
 {
+
     public class HexMap : IEnumerable
     {
         public const int HEXPIXELWIDTH = 200;
         public const int HEXPIXELHEIGHT = 120;
 
-        public const int MAPWIDTH = 20;
-        public const int MAPHEIGHT = 20;
+        public int MapWidth = 20;
+        public int MapHeight = 20;
 
         protected static Random r = new Random();
 
-        public Tile[,] tiles;
+        protected Tile[,] tiles;
+
+        public virtual Tile[,] Tiles { get => tiles; set => tiles = value; }
 
         public Tile this[int x, int y]
         {
             get
             {
-                return tiles[x, y];
+                return Tiles[x, y];
             }
             set
             {
-                tiles[x, y] = value;
+                Tiles[x, y] = value;
             }
         }
 
@@ -42,60 +45,41 @@ namespace First_Build
             GenerateMap();
         }
 
-        public Bitmap GetMapTexture()
+        protected virtual void GenerateMap()
         {
-            var (width, height) = GetMapPixelSize((MAPWIDTH, MAPHEIGHT));
+
+        }
+
+        public virtual Bitmap GetMapTexture()
+        {
+            var (width, height) = GetMapPixelSize((MapWidth, MapHeight));
             var texture = new Bitmap(width, height);
 
             Graphics g = Graphics.FromImage(texture);
-            for (int i = 0; i < tiles.GetLength(1); i++)
+            for (int i = 0; i < Tiles.GetLength(1); i++)
             {
-                for (int j = 0; j < tiles.GetLength(0); j++)
+                for (int j = 0; j < Tiles.GetLength(0); j++)
                 {
-                    var item = tiles[i, j];
+                    var item = Tiles[i, j];
                     var pixelCoord = HexToPixel(new Point(i, j));
-                    g.DrawImage(item.terrain.texture, pixelCoord);
+                    g.DrawImage(item.Texture, pixelCoord);
                 }
             }
 
-            texture.Save("BattleMap" + ".png");
+            texture.Save("Map" + ".png");
 
             return texture;
         }
-        protected void GenerateMap()
-        {
-            tiles = new Tile[MAPWIDTH, MAPHEIGHT];
-
-            for (int i = 0; i < MAPWIDTH; i++)
-            {
-                for (int j = 0; j < MAPHEIGHT; j++)
-                {
-                    tiles[i, j] = new Tile((i, j));
-                    if (r.Next(15) == 0)
-                    {
-                        tiles[i, j].terrain = Terrain.Stone;
-                    }
-                    else
-                    {
-                        tiles[i, j].terrain = Terrain.Flat;
-                    }
-                }
-            }
-        }
-        public IEnumerator GetEnumerator()
-        {
-            return tiles.GetEnumerator();
-        }
         public Tile GetTileFromPoint(Point point)
         {
-            return tiles[point.X, point.Y];
+            return Tiles[point.X, point.Y];
         }
         public List<Tile> GetTilesFromPoints(List<Point> points)
         {
             List<Tile> result = new List<Tile>();
             foreach (Point item in points)
             {
-                result.Add(tiles[item.X, item.Y]);
+                result.Add(Tiles[item.X, item.Y]);
             }
             return result;
         }
@@ -106,9 +90,9 @@ namespace First_Build
 
             foreach (var point in points)
             {
-                if (point.X < 0 || point.X >= tiles.GetLength(0))
+                if (point.X < 0 || point.X >= Tiles.GetLength(0))
                     continue;
-                if (point.Y < 0 || point.Y >= tiles.GetLength(1))
+                if (point.Y < 0 || point.Y >= Tiles.GetLength(1))
                     continue;
 
                 result.Add(GetTileFromPoint(point));
@@ -121,6 +105,10 @@ namespace First_Build
             var x = AStar.FindPath(this, tile1.coord, tile2.coord, true);
 
             return x.Count - 1;
+        }
+        public IEnumerator GetEnumerator()
+        {
+            return Tiles.GetEnumerator();
         }
 
 
@@ -185,26 +173,6 @@ namespace First_Build
             result.height = (HEXPIXELHEIGHT * dataSize.y) + (HEXPIXELHEIGHT / 2);
 
             return result;
-        }
-        public static (int x, int y) GetCharacterStarterTilePosition((int w, int h) mapSize, int order, int team)
-        {
-            (int x, int y) position;
-
-            switch (team)
-            {
-                case 0:
-                    position.x = mapSize.w / 8 * 3;
-                    position.y = mapSize.h / 8 * 3 + order;
-                    break;
-                case 1:
-                    position.x = mapSize.w / 8 * 5;
-                    position.y = mapSize.h / 8 * 3 + order;
-                    break;
-                default:
-                    throw new Exception("Сражаться могут лишь 2 команды");
-            }
-
-            return position;
         }
     }
 }

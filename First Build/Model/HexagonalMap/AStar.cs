@@ -81,7 +81,6 @@ namespace First_Build
 
         private static int GetDistanceBetweenNeighbours(Point to, HexMap field)
         {
-            if (field.GetTileFromPoint(to).ContainsCharacter) { return 100000; }
             return field.GetTileFromPoint(to).terrain.moveCost;
         }
 
@@ -102,9 +101,9 @@ namespace First_Build
             foreach (var point in neighbourPoints)
             {
                 // Проверяем, что не вышли за границы карты.
-                if (point.X < 0 || point.X >= field.tiles.GetLength(0))
+                if (point.X < 0 || point.X >= field.Tiles.GetLength(0))
                     continue;
-                if (point.Y < 0 || point.Y >= field.tiles.GetLength(1))
+                if (point.Y < 0 || point.Y >= field.Tiles.GetLength(1))
                     continue;
                 // Проверяем, что по клетке можно ходить.
                 if (!field[point.X, point.Y].terrain.walkable)

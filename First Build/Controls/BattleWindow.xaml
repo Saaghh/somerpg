@@ -15,5 +15,7 @@
         <Button x:Name="endTurnButton" Content="End Turn" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="1809,1001,0,0" BorderBrush="{x:Null}" Background="White" Click="EndTurnButton_Click"/>
         <MediaElement x:Name="hitSound" HorizontalAlignment="Left" Height="100" Margin="406,449,0,0" VerticalAlignment="Top" Width="100" d:IsHidden="True" Source="pack://siteoforigin:,,,/Resources/Sounds/HitSound.wav"/>
         <ListBox x:Name="listBox" HorizontalAlignment="Left" Height="276" VerticalAlignment="Top" Width="328"/>
+        <Canvas x:Name="actionsCanvas" HorizontalAlignment="Left" Height="586" Margin="333,10,0,0" VerticalAlignment="Top" Width="1569"/>
+        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="114,305,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
     </Grid>
 </Window>

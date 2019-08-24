@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace First_Build
 {
@@ -6,6 +7,8 @@ namespace First_Build
     {
         public float bladeS = 13f;
         public float pointS = 3.5f;
+
+
 
         protected static AttackType SwordTopDown
         {
@@ -30,6 +33,25 @@ namespace First_Build
             avaliableAttackTypes.Add(SwordThrust);
         }
 
+        public override List<Action> avaliableActions
+        {
+            get
+            {
+                var s = new List<Action>();
+                s.Add(new AttackAction(GetAttack(SwordTopDown))
+                {
+                    header = "Рубящий удар мечом",
+                    text = "Наносит рубящий удар мечом"
+                });
+                s.Add(new AttackAction(GetAttack(SwordThrust))
+                {
+                    header = "Пыр мечом",
+                    text = "Наносит колющий удар концом меча"
+                });
+                return s;
+            }
+        }
+
         public override AttackParams GetAttack(AttackType attackType)
         {
 
@@ -39,7 +61,8 @@ namespace First_Build
                     (
                         weight, 
                         owner.swiftness * 2,
-                        bladeS
+                        bladeS,
+                        3.5f
                     );
             }
             else if (attackType == SwordThrust)
@@ -48,7 +71,8 @@ namespace First_Build
                     (
                         Convert.ToSingle(weight * 0.8),
                         owner.swiftness,
-                        pointS
+                        pointS,
+                        5
                     );
             }
             throw new ArgumentException("Unexpected AttackType");

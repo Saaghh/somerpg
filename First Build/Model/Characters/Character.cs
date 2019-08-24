@@ -14,44 +14,46 @@ namespace First_Build
 {
     public class Character
     {
-        CharacterEquipment equipment;
-        Body body = new HumanBody();
-
         static int amount       = 0;
         public string name      = "Nameless #" + amount++;
 
-        public float maxHealth
-        {
-            get
-            {
-                return body.MaxHealth;
-            }
-        }
-        public float health
-        {
-            get
-            {
-                return body.Health;
-            }
-        }
-
         public float swiftness  = 10f;
-
-        public int maxAP        = 13;
+        public int maxAP        = 7;
         public int ap;
 
-        public bool isAlive     = true;
-
-        public Tile position;
-
-        public Bitmap texture   = Properties.Resources.TestCharacter;
+        public CharacterEquipment equipment;
+        public Body body = new HumanBody();
+        public BattleTile battlePosition;
+        public System.Drawing.Point position;
         public BitmapSource textureSource;
+        public Bitmap texture   = Properties.Resources.TestCharacter;
 
         public event EventHandler<MoveEventArgs> Moved;
         public event EventHandler<AttackedEventArgs> GotAttacked;
         public event EventHandler<EventArgs> RoundStarted;
         public event EventHandler<EventArgs> Died;
 
+        public bool IsAlive
+        {
+            get
+            {
+                return body.IsAlive;
+            }
+        }
+        public float MaxHealth
+        {
+            get
+            {
+                return body.MaxHealth;
+            }
+        }
+        public float Health
+        {
+            get
+            {
+                return body.Health;
+            }
+        }
         public List<string> Status
         {
             get
@@ -66,7 +68,6 @@ namespace First_Build
                 return equipment.Stats;
             }
         }
-
         public bool HasActionPoints
         {
             get
@@ -82,66 +83,43 @@ namespace First_Build
             equipment = new CharacterEquipment(this);
         }
 
-        public BitmapSource PrepareTexture()
+        public List<Action> AvaliableActions
         {
-            textureSource = Imaging.CreateBitmapSourceFromHBitmap(texture.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+            get
+            {
+                var s = equipment.avaliableActions;
 
-            return textureSource;
+                foreach (var item in s)
+                {
+                    item.AddActor(this);
+                }
+
+                return s;
+            }
         }
 
         protected virtual void GetReadyForBattle()
         {
             ap = maxAP;
         }
-
         public virtual void GetReadyForNewRound()
         {
             ap = maxAP;
 
             RoundStarted(this, new EventArgs());
         }
-
-        public virtual void EngageBattle(Tile position)
+        public virtual void EngageBattle(BattleTile position)
         {
             GetReadyForBattle();
-            this.position = position;
-            this.position.Enter(this);
+            this.battlePosition = position;
+            this.battlePosition.Enter(this);
         }
-
-        public virtual bool TryToMove(Path path)
+        public virtual void Attack(Character target, AttackParams attackParams)
         {
-            var p = position;
+            attackParams.attacker = this;
 
-            for (int i = 1; i < path.Length; i++)
-            {
-                if (ap >= path[i].GetEnterCost())
-                {
-                    position.Leave();
-                    path[i].Enter(this);
-                    position = path[i];
-                    ap -= path[i].GetEnterCost();
-                    Moved(this, new MoveEventArgs(path[i]));
-
-                }
-            }
-            if (position == p)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            target.GetAttacked(attackParams);
         }
-
-        public virtual void Attack(Character target)
-        {
-            Random r = new Random();
-            var aTs = equipment.rightHand.avaliableAttackTypes;
-            var aT = aTs[r.Next(aTs.Count)];
-            target.GetAttacked(equipment.rightHand.GetAttack(aT));
-        }
-
         public virtual void GetAttacked(AttackParams attack)
         {
             equipment.Protect(attack);
@@ -152,13 +130,40 @@ namespace First_Build
 
             CheckForDeath();
         }
+        public virtual void Move(Path path)
+        {
+            var p = battlePosition;
 
+            for (int i = 1; i < path.Length; i++)
+            {
+                if (ap >= ((BattleTile)path[i]).GetEnterCost())
+                {
+                    battlePosition.Leave();
+                    ((BattleTile)path[i]).Enter(this);
+                    battlePosition = (BattleTile)path[i];
+                    ap -= ((BattleTile)path[i]).GetEnterCost();
+                    Moved(this, new MoveEventArgs((BattleTile)path[i]));
+                }
+            }
+        }
+        public override string ToString()
+        {
+            return name;
+        }
         void CheckForDeath()
         {
-            if (!body.IsAlive)
+            if (!IsAlive)
             {
                 Died(this, new EventArgs());
             }
+        }
+
+
+        public BitmapSource PrepareTexture()
+        {
+            textureSource = Imaging.CreateBitmapSourceFromHBitmap(texture.GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+
+            return textureSource;
         }
 
         public class AttackedEventArgs : EventArgs
@@ -171,9 +176,9 @@ namespace First_Build
         }
         public class MoveEventArgs : EventArgs
         {
-            public Tile target;
+            public BattleTile target;
 
-            public MoveEventArgs(Tile tile)
+            public MoveEventArgs(BattleTile tile)
             {
                 target = tile;
             }
@@ -213,11 +218,5 @@ namespace First_Build
                 };
             }
         }
-
-        public override string ToString()
-        {
-            return name;
-        }
-
     }
 }

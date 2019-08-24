@@ -20,7 +20,7 @@ namespace First_Build
                 bool isAlive = false;
                 for (int i = 0; i < Count; i++)
                 {
-                    if (characters[i].isAlive) { isAlive = true; }
+                    if (characters[i].IsAlive) { isAlive = true; }
                 }
 
                 return isAlive;

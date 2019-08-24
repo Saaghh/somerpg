@@ -160,6 +160,16 @@ namespace First_Build.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap Village {
+            get {
+                object obj = ResourceManager.GetObject("Village", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap Warrior {
             get {
                 object obj = ResourceManager.GetObject("Warrior", resourceCulture);
@@ -173,6 +183,16 @@ namespace First_Build.Properties {
         public static System.Drawing.Bitmap WaterTile {
             get {
                 object obj = ResourceManager.GetObject("WaterTile", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap WorldFlatTile {
+            get {
+                object obj = ResourceManager.GetObject("WorldFlatTile", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

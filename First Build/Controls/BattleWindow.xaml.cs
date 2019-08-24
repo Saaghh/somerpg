@@ -20,7 +20,7 @@ namespace First_Build.View
     /// </summary>
     public partial class BattleWindow : Window
     {
-        static readonly (int x, int y) mapSize = (x: HexMap.MAPWIDTH, y: HexMap.MAPHEIGHT);
+        static readonly (int x, int y) mapSize = (20, 20);
 
         List<HighlightedTile> highlightedTiles = new List<HighlightedTile>();
 
@@ -50,10 +50,15 @@ namespace First_Build.View
 
         private void Battle_TurnDone(object sender, EventArgs e)
         {
-            ShowCurrentCharacter();
+            ShowCurrentCharacterStats();
+            ShowActions(battle.turnOrder.Peek());
+            foreach (ActionControl item in actionsCanvas.Children)
+            {
+                item.HideSelection();
+            }
         }
 
-        private void ShowCurrentCharacter()
+        private void ShowCurrentCharacterStats()
         {
             listBox.Items.Clear();
             var c = battle.turnOrder.Peek();
@@ -64,18 +69,29 @@ namespace First_Build.View
             {
                 listBox.Items.Add(item);
             }
+            foreach (var item in c.equipment.avaliableActions)
+            {
+                foreach (var item2 in item.Description)
+                {
+                    listBox.Items.Add(item2);
+                }
+            }
         }
 
         private void Battle_ActionChanged(object sender, EventArgs e)
         {
             HidePath();
             HideChoiceHighlight();
+            foreach (ActionControl item in actionsCanvas.Children)
+            {
+                item.HideSelection();
+            }
         }
 
         public void DrawPath(Path path)
         {
             HidePath();
-            foreach (Tile item in path.tiles)
+            foreach (BattleTile item in path.tiles)
             {
                 var b = new SolidColorBrush(Color.FromArgb(50, 0, 0, 255));
                 var control = new HighlightedTile(b);
@@ -102,7 +118,7 @@ namespace First_Build.View
             }
         }
 
-        public void Highlight(Tile tile)
+        public void Highlight(BattleTile tile)
         {
             HideChoiceHighlight();
 
@@ -160,6 +176,32 @@ namespace First_Build.View
         private void EndTurnButton_Click(object sender, RoutedEventArgs e)
         {
             battle.EndTurn();
+        }
+
+        public void ShowActions(Character character)
+        {
+            actionsCanvas.Children.Clear();
+            int i = 0;
+
+            foreach (var item in character.AvaliableActions)
+            {
+                var actionControl = new ActionControl(item, i++);
+                actionControl.ActionChosen += ActionControl_ActionChosen;
+                actionsCanvas.Children.Add(actionControl);
+            }
+        }
+
+        private void ActionControl_ActionChosen(object sender, EventArgs e)
+        {
+            var s = sender as ActionControl;
+            battle.ChooseAction(s.action);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            WorldWindow w = new WorldWindow();
+            w.Show();
+            Close();
         }
     }
 }

@@ -12,6 +12,8 @@ namespace First_Build
         public float weight = 1f;
         public List<AttackType> avaliableAttackTypes = new List<AttackType>();
 
+        public override List<Action> avaliableActions => throw new System.NotImplementedException();
+
         public abstract AttackParams GetAttack(AttackType attackType);
         public void SetOwner(Character owner)
         {

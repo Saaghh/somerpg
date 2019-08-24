@@ -13,6 +13,31 @@ namespace First_Build
         public Weapon rightHand;
 
 
+        public List<Action> avaliableActions
+        {
+            get
+            {
+                var s = new List<Action>();
+
+                if (rightHand != null)
+                {
+                    foreach (var item in rightHand.avaliableActions)
+                    {
+                        s.Add(item);
+                    }
+                }
+                //foreach (var item in bodyEquipment)
+                //{
+                //    foreach (var item2 in item.avaliableActions)
+                //    {
+
+                //    }
+                //}
+
+                return s;
+            }
+        }
+
         public CharacterEquipment(Character owner)
         {
             bodyEquipment.Add(new ChainMail

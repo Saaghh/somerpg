@@ -20,7 +20,7 @@ namespace First_Build
 
         public (int width, int height) battleMapSize;
 
-        public HexMap tiles = new HexMap();
+        public BattleMap tiles = new BattleMap();
 
         public Party playerTeam;
         public Party opponentTeam;
@@ -38,7 +38,7 @@ namespace First_Build
 
         BattleWindow window;
 
-        Tile clickedTile;
+        BattleTile clickedTile;
 
         public Battle((int w, int h) size, BattleWindow window)
         {
@@ -59,7 +59,7 @@ namespace First_Build
         {
             foreach (var item in playerTeam)
             {
-                if (item.isAlive)
+                if (item.IsAlive)
                 {
                     turnOrder.Enqueue(item);
                     item.GetReadyForNewRound();
@@ -68,7 +68,7 @@ namespace First_Build
 
             foreach (var item in opponentTeam)
             {
-                if (item.isAlive)
+                if (item.IsAlive)
                 {
                     turnOrder.Enqueue(item);
                     item.GetReadyForNewRound();
@@ -84,15 +84,15 @@ namespace First_Build
             for (int i = 0; i < playerTeam.Count; i++)
             {
                 playerTeam[i] = Character.Warrior;
-                var (x, y) = HexMap.GetCharacterStarterTilePosition(battleMapSize, i, 0);
-                playerTeam[i].EngageBattle(tiles[x, y]);
+                var (x, y) = BattleMap.GetCharacterStarterTilePosition(battleMapSize, i, 0);
+                playerTeam[i].EngageBattle(tiles[x, y] as BattleTile);
             }
 
             for (int i = 0; i < opponentTeam.Count; i++)
             {
                 opponentTeam[i] = Character.Zombie;
-                var (x, y) = HexMap.GetCharacterStarterTilePosition(battleMapSize, i, 1);
-                opponentTeam[i].EngageBattle(tiles[x, y]);
+                var (x, y) = BattleMap.GetCharacterStarterTilePosition(battleMapSize, i, 1);
+                opponentTeam[i].EngageBattle(tiles[x, y] as BattleTile);
             }
         }
 
@@ -108,7 +108,7 @@ namespace First_Build
             {
                 var control = new CharacterControl(item);
 
-                var coord = HexMap.HexToPixel(item.position.coord);
+                var coord = HexMap.HexToPixel(item.battlePosition.coord);
 
                 Canvas.SetTop(control, coord.Y);
                 Canvas.SetLeft(control, coord.X);
@@ -119,7 +119,7 @@ namespace First_Build
 
         protected void GenerateHexControls(Canvas canvas)
         {
-            foreach (Tile item in tiles)
+            foreach (BattleTile item in tiles)
             {
                 var control = new BattleMapControl(item.coord);
 
@@ -138,24 +138,28 @@ namespace First_Build
         {
             var coord = ((BattleMapControl)sender).coord;
 
-            Tile target = tiles[coord.X, coord.Y];
+            BattleTile target = tiles[coord.X, coord.Y] as BattleTile;
 
             bool turnEnded = false;
 
             var previousTile = clickedTile;
             clickedTile = target;
 
-            if (action.IsAvaliable && clickedTile == previousTile)
+
+            if (action == null && target.ContainsCharacter) { return; }
+            
+            if (action != null && action.IsAvaliable && clickedTile == previousTile)
             {
                 turnEnded = !action.Do();
+                action = null;
                 window.HideChoiceHighlight();
             }
-            else if (target.ContainsCharacter)
+            else if (target.ContainsCharacter) //Если в нажатома тайле есть персонаж
             {
-                if (tiles.GetDistanceBetweenTiles(turnOrder.Peek().position, target) <= 2)
+                if (tiles.GetDistanceBetweenTiles(turnOrder.Peek().battlePosition, target) <= 2)
                 {
                     ActionChanged(this, new EventArgs());
-                    action = new AttackAction(turnOrder.Peek(), target.character);
+                    action.AddTarget(target.character);
                     window.Highlight(target);
                 }
                 else
@@ -163,11 +167,13 @@ namespace First_Build
                     clickedTile = previousTile;
                 }
             }
-            else
+            else //Если в нажатом тайле персонажа нет
             {
                 ActionChanged(this, new EventArgs());
                 var character = turnOrder.Peek();
-                action = new MoveAction(character, new Path(character.position, target, tiles, window));
+                action = new MoveAction();
+                action.AddActor(character);
+                action.AddTarget(new Path(character.battlePosition, target, tiles, window));
                 window.Highlight(target);
             }
 
@@ -208,6 +214,11 @@ namespace First_Build
             }
             TurnDone(this, new EventArgs());
             CheckForEndGame();
+        }
+
+        public void ChooseAction(Action action)
+        {
+            this.action = action;
         }
 
         public class BattleEndEventArgs

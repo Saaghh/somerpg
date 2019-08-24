@@ -7,13 +7,15 @@ namespace First_Build
         public float M;
         public float C;
         public float S;
+        public float apCost;
         public Character attacker;
 
-        public AttackParams(float M, float C, float S)
+        public AttackParams(float M, float C, float S, float apCost)
         {
             this.M = M;
             this.C = C;
             this.S = S;
+            this.apCost = apCost;
         }
 
         public bool AttackerKnown

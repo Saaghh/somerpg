@@ -39,7 +39,7 @@ namespace First_Build
     }
     public class Body
     {
-        public bool isDead = false;
+        protected bool isDead = false;
         public float absorbationK = 4;
         protected List<BodyPart> bodyParts = new List<BodyPart>();
 
@@ -144,7 +144,6 @@ namespace First_Build
 
         }
     }
-
     public class HumanBody : Body
     {
         public HumanBody()
@@ -169,34 +168,32 @@ namespace First_Build
                 maxHealth = 80,
 
             });
-            bodyParts.Add(new BodyPart
-            {
-                name = "LeftLeg",
-                health = 50,
-                maxHealth = 50,
+            //bodyParts.Add(new BodyPart
+            //{
+            //    name = "LeftLeg",
+            //    health = 50,
+            //    maxHealth = 50,
 
-            });
-            bodyParts.Add(new BodyPart
-            {
-                name = "RightLeg",
-                health = 50,
-                maxHealth = 50,
-
-            });
-            bodyParts.Add(new BodyPart
-            {
-                name = "RightLeg",
-                health = 50,
-                maxHealth = 50,
-            });
-            bodyParts.Add(new BodyPart
-            {
-                name = "RightLeg",
-                health = 50,
-                maxHealth = 50,
-            });
+            //});
+            //bodyParts.Add(new BodyPart
+            //{
+            //    name = "RightLeg",
+            //    health = 50,
+            //    maxHealth = 50,
+            //});
+            //bodyParts.Add(new BodyPart
+            //{
+            //    name = "RightLeg",
+            //    health = 50,
+            //    maxHealth = 50,
+            //});
+            //bodyParts.Add(new BodyPart
+            //{
+            //    name = "RightLeg",
+            //    health = 50,
+            //    maxHealth = 50,
+            //});
         }
 
     }
-
 }

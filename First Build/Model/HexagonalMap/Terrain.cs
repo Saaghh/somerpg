@@ -23,46 +23,66 @@ namespace First_Build
         [DataMember]
         public Bitmap texture = Properties.Resources.TestTile;
 
-        public static Terrain Stone
+        public struct BattleTerrain
         {
-            get
+            public static Terrain Stone
             {
-                var x = new Terrain
+                get
                 {
-                    moveCost = 1000,
-                    type = "Stone",
-                    walkable = true,
-                    texture = Properties.Resources.StoneTile
-                };
-                return x;
+                    var x = new Terrain
+                    {
+                        moveCost = 1000,
+                        type = "Stone",
+                        walkable = true,
+                        texture = Properties.Resources.StoneTile
+                    };
+                    return x;
+                }
+            }
+            public static Terrain Water
+            {
+                get
+                {
+                    var x = new Terrain
+                    {
+                        moveCost = 4,
+                        type = "Water",
+                        walkable = false,
+                        texture = Properties.Resources.WaterTile
+                    };
+                    return x;
+                }
+            }
+            public static Terrain Flat
+            {
+                get
+                {
+                    var x = new Terrain
+                    {
+                        moveCost = 1,
+                        type = "Flat",
+                        walkable = true,
+                        texture = Properties.Resources.FlatTile
+                    };
+                    return x;
+                }
             }
         }
-        public static Terrain Water
+        public struct WorldTerrain
         {
-            get
+            public static Terrain Field
             {
-                var x = new Terrain
+                get
                 {
-                    moveCost = 4,
-                    type = "Water",
-                    walkable = false,
-                    texture = Properties.Resources.WaterTile
-                };
-                return x;
-            }
-        }
-        public static Terrain Flat
-        {
-            get
-            {
-                var x = new Terrain
-                {
-                    moveCost = 1,
-                    type = "Flat",
-                    walkable = true,
-                    texture = Properties.Resources.FlatTile
-                };
-                return x;
+                    var x = new Terrain
+                    {
+                        moveCost = 10,
+                        type = "Field",
+                        walkable = true,
+                        texture = Properties.Resources.WorldFlatTile
+                    };
+                    return x;
+                }
             }
         }
     }

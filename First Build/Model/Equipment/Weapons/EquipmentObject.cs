@@ -1,4 +1,6 @@
-﻿namespace First_Build
+﻿using System.Collections.Generic;
+
+namespace First_Build
 {
     public abstract class EquipmentObject
     {
@@ -12,7 +14,6 @@
                 if (owner != null) { return true; } else { return false; }
             }
         }
-
+        public abstract List<Action> avaliableActions { get; }
     }
-
 }

@@ -22,7 +22,7 @@ namespace First_Build
             get { if (tiles.Count == 0 || tiles == null) { return true; } else { return false; } }
         }
 
-        public Path(Tile start, Tile target, HexMap map, BattleWindow window)
+        public Path(BattleTile start, BattleTile target, HexMap map, BattleWindow window)
         {
             this.window = window;
 

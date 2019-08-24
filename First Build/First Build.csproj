@@ -72,11 +72,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\BattleControls\ActionControl.xaml.cs">
+      <DependentUpon>ActionControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\BattleControls\HighlightedTile.xaml.cs">
       <DependentUpon>HighlightedTile.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\WorldWindow.xaml.cs">
+      <DependentUpon>WorldWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Actions\AttackAction.cs" />
+    <Compile Include="Model\Actions\Action.cs" />
+    <Compile Include="Model\Actions\EmptyAction.cs" />
+    <Compile Include="Model\Actions\MoveAction.cs" />
     <Compile Include="Model\Characters\CharacterEquipment.cs" />
-    <Compile Include="Model\Action.cs" />
+    <Compile Include="Model\Actions\EndTurnAction.cs" />
     <Compile Include="Model\Characters\Body.cs" />
     <Compile Include="Model\Equipment\Armor\CoveringEquipment.cs" />
     <Compile Include="Model\Equipment\Weapons\EquipmentObject.cs" />
@@ -84,15 +94,20 @@
     <Compile Include="Model\Equipment\Weapons\Swords.cs" />
     <Compile Include="Model\HexagonalMap\AStar.cs" />
     <Compile Include="Model\Equipment\Weapons\Weapon.cs" />
-    <Compile Include="Model\Attack\AttackParams.cs" />
-    <Compile Include="Model\Attack\AttackType.cs" />
+    <Compile Include="Model\Actions\AttackParams.cs" />
+    <Compile Include="Model\Actions\AttackType.cs" />
     <Compile Include="Model\Battle.cs" />
     <Compile Include="Model\Characters\Character.cs" />
     <Compile Include="Model\Characters\Party.cs" />
+    <Compile Include="Model\HexagonalMap\BattleMap.cs" />
+    <Compile Include="Model\HexagonalMap\BattleTile.cs" />
     <Compile Include="Model\HexagonalMap\Path.cs" />
     <Compile Include="Model\HexagonalMap\Terrain.cs" />
     <Compile Include="Model\HexagonalMap\Tile.cs" />
     <Compile Include="Model\HexagonalMap\HexMap.cs" />
+    <Compile Include="Model\HexagonalMap\TileContent.cs" />
+    <Compile Include="Model\HexagonalMap\WorldMap.cs" />
+    <Compile Include="Model\HexagonalMap\WorldTile.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -107,11 +122,19 @@
     <Compile Include="Controls\BattleControls\CharacterControl.xaml.cs">
       <DependentUpon>CharacterControl.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\BattleControls\ActionControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\BattleControls\BattleMapControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\BattleControls\HighlightedTile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WorldWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -201,6 +224,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\StoneTile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\WorldFlatTile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Village.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

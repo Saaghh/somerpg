@@ -99,14 +99,14 @@ namespace First_Build
 
         public void ShowHealth()
         {
-            double pixelsPerHealth = healthBarBackground.Width / character.maxHealth;
+            double pixelsPerHealth = healthBarBackground.Width / character.MaxHealth;
 
-            if (character.isAlive)
+            if (character.IsAlive)
             {
-                healthBar.Width = pixelsPerHealth * character.health;
+                healthBar.Width = pixelsPerHealth * character.Health;
             }
 
-            healthText.Text = character.health + " / " + character.maxHealth;
+            healthText.Text = character.Health + " / " + character.MaxHealth;
         }
 
         public void ShowAP()

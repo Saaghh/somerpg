@@ -84,5 +84,7 @@ namespace First_Build
             penetration = (200f, 150f, 4f);
             viscosity = 2f;
         }
+
+        public override List<Action> avaliableActions => null;
     }
 }

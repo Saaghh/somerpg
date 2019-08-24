@@ -1,25 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="First_Build.Weapon">
-    <Position X="1.5" Y="9.75" Width="1.5" />
+    <Position X="6.75" Y="10.5" Width="1.5" />
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAAABIAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAIAA=</HashCode>
+      <HashCode>AAAAAABICAAAAAAEAAAAAAAAAAAAAAAgAAAAAAAAIAA=</HashCode>
       <FileName>Model\Equipment\Weapons\Weapon.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="First_Build.AttackParams" Collapsed="true">
-    <Position X="12.5" Y="1" Width="1.5" />
+    <Position X="17.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAABACAAEAAAAAAgAAAAAAAAAAAAigKAAAA=</HashCode>
-      <FileName>Model\Attack\AttackParams.cs</FileName>
-      <NewMemberFileName>Model\Equipment\Weapons\Weapon.cs</NewMemberFileName>
+      <HashCode>AAAAAAAAAAABACAEEAAAAAAiAAAAAAAAAAAAigKAAAA=</HashCode>
+      <FileName>Model\Actions\AttackParams.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="First_Build.LongSword">
-    <Position X="2.75" Y="16.25" Width="1.5" />
+    <Position X="5.75" Y="17.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Equipment\Weapons\Swords.cs</FileName>
@@ -27,14 +26,21 @@
     </TypeIdentifier>
   </Class>
   <Class Name="First_Build.Battle" Collapsed="true">
-    <Position X="16" Y="1" Width="1.5" />
+    <Position X="21.25" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Class Name="First_Build.Battle.BattleEndEventArgs" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Model\Battle.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
     <TypeIdentifier>
-      <HashCode>BAAAJAAEAAAIAAQQAAEBAAAQAkBoghAIAAAAQAACAgA=</HashCode>
+      <HashCode>BAAAJAAEAAQIAAQQAAEBACAQAkBoghAIAAAAQAACAgA=</HashCode>
       <FileName>Model\Battle.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="First_Build.Party" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="16" Y="2" Width="1.5" />
+    <Position X="21.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQAAAAAAAAAAABAACAAAAAQAAAABAAAEAAAAAAAAAAA=</HashCode>
       <FileName>Model\Characters\Party.cs</FileName>
@@ -42,160 +48,226 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="First_Build.PathNode" Collapsed="true">
-    <Position X="12.5" Y="3" Width="1.5" />
+    <Position X="17.75" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAACAAAAAAAgAAAAAAAgAgAAAAAAAAAEAAAAAAA=</HashCode>
       <FileName>Model\HexagonalMap\AStar.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="First_Build.AStar" Collapsed="true">
-    <Position X="10.75" Y="1" Width="1.5" />
+    <Position X="16" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAEAAIAAAAAAIAAAAgA=</HashCode>
       <FileName>Model\HexagonalMap\AStar.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="First_Build.HexMap" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="14.25" Y="2" Width="1.5" />
+  <Class Name="First_Build.HexMap" BaseTypeListCollapsed="true">
+    <Position X="13.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAQAAAAAAAABAICAAQiAIIIgAAAgEQAACBQABgAAA=</HashCode>
+      <HashCode>AAAAQAAAAAAAABAICAAAiAIIIgAAAgIAAACBQABgEBA=</HashCode>
       <FileName>Model\HexagonalMap\HexMap.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="First_Build.Path" Collapsed="true">
-    <Position X="10.75" Y="3" Width="1.5" />
+    <Position X="16" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AABAAAAAAAAAAAAACAAAAABAAgAAAAAIAIAAAAAAAAA=</HashCode>
       <FileName>Model\HexagonalMap\Path.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="First_Build.Terrain" Collapsed="true">
-    <Position X="14.25" Y="3" Width="1.5" />
+    <Position X="19.5" Y="2.5" Width="1.5" />
+    <NestedTypes>
+      <Struct Name="First_Build.Terrain.BattleTerrain" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Model\HexagonalMap\Terrain.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+      <Struct Name="First_Build.Terrain.WorldTerrain" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Model\HexagonalMap\Terrain.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAIAAAAAEAAAAAAhAgAAEAAAAAAIAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAIAAAAAAAAAAAABAgAAAAAAAAAIAAA=</HashCode>
       <FileName>Model\HexagonalMap\Terrain.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="First_Build.Tile" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="16" Y="3" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAJABAAAAAAAQAFgAAAAAAAAAFEAIAAAAAEAABAAiA=</HashCode>
-      <FileName>Model\HexagonalMap\Tile.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
   <Class Name="First_Build.Action">
-    <Position X="3.75" Y="1" Width="1.5" />
+    <Position X="4" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAAAACAAAAAAAAAAIIAAAAQACAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Model\Action.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="First_Build.MoveAction">
-    <Position X="0.5" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Model\Action.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="First_Build.AttackAction">
-    <Position X="2.75" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Model\Action.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="First_Build.EmptyAction">
-    <Position X="5" Y="4.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Model\Action.cs</FileName>
+      <HashCode>IAAABCQAAAAgAAAAIIAAAAQCCAAAAAEIAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Actions\Action.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="First_Build.EndTurnAction">
-    <Position X="7.25" Y="4.5" Width="1.5" />
+    <Position X="7.5" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Model\Action.cs</FileName>
+      <FileName>Model\Actions\EndTurnAction.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="First_Build.AttackType" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="14.25" Y="1" Width="1.5" />
+    <Position X="19.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAAEAIAAAAAAAAAAAiA=</HashCode>
-      <FileName>Model\Attack\AttackType.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAEgAAAAAAAAAAEAIAAAAAAAAAAAiA=</HashCode>
+      <FileName>Model\Actions\AttackType.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="First_Build.Sword">
-    <Position X="2.75" Y="12.75" Width="1.5" />
+    <Position X="5.75" Y="14" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AgAAAACAAAAAgAAAAAAAAgAAAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <HashCode>AgAAAACACAAAgAAAAAAAAgAAAAAAAAAAAAAAAAAAIAA=</HashCode>
       <FileName>Model\Equipment\Weapons\Swords.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="First_Build.Spear">
-    <Position X="0.5" Y="12.75" Width="1.5" />
+    <Position X="8" Y="14" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AgAAAACAAAAAAAAAAAACAAAAAAAAAAAAAIAAAAAAIAA=</HashCode>
+      <HashCode>AgAAAACACAAAAAAAAAACAAAAAAAAAAAAAIAAAAAAIAA=</HashCode>
       <FileName>Model\Equipment\Weapons\Spear.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="First_Build.EquipmentObject">
-    <Position X="2.75" Y="7" Width="1.5" />
+    <Position X="8" Y="7.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAgAAAAAAAAAQAAAAEAAAAAAAQAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAACAAAgAAAAAAAAAQAAAAEAAAAAAAQAAAAAAA=</HashCode>
       <FileName>Model\Equipment\Weapons\EquipmentObject.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="First_Build.CharacterEquipment" Collapsed="true">
-    <Position X="12.25" Y="4.75" Width="1.5" />
+    <Position X="19.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAEAAAAAAAAAAAAAAAAAACAAIAAAAAAAAAAAA=</HashCode>
+      <HashCode>ABAAAAAAGAAAAAAAAAAAAAAAAAACAAIAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Characters\CharacterEquipment.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="First_Build.WearableEquiment">
-    <Position X="5" Y="9.75" Width="1.5" />
+    <Position X="10.25" Y="10.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAIAAgBABAAAgAAAAAQABAAAAAgAAEAACAAA=</HashCode>
+      <HashCode>AAAAAAAAAIAAgBAFAAAgAAAAAQABAAAAAgAAEAACAAA=</HashCode>
       <FileName>Model\Equipment\Armor\CoveringEquipment.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="First_Build.ChainMail">
-    <Position X="5" Y="13.75" Width="1.5" />
+    <Position X="10.25" Y="14.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Equipment\Armor\CoveringEquipment.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="First_Build.BodyPart" Collapsed="true">
-    <Position X="10.75" Y="2" Width="1.5" />
+    <Position X="16" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAIAAAAAAAAEAAAAAAAAAAEAAAAAAAAgAAAAAk=</HashCode>
+      <HashCode>AAAAAAAIAAAAAAAEEAAAAAAAAAAEAAAAAAAAgAAAAAk=</HashCode>
       <FileName>Model\Characters\Body.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="First_Build.Body">
-    <Position X="8.25" Y="7" Width="1.5" />
+    <Position X="13.5" Y="9.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AQAACABCAAAACAAAAAAAAAAAARAAAAAACgAAAQAAAAA=</HashCode>
+      <HashCode>AQAACABGAAAACAAAAAAAAAAAARAAAAAACgAAAQAAAAA=</HashCode>
       <FileName>Model\Characters\Body.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="First_Build.HumanBody">
-    <Position X="8.25" Y="11" Width="1.5" />
+    <Position X="13.5" Y="13.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Characters\Body.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="First_Build.Character" Collapsed="true">
-    <Position X="12.5" Y="2" Width="1.5" />
+    <Position X="17.75" Y="1.5" Width="1.5" />
+    <NestedTypes>
+      <Class Name="First_Build.Character.AttackedEventArgs" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Model\Characters\Character.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="First_Build.Character.MoveEventArgs" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Model\Characters\Character.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>ASABSAAEEIBAHIAEAAgCIAAAC4BEogAAECAACBIQAAA=</HashCode>
       <FileName>Model\Characters\Character.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="First_Build.MoveAction">
+    <Position X="0.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAACAAAAAEAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Actions\MoveAction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="First_Build.AttackAction">
+    <Position X="3" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAQACAAAAAEAAAAAAAAAQAA=</HashCode>
+      <FileName>Model\Actions\AttackAction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="First_Build.EmptyAction">
+    <Position X="5.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Actions\EmptyAction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="First_Build.BattleMap">
+    <Position X="13.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAIAAAAAMAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\HexagonalMap\BattleMap.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="First_Build.Tile">
+    <Position X="1.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEgAAAAAAAAABAAIAAAAIAAABAAiA=</HashCode>
+      <FileName>Model\HexagonalMap\Tile.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="First_Build.BattleTile" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAJABAAAAAAAQABAAAAAAAAAAEEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\HexagonalMap\BattleTile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="First_Build.WorldMap">
+    <Position X="15.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Model\HexagonalMap\WorldMap.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="First_Build.WorldTile">
+    <Position X="2.75" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\HexagonalMap\WorldTile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="First_Build.TileContent">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAABAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\HexagonalMap\TileContent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="First_Build.City">
+    <Position X="10.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAEAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Model\HexagonalMap\TileContent.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />
