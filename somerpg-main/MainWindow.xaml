@@ -5,8 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:somerpg_main"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowState="Maximized">
     <Grid>
-        
+        <ScrollViewer Margin="0" PanningMode="Both" HorizontalScrollBarVisibility="Visible" CanContentScroll="True">
+            <Canvas x:Name="canvas" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" MouseDown="Window_MouseDown"/>
+        </ScrollViewer>
+        <ListBox x:Name="listBox" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFAC0505" Width="200" Height="395" Panel.ZIndex="120"/>
+
     </Grid>
 </Window>

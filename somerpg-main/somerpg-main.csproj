@@ -37,6 +37,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -69,6 +70,18 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\AStar.cs" />
+    <Compile Include="Model\HexagonalMap.cs" />
+    <Compile Include="Model\Tile.cs" />
+    <Content Include="Model_Old\BattleMap.cs" />
+    <Content Include="Model_Old\BattleTile.cs" />
+    <Content Include="Model_Old\HexMap.cs" />
+    <Content Include="Model_Old\Path.cs" />
+    <Content Include="Model_Old\Terrain.cs" />
+    <Content Include="Model_Old\Tile.cs" />
+    <Content Include="Model_Old\TileContent.cs" />
+    <Content Include="Model_Old\WorldMap.cs" />
+    <Content Include="Model_Old\WorldTile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -93,6 +106,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\WorldFlatTile.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
