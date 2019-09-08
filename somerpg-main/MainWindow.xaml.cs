@@ -21,40 +21,19 @@ namespace somerpg_main
     /// </summary>
     public partial class MainWindow : Window
     {
-        readonly WorldMap worldMap = new WorldMap();
-        public MainWindow()
+        public WorldMap worldMap;
+        Polygon polygon = new Polygon();
+        Point rmbPressedPoint = new Point(0,0);
+
+        public MainWindow(WorldMap worldMap)
         {
+            this.worldMap = worldMap;
             InitializeComponent();
             IniCanvas();
             GenerateImages();
+
             //DrawMapImage();
-            DrawPolygons();
-        }
-
-        void GenerateImages()
-        {
-            foreach (Tile item in worldMap)
-            {
-                Image i = new Image
-                {
-                    Source = new BitmapImage(item.Terrain.textureUri)
-                };
-                TextBlock t = new TextBlock();
-                t.Text = item.Coord.ToString();
-
-                var pixelCoord = HexagonalMap.HexToPixel(item.Coord);
-
-                Canvas.SetTop(i, pixelCoord.Y);
-                Canvas.SetLeft(i, pixelCoord.X);
-
-                Canvas.SetTop(t, pixelCoord.Y + 140);
-                Canvas.SetLeft(t, pixelCoord.X + 70);
-
-                t.Foreground = Brushes.White;
-
-                canvas.Children.Add(i);
-                canvas.Children.Add(t);
-            }
+            //DrawPolygons();
         }
 
         void IniCanvas()
@@ -62,12 +41,40 @@ namespace somerpg_main
             var s = worldMap.GetSize();
             var (width, height) = HexagonalMap.GetMapPixelSize((s.X, s.Y));
 
-            canvas.Background = Brushes.DarkGray;
+            //canvas.Background = Brushes.DarkGray;
 
             canvas.Width = width;
             canvas.Height = height;
-        }
 
+            canvas.RenderTransform = new ScaleTransform
+            {
+                CenterX = canvas.Width / 2,
+                CenterY = canvas.Width / 2
+            };
+        }
+        void GenerateImages()
+        {
+            foreach (WorldTile item in worldMap)
+            {
+                var textures = item.TextureUris;
+                for (int i = 0; i < textures.Count; i++)
+                {
+                    Image img = new Image
+                    {
+                        Source = new BitmapImage(textures[i])
+                    };
+
+                    var pixelCoord = HexagonalMap.HexToPixel(item.Coord);
+
+                    Canvas.SetTop(img, pixelCoord.Y);
+                    Canvas.SetLeft(img, pixelCoord.X);
+
+                    Panel.SetZIndex(img, i);
+
+                    canvas.Children.Add(img);
+                }
+            }
+        }
         void DrawPolygons()
         {
             foreach (Tile item in worldMap)
@@ -75,7 +82,20 @@ namespace somerpg_main
                 canvas.Children.Add(GetLocatedPolygon(item.Coord));
             }
         }
+        void DrawMapImage()
+        {
+            var image = new Image();
 
+            var s = Imaging.CreateBitmapSourceFromHBitmap(
+                worldMap.GetMapTexture().GetHbitmap(),
+                IntPtr.Zero,
+                Int32Rect.Empty,
+                BitmapSizeOptions.FromEmptyOptions());
+
+            image.Source = s;
+
+            canvas.Children.Add(image);
+        }
         Polygon GetLocatedPolygon(System.Drawing.Point coord)
         {
             Polygon p = new Polygon();
@@ -91,10 +111,10 @@ namespace somerpg_main
             Canvas.SetTop(p, offset.Y);
             Canvas.SetLeft(p, offset.X);
 
-            p.MouseEnter += P_MouseEnter;
-            p.MouseLeave += P_MouseLeave;
+            //p.MouseEnter += P_MouseEnter;
+            //p.MouseLeave += P_MouseLeave;
 
-            p.Fill = Brushes.Transparent;
+            //p.Fill = Brushes.Transparent;
 
             Panel.SetZIndex(p, 0);
 
@@ -103,19 +123,18 @@ namespace somerpg_main
             return p;
         }
 
-        void DrawMapImage()
+        void DrawHighlightPolygonByPixel(Point p)
         {
-            var image = new Image();
-
-            var s = Imaging.CreateBitmapSourceFromHBitmap(
-                worldMap.GetMapTexture().GetHbitmap(),
-                IntPtr.Zero,
-                Int32Rect.Empty,
-                BitmapSizeOptions.FromEmptyOptions());
-
-            image.Source = s;
-
-            canvas.Children.Add(image);
+            var tileCoord = HexagonalMap.PixelToHex(p);
+            DrawClickedPolygon(tileCoord);
+            Console.WriteLine(tileCoord);
+        }
+        void DrawClickedPolygon(System.Drawing.Point point)
+        {
+            canvas.Children.Remove(polygon);
+            var p = GetLocatedPolygon(point);
+            polygon = p;
+            canvas.Children.Add(p);
         }
 
         private void P_MouseLeave(object sender, MouseEventArgs e)
@@ -123,18 +142,46 @@ namespace somerpg_main
             var p = sender as Polygon;
             p.Fill = Brushes.Transparent;
         }
-
         private void P_MouseEnter(object sender, MouseEventArgs e)
         {
             var p = sender as Polygon;
             p.Fill = Brushes.LightGray;
         }
-
-        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            HexagonalMap.PixelToHex(e.GetPosition(canvas));
-            listBox.Items.Add(e.GetPosition(canvas));
-            Console.WriteLine(e.GetPosition(canvas));
+            DrawHighlightPolygonByPixel(e.GetPosition(canvas));
+        }
+        private void Canvas_MouseMove(object sender, MouseEventArgs e)
+        {
+            //DrawHighlightPolygonByPixel(e.GetPosition(canvas));
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                var xOffset = e.GetPosition(window).X - rmbPressedPoint.X;
+                var yOffset = e.GetPosition(window).Y - rmbPressedPoint.Y;
+
+                var x = canvas.Margin.Left + xOffset; 
+                var y = canvas.Margin.Top + yOffset;
+
+                canvas.Margin = new Thickness(x, y, 0, 0);
+            }
+            rmbPressedPoint = e.GetPosition(window);
+        }
+        private void Canvas_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            float scale;
+            if (e.Delta < 0)
+            {
+                scale = 0.95f;
+            }
+            else
+            {
+                scale = 1.05f;
+            }
+
+
+            ScaleTransform s = (ScaleTransform)canvas.RenderTransform;
+            s.ScaleX *= scale;
+            s.ScaleY *= scale;
         }
     }
 }

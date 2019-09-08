@@ -13,5 +13,14 @@ namespace somerpg_main
     /// </summary>
     public partial class App : Application
     {
+        public static WorldMap worldMap = new WorldMap();
+
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            // Create the startup window
+            MainWindow wnd = new MainWindow(worldMap);
+            // Show the window
+            wnd.Show();
+        }
     }
 }

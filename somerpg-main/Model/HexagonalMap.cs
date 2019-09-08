@@ -123,7 +123,7 @@ namespace somerpg_main
         {
             (int width, int height) result;
             result.width = ((HEXPIXELWIDTH / 4 * 3) * dataSize.x) + (HEXPIXELWIDTH / 4);
-            result.height = (HEXPIXELHEIGHT * dataSize.y) + (HEXPIXELHEIGHT / 2);
+            result.height = (HEXPIXELHEIGHT * dataSize.y) + (HEXPIXELHEIGHT / 2) + HEXPIXELHEIGHTOFFSET;
 
             return result;
         }
@@ -131,7 +131,7 @@ namespace somerpg_main
         {
             //Console.WriteLine("-----------");
 
-            int quarter = (int)(HEXPIXELWIDTH * 0.25f);
+            const int quarter = (int)(HEXPIXELWIDTH * 0.25f);
 
             (int x, int y) pixelCoord = 
                 (Convert.ToInt32(coord.X), 
@@ -167,10 +167,6 @@ namespace somerpg_main
 
                 var linecheck2 = ((y1 - y2) * xRem) + ((x2 - x1) * yRem) + ((x1 * y2) - (x2 * y1));
 
-                //Console.WriteLine("linecheck1: " + linecheck1);
-                //Console.WriteLine("linecheck2: " + linecheck2);
-
-
                 int trianglepart = 0;
 
                 if (linecheck1 > 0) { trianglepart = -1; }
@@ -195,22 +191,6 @@ namespace somerpg_main
                         break;
                 }
             }
-            else
-            {
-                //if (x % 2 == 0)
-                //{
-                //    pixelCoord.y -= HEXPIXELHEIGHT / 2;
-                //    y = pixelCoord.y / HEXPIXELHEIGHT;
-                //}
-            }
-
-
-            //Console.WriteLine("x: " + x);
-            //Console.WriteLine("y: " + y);
-            //Console.WriteLine("yRem: " + yRem);
-            //Console.WriteLine("xRem: " + xRem);
-            //Console.WriteLine("quarterN: " + quarterN);
-
             return new Point(x, y);
         }
     }
@@ -219,7 +199,7 @@ namespace somerpg_main
     {
         public WorldMap()
         {
-            IniTiles(new Point(30, 30));
+            IniTiles(new Point(120, 120));
         }
 
         void IniTiles(Point size)

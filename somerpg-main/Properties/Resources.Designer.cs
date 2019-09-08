@@ -63,6 +63,16 @@ namespace somerpg_main.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Village {
+            get {
+                object obj = ResourceManager.GetObject("Village", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap WorldFlatTile {
             get {
                 object obj = ResourceManager.GetObject("WorldFlatTile", resourceCulture);
