@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F3E5E56E-D6E0-4085-9F0A-235260326642}</ProjectGuid>
+    <ProjectGuid>{9AD0DEA6-C797-4D39-AF58-60AE6CFA24B0}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>DataCreator</RootNamespace>
-    <AssemblyName>DataCreator</AssemblyName>
+    <RootNamespace>somerpg_main</RootNamespace>
+    <AssemblyName>somerpg-main</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -37,7 +37,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -70,6 +70,18 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\AStar.cs" />
+    <Compile Include="Model\HexagonalMap.cs" />
+    <Compile Include="Model\Tile.cs" />
+    <Content Include="Model_Old\BattleMap.cs" />
+    <Content Include="Model_Old\BattleTile.cs" />
+    <Content Include="Model_Old\HexMap.cs" />
+    <Content Include="Model_Old\Path.cs" />
+    <Content Include="Model_Old\Terrain.cs" />
+    <Content Include="Model_Old\Tile.cs" />
+    <Content Include="Model_Old\TileContent.cs" />
+    <Content Include="Model_Old\WorldMap.cs" />
+    <Content Include="Model_Old\WorldTile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -83,10 +95,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="Resources\Village.png" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Model\z_Model.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -94,6 +108,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\WorldFlatTile.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

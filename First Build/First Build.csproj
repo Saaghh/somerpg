@@ -14,6 +14,21 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -38,6 +53,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -56,69 +72,90 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Controller\Battle.cs" />
-    <Compile Include="Controller\HexMapMath.cs" />
-    <Compile Include="Model\BattleMap.cs" />
-    <Compile Include="Model\Characters\CharacterController.cs" />
-    <Compile Include="Model\Tiles\BaseTile.cs" />
-    <Compile Include="Model\Tiles\BattleTilesCollection.cs" />
-    <Compile Include="Model\Tiles\BaseTileController.cs" />
+    <Compile Include="Controls\BattleControls\ActionControl.xaml.cs">
+      <DependentUpon>ActionControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\BattleControls\HighlightedTile.xaml.cs">
+      <DependentUpon>HighlightedTile.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WorldWindow.xaml.cs">
+      <DependentUpon>WorldWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Actions\AttackAction.cs" />
+    <Compile Include="Model\Actions\Action.cs" />
+    <Compile Include="Model\Actions\EmptyAction.cs" />
+    <Compile Include="Model\Actions\MoveAction.cs" />
+    <Compile Include="Model\Characters\CharacterEquipment.cs" />
+    <Compile Include="Model\Actions\EndTurnAction.cs" />
+    <Compile Include="Model\Characters\Body.cs" />
+    <Compile Include="Model\Equipment\Armor\CoveringEquipment.cs" />
+    <Compile Include="Model\Equipment\Weapons\EquipmentObject.cs" />
+    <Compile Include="Model\Equipment\Weapons\Spear.cs" />
+    <Compile Include="Model\Equipment\Weapons\Swords.cs" />
+    <Compile Include="Model\HexagonalMap\AStar.cs" />
+    <Compile Include="Model\Equipment\Weapons\Weapon.cs" />
+    <Compile Include="Model\Actions\AttackParams.cs" />
+    <Compile Include="Model\Actions\AttackType.cs" />
+    <Compile Include="Model\Battle.cs" />
+    <Compile Include="Model\Characters\Character.cs" />
+    <Compile Include="Model\Characters\Party.cs" />
+    <Compile Include="Model\HexagonalMap\BattleMap.cs" />
+    <Compile Include="Model\HexagonalMap\BattleTile.cs" />
+    <Compile Include="Model\HexagonalMap\Path.cs" />
+    <Compile Include="Model\HexagonalMap\Terrain.cs" />
+    <Compile Include="Model\HexagonalMap\Tile.cs" />
+    <Compile Include="Model\HexagonalMap\HexMap.cs" />
+    <Compile Include="Model\HexagonalMap\TileContent.cs" />
+    <Compile Include="Model\HexagonalMap\WorldMap.cs" />
+    <Compile Include="Model\HexagonalMap\WorldTile.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="View\BattleControls\BattleMapControl.xaml.cs">
+    <Compile Include="Controls\BattleControls\BattleMapControl.xaml.cs">
       <DependentUpon>BattleMapControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\BattleControls\BattleMapImage.xaml.cs">
-      <DependentUpon>BattleMapImage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\BattleWindow.xaml.cs">
+    <Compile Include="Controls\BattleWindow.xaml.cs">
       <DependentUpon>BattleWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\BattleControls\CharacterControl.xaml.cs">
+    <Compile Include="Controls\BattleControls\CharacterControl.xaml.cs">
       <DependentUpon>CharacterControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Archive\HexControl.xaml.cs">
-      <DependentUpon>HexControl.xaml</DependentUpon>
-    </Compile>
-    <Page Include="View\BattleControls\BattleMapControl.xaml">
+    <Page Include="Controls\BattleControls\ActionControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\BattleControls\BattleMapImage.xaml">
+    <Page Include="Controls\BattleControls\BattleMapControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\BattleWindow.xaml">
+    <Page Include="Controls\BattleControls\HighlightedTile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Archive\MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Include="Controls\WorldWindow.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\BattleWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Archive\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="View\BattleControls\CharacterControl.xaml">
+    <Page Include="Controls\BattleControls\CharacterControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Archive\HexControl.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Characters\CharacterBase.cs" />
-    <Compile Include="Controller\Game.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -130,12 +167,15 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
+    <None Include="JSONs\ForestTile.json" />
+    <None Include="JSONs\WaterTile.json" />
+    <None Include="Model\Equipment\WholeProject.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="TileDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -154,6 +194,42 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\TestCharacter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 и x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\FlatTile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Warrior.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Zombie.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\TreeTile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Sounds\HitSound.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\StoneTile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\WorldFlatTile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Village.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

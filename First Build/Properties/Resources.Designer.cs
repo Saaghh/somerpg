@@ -61,6 +61,15 @@ namespace First_Build.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на {&quot;moveCost&quot;:15,&quot;type&quot;:&quot;Forest&quot;,&quot;walkable&quot;:true}.
+        /// </summary>
+        public static string BasicTerrainJson {
+            get {
+                return ResourceManager.GetString("BasicTerrainJson", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap ErrorTile {
@@ -73,9 +82,38 @@ namespace First_Build.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap FlatTile {
+            get {
+                object obj = ResourceManager.GetObject("FlatTile", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap ForestTile {
             get {
                 object obj = ResourceManager.GetObject("ForestTile", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.IO.UnmanagedMemoryStream, аналогичного System.IO.MemoryStream.
+        /// </summary>
+        public static System.IO.UnmanagedMemoryStream HitSound {
+            get {
+                return ResourceManager.GetStream("HitSound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap StoneTile {
+            get {
+                object obj = ResourceManager.GetObject("StoneTile", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -103,9 +141,68 @@ namespace First_Build.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap TreeTile {
+            get {
+                object obj = ResourceManager.GetObject("TreeTile", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на pack://application:,,,/First Build;component/.
+        /// </summary>
+        public static string UriBase {
+            get {
+                return ResourceManager.GetString("UriBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Village {
+            get {
+                object obj = ResourceManager.GetObject("Village", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Warrior {
+            get {
+                object obj = ResourceManager.GetObject("Warrior", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap WaterTile {
             get {
                 object obj = ResourceManager.GetObject("WaterTile", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap WorldFlatTile {
+            get {
+                object obj = ResourceManager.GetObject("WorldFlatTile", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Zombie {
+            get {
+                object obj = ResourceManager.GetObject("Zombie", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

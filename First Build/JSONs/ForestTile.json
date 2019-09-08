@@ -1,0 +1,8 @@
+{
+  "terrain": {
+    "moveCost": 2,
+    "textureUriEnd": "Resources\/ForestTile.png",
+    "type": "Forest",
+    "walkable": true
+  }
+}

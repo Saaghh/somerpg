@@ -1,0 +1,21 @@
+﻿<Window x:Class="First_Build.View.BattleWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:First_Build.View"
+        mc:Ignorable="d"
+        Title="BattleWindow" Height="1080" Width="1920" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" WindowState="Maximized" KeyDown="Window_KeyDown">
+    <Grid Margin="0">
+        <ScrollViewer x:Name="scrollViewer" HorizontalAlignment="Left" VerticalAlignment="Top" CanContentScroll="True" Width="1912" Height="1049" AllowDrop="True" PanningMode="Both" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" Background="#FF4B1F0B" d:IsHidden="True" RenderTransformOrigin="0.5,0.5" >
+            <Canvas x:Name="mapContainer" HorizontalAlignment="Center" VerticalAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" Background="#FF361B0F" RenderTransformOrigin="0.5,0.5">
+                <Image x:Name="image" HorizontalAlignment="Left"  VerticalAlignment="Top" Stretch="None" Panel.ZIndex="-1000"/>
+            </Canvas>
+        </ScrollViewer>
+        <Button x:Name="endTurnButton" Content="End Turn" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="1809,1001,0,0" BorderBrush="{x:Null}" Background="White" Click="EndTurnButton_Click"/>
+        <MediaElement x:Name="hitSound" HorizontalAlignment="Left" Height="100" Margin="406,449,0,0" VerticalAlignment="Top" Width="100" d:IsHidden="True" Source="pack://siteoforigin:,,,/Resources/Sounds/HitSound.wav"/>
+        <ListBox x:Name="listBox" HorizontalAlignment="Left" Height="276" VerticalAlignment="Top" Width="328"/>
+        <Canvas x:Name="actionsCanvas" HorizontalAlignment="Left" Height="586" Margin="333,10,0,0" VerticalAlignment="Top" Width="1569"/>
+        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="114,305,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+    </Grid>
+</Window>
