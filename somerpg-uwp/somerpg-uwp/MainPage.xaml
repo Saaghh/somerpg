@@ -9,7 +9,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid x:Name="maingrid">
-        <Canvas x:Name="canvas" PointerMoved="canvas_PointerMoved" CanDrag="False" PointerWheelChanged="canvas_PointerWheelChanged" />
+        <Canvas x:Name="canvas" PointerMoved="canvas_PointerMoved" CanDrag="False" PointerWheelChanged="canvas_PointerWheelChanged" PointerPressed="canvas_PointerPressed" />
 
     </Grid>
 </Page>

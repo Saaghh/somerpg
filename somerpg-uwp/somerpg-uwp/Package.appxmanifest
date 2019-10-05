@@ -15,7 +15,7 @@
 
   <Properties>
     <DisplayName>somerpg-uwp</DisplayName>
-    <PublisherDisplayName>ssa2g</PublisherDisplayName>
+    <PublisherDisplayName>Saagh</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -38,7 +38,7 @@
         Description="somerpg-uwp"
         BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
-        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        <uap:SplashScreen Image="Splash\SplashScreen.png" BackgroundColor="black"/>
       </uap:VisualElements>
     </Application>
   </Applications>

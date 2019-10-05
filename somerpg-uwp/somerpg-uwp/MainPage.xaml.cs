@@ -25,16 +25,45 @@ namespace somerpg_uwp
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        public WorldMap worldMap;
+        WorldMap worldMap;
 
         public MainPage()
         {
             this.InitializeComponent();
             worldMap = new WorldMap();
             IniCanvas();
-            DrawPolygons();
+            DrawImages();
         }
 
+        Polygon polygon;
+
+        void DrawHighlightPolygon(System.Drawing.Point hex)
+        {
+            if (polygon != null)
+            {
+                canvas.Children.Remove(polygon);
+            }
+
+            var coord = HexagonalMap.HexToPixel(hex);
+
+            var newPoly = new Polygon();
+
+            newPoly.Points.Add(new Point(50, 0));
+            newPoly.Points.Add(new Point(150, 0));
+            newPoly.Points.Add(new Point(200, 60));
+            newPoly.Points.Add(new Point(150, 120));
+            newPoly.Points.Add(new Point(50, 120));
+            newPoly.Points.Add(new Point(0, 60));
+
+            newPoly.Stroke = new SolidColorBrush(Colors.Wheat);
+
+            Canvas.SetLeft(newPoly, coord.X);
+            Canvas.SetTop(newPoly, coord.Y + HexagonalMap.HEXPIXELHEIGHTOFFSET);
+
+            canvas.Children.Add(newPoly);
+
+            polygon = newPoly;
+        }
         private void IniCanvas()
         {
             var s = worldMap.GetSize();
@@ -50,8 +79,7 @@ namespace somerpg_uwp
                 CenterY = canvas.Height / 2
             };
         }
-
-        private void DrawPolygons()
+        private void DrawImages()
         {
             //var poly = new Polygon();
             //poly.Points.Add(new Point(50, 0));
@@ -81,7 +109,6 @@ namespace somerpg_uwp
                 canvas.Children.Add(img);
             }
         }
-
         private void GenerateImages()
         {
             foreach (WorldTile item in worldMap)
@@ -165,6 +192,15 @@ namespace somerpg_uwp
                 s.ScaleX *= scale;
                 s.ScaleY *= scale;
             }
+        }
+
+        private void canvas_PointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+            var point = e.GetCurrentPoint(canvas);
+
+            var hex = HexagonalMap.PixelToHex(new System.Drawing.Point(Convert.ToInt32(point.Position.X), Convert.ToInt32(point.Position.Y)));
+
+            DrawHighlightPolygon(hex);
         }
     }
 }
