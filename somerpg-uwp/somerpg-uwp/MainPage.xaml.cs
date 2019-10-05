@@ -105,5 +105,66 @@ namespace somerpg_uwp
                 }
             }
         }
+
+
+        Point rmbPressedPoint = new Point(0, 0);
+
+        private void canvas_PointerMoved(object sender, PointerRoutedEventArgs e)
+        {
+            Pointer ptr = e.Pointer;
+
+            if (ptr.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Mouse)
+            {
+                Windows.UI.Input.PointerPoint ptrPt = e.GetCurrentPoint(maingrid);
+
+                if (ptrPt.Properties.IsLeftButtonPressed)
+                {
+                    var xOffset = ptrPt.Position.X - rmbPressedPoint.X;
+                    var yOffset = ptrPt.Position.Y - rmbPressedPoint.Y;
+
+                    var x = canvas.Margin.Left + xOffset;
+                    var y = canvas.Margin.Top + yOffset;
+
+                    canvas.Margin = new Thickness(x, y, 0, 0);
+                }
+
+                rmbPressedPoint = ptrPt.Position;
+            }
+
+            //if (e.LeftButton == MouseButtonState.Pressed)
+            //{
+            //    var xOffset = e.GetPosition(window).X - rmbPressedPoint.X;
+            //    var yOffset = e.GetPosition(window).Y - rmbPressedPoint.Y;
+
+            //    var x = canvas.Margin.Left + xOffset;
+            //    var y = canvas.Margin.Top + yOffset;
+
+            //    canvas.Margin = new Thickness(x, y, 0, 0);
+            //}
+            //rmbPressedPoint = e.GetPosition(window);
+        }
+
+        private void canvas_PointerWheelChanged(object sender, PointerRoutedEventArgs e)
+        {
+            Pointer ptr = e.Pointer;
+            if (ptr.PointerDeviceType == Windows.Devices.Input.PointerDeviceType.Mouse)
+            {
+
+                float scale;
+                if (e.GetCurrentPoint(maingrid).Properties.MouseWheelDelta < 0)
+                {
+                    scale = 0.95f;
+                }
+                else
+                {
+                    scale = 1.05f;
+                }
+
+
+                ScaleTransform s = (ScaleTransform)canvas.RenderTransform;
+                s.ScaleX *= scale;
+                s.ScaleY *= scale;
+            }
+        }
     }
 }

@@ -199,7 +199,7 @@ namespace somerpg_uwp
     {
         public WorldMap()
         {
-            IniTiles(new Point(120, 120));
+            IniTiles(new Point(30, 30));
         }
 
         void IniTiles(Point size)

@@ -8,14 +8,8 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-        <Canvas x:Name="canvas" >
-            <Polygon Points="0,0 200,0 200,200 0,200" >
-                <Polygon.Fill>
-                    <ImageBrush ImageSource="Textures/WorldFlatTile.png"/>
-                </Polygon.Fill>
-            </Polygon>
-        </Canvas>
+    <Grid x:Name="maingrid">
+        <Canvas x:Name="canvas" PointerMoved="canvas_PointerMoved" CanDrag="False" PointerWheelChanged="canvas_PointerWheelChanged" />
 
     </Grid>
 </Page>
