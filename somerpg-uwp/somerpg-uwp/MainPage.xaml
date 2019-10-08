@@ -3,13 +3,15 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:somerpg_uwp"
+    xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid x:Name="maingrid">
-        <Canvas x:Name="canvas" PointerMoved="canvas_PointerMoved" CanDrag="False" PointerWheelChanged="canvas_PointerWheelChanged" PointerPressed="canvas_PointerPressed" />
-
+        <!--<Canvas x:Name="canvas2" PointerMoved="canvas_PointerMoved" CanDrag="False" PointerWheelChanged="canvas_PointerWheelChanged" PointerPressed="canvas_PointerPressed" />-->
+        <canvas:CanvasAnimatedControl x:Name="canvas" CreateResources="canvas_CreateResources" Draw="canvas_Draw" PointerMoved="canvas_PointerMoved" PointerWheelChanged="canvas_PointerWheelChanged" RenderTransformOrigin="0.5,0.5">
+        </canvas:CanvasAnimatedControl>
     </Grid>
 </Page>

@@ -15,14 +15,38 @@ namespace somerpg_uwp
             get
             {
                 List<Uri> list = new List<Uri>();
-                list.Add(Terrain1.textureUri);
+                list.Add(Terrain.TextureUri);
                 return list;
             }
         }
 
-        public Terrain Terrain { get => Terrain1; set => Terrain1 = value; }
-        public Point Coord { get => coord; protected set => coord = value; }
-        public Terrain Terrain1 { get; set; }
+        public Point Coord { get => coord; set => coord = value; }
+        public Terrain Terrain { get; set; }
+    }
+
+    public static class Tiles
+    {
+        public static Tile FlatTile
+        {
+            get
+            {
+                return new Tile
+                {
+                    Terrain = Terrain.FlatWorldTerrain
+                };
+            }
+        }
+        public static Tile ForestTile
+        {
+            get
+            {
+                return new Tile
+                {
+                    Terrain = Terrain.ForestWorldTerrain
+                };
+            }
+        }
+
     }
 
     public class WorldTile : Tile
@@ -61,10 +85,10 @@ namespace somerpg_uwp
 
     public class Terrain
     {
-        public Uri textureUri;
-        public string name;
-        public float moveCost;
-        public bool isWalkable;
+        public Uri TextureUri { get; set; }
+        public string Name { get; set; }
+        public float MoveCost { get; set; }
+        public bool IsWalkable { get; set; }
 
         public static Terrain FlatWorldTerrain
         {
@@ -72,13 +96,27 @@ namespace somerpg_uwp
             {
                 return new Terrain
                 {
-                    textureUri = new Uri("Resources/WorldFlatTile.png", UriKind.RelativeOrAbsolute),
-                    name = "FlatWorldTerrain",
-                    moveCost = 1,
-                    isWalkable = true
+                    TextureUri = new Uri("ms-appx:///Textures/FlatTile.png", UriKind.RelativeOrAbsolute),
+                    Name = "FlatWorldTerrain",
+                    MoveCost = 1,
+                    IsWalkable = true
                 };
             }
         }
+        public static Terrain ForestWorldTerrain
+        {
+            get
+            {
+                return new Terrain
+                {
+                    TextureUri = new Uri("ms-appx:///Textures/Forest.png", UriKind.RelativeOrAbsolute),
+                    Name = "ForestWorldTerrain",
+                    MoveCost = 2,
+                    IsWalkable = true
+                };
+            }
+        }
+
     }
 
     public class WordlTileContent : ContentObject

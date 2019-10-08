@@ -12,8 +12,7 @@ namespace somerpg_uwp
         public const int HEXPIXELHEIGHT = 120;
         public const int HEXPIXELHEIGHTOFFSET = 80;
 
-        private Tile[,] tiles;
-        public Tile[,] Tiles { get => tiles; set => tiles = value; }
+        Tile[,] Tiles { get; set; }
         public Tile this[int x, int y]
         {
             get
@@ -24,6 +23,11 @@ namespace somerpg_uwp
             {
                 Tiles[x, y] = value;
             }
+        }
+
+        public HexagonalMap(int width, int height)
+        {
+            Tiles = new Tile[width, height];
         }
 
         public Point GetSize()
@@ -197,22 +201,45 @@ namespace somerpg_uwp
 
     public class WorldMap : HexagonalMap
     {
-        public WorldMap()
+        public WorldMap() : base(100, 100)
         {
-            IniTiles(new Point(30, 30));
+            IniTiles();
         }
 
-        void IniTiles(Point size)
+        void IniTiles()
         {
-            Tiles = new Tile[size.X, size.Y];
-            for (int i = 0; i < Tiles.GetLength(0); i++)
+            Random r = new Random();
+            for (int i = 0; i < GetSize().X; i++)
             {
-                for (int j = 0; j < Tiles.GetLength(1); j++)
+                for (int j = 0; j < GetSize().Y; j++)
                 {
-                    Tiles[i, j] = new WorldTile(new Point(i, j));
+                    if (r.Next(2) == 1)
+                    {
+                        this[i, j] = Tiles.FlatTile;
+                    }
+                    else
+                    {
+                        this[i, j] = Tiles.ForestTile;
+
+                    }
+                    this[i, j].Coord = new Point(i, j);
+
                 }
             }
         }
+
+        //void IniTiles(Point size)
+        //{
+
+        //    Tiles = new Tile[size.X, size.Y];
+        //    for (int i = 0; i < Tiles.GetLength(0); i++)
+        //    {
+        //        for (int j = 0; j < Tiles.GetLength(1); j++)
+        //        {
+        //            Tiles[i, j] = new WorldTile(new Point(i, j));
+        //        }
+        //    }
+        //}
 
         //public Bitmap GetMapTexture()
         //{

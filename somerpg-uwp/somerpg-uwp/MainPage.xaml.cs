@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
+using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.UI.Xaml;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI;
@@ -15,6 +17,8 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Xaml.Shapes;
+using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 // Документацию по шаблону элемента "Пустая страница" см. по адресу https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x419
 
@@ -26,11 +30,13 @@ namespace somerpg_uwp
     public sealed partial class MainPage : Page
     {
         WorldMap worldMap;
-
+        CanvasBitmap[,] canvasImages;
         public MainPage()
         {
             this.InitializeComponent();
             worldMap = new WorldMap();
+            canvasImages = new CanvasBitmap[worldMap.GetSize().X, worldMap.GetSize().Y];
+
             IniCanvas();
             DrawImages();
         }
@@ -41,7 +47,7 @@ namespace somerpg_uwp
         {
             if (polygon != null)
             {
-                canvas.Children.Remove(polygon);
+                //canvas.Children.Remove(polygon);
             }
 
             var coord = HexagonalMap.HexToPixel(hex);
@@ -60,7 +66,7 @@ namespace somerpg_uwp
             Canvas.SetLeft(newPoly, coord.X);
             Canvas.SetTop(newPoly, coord.Y + HexagonalMap.HEXPIXELHEIGHTOFFSET);
 
-            canvas.Children.Add(newPoly);
+            //canvas.Children.Add(newPoly);
 
             polygon = newPoly;
         }
@@ -79,6 +85,11 @@ namespace somerpg_uwp
                 CenterY = canvas.Height / 2
             };
         }
+
+        private void TestMethod()
+        {
+            canvas.Translation = new System.Numerics.Vector3(0, 0, 400);
+        }
         private void DrawImages()
         {
             //var poly = new Polygon();
@@ -93,8 +104,8 @@ namespace somerpg_uwp
             {
                 var img = new Image();
 
-                //TODO: fix this shit
-                img.Source = new BitmapImage(new Uri("ms-appx:///Textures/WorldFlatTile.png", UriKind.RelativeOrAbsolute));
+                //new Uri("ms-appx:///Textures/WorldFlatTile.png", UriKind.RelativeOrAbsolute)
+                img.Source = new BitmapImage(item.TextureUris[0]);
 
                 img.Width = 200;
                 img.Height = 200;
@@ -106,7 +117,7 @@ namespace somerpg_uwp
 
                 //img.Stroke = new SolidColorBrush(Colors.Wheat);
 
-                canvas.Children.Add(img);
+                //canvas.Children.Add(img);
             }
         }
         private void GenerateImages()
@@ -128,7 +139,7 @@ namespace somerpg_uwp
 
                     //Panel.SetZIndex(img, i);
 
-                    canvas.Children.Add(img);
+                    //canvas.Children.Add(img);
                 }
             }
         }
@@ -149,10 +160,18 @@ namespace somerpg_uwp
                     var xOffset = ptrPt.Position.X - rmbPressedPoint.X;
                     var yOffset = ptrPt.Position.Y - rmbPressedPoint.Y;
 
+
+                    //var x = Convert.ToSingle(canvas.Translation.X + xOffset);
+                    //var y = Convert.ToSingle(canvas.Translation.Y + yOffset);
+
+                    //canvas.Translation = new System.Numerics.Vector3(x, y, 0);
+
                     var x = canvas.Margin.Left + xOffset;
                     var y = canvas.Margin.Top + yOffset;
 
                     canvas.Margin = new Thickness(x, y, 0, 0);
+
+                    //canvas.Invalidate();
                 }
 
                 rmbPressedPoint = ptrPt.Position;
@@ -180,17 +199,20 @@ namespace somerpg_uwp
                 float scale;
                 if (e.GetCurrentPoint(maingrid).Properties.MouseWheelDelta < 0)
                 {
-                    scale = 0.95f;
+                    scale = 0.99f;
                 }
                 else
                 {
-                    scale = 1.05f;
+                    scale = 1.01f;
                 }
 
 
                 ScaleTransform s = (ScaleTransform)canvas.RenderTransform;
                 s.ScaleX *= scale;
                 s.ScaleY *= scale;
+
+                canvas.Invalidate();
+
             }
         }
 
@@ -202,5 +224,36 @@ namespace somerpg_uwp
 
             DrawHighlightPolygon(hex);
         }
+
+
+        private void canvas_CreateResources(CanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.CanvasCreateResourcesEventArgs args)
+        {
+            args.TrackAsyncAction(CreateResourcesAsync(sender).AsAsyncAction());
+        }
+
+
+        CanvasBitmap canvasImage;
+        async Task CreateResourcesAsync(CanvasAnimatedControl sender)
+        {
+
+            canvasImage = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Textures/FlatTile.png", UriKind.RelativeOrAbsolute));
+
+        }
+
+        private void canvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
+        {
+            for (int i = 0; i < worldMap.GetSize().X; i++)
+            {
+                for (int j = 0; j < worldMap.GetSize().Y; j++)
+                {
+                    //var item = canvasImages[i, j];
+                    var coord = HexagonalMap.HexToPixel(new System.Drawing.Point(i, j));
+
+                    args.DrawingSession.DrawImage(canvasImage, coord.X, coord.Y);
+                    //args.DrawingSession.DrawImage(canvasImages[i, j], coord.X, coord.Y);
+                }
+            }
+        }
+
     }
 }
