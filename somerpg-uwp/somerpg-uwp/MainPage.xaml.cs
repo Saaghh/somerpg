@@ -30,46 +30,16 @@ namespace somerpg_uwp
     public sealed partial class MainPage : Page
     {
         WorldMap worldMap;
-        CanvasBitmap[,] canvasImages;
+        Point rmbPressedPoint = new Point(0, 0);
+        System.Drawing.Point highlightPoint;
+
         public MainPage()
         {
             this.InitializeComponent();
-            worldMap = new WorldMap();
-            canvasImages = new CanvasBitmap[worldMap.GetSize().X, worldMap.GetSize().Y];
-
+            worldMap = new WorldMap(33333);
             IniCanvas();
-            DrawImages();
         }
 
-        Polygon polygon;
-
-        void DrawHighlightPolygon(System.Drawing.Point hex)
-        {
-            if (polygon != null)
-            {
-                //canvas.Children.Remove(polygon);
-            }
-
-            var coord = HexagonalMap.HexToPixel(hex);
-
-            var newPoly = new Polygon();
-
-            newPoly.Points.Add(new Point(50, 0));
-            newPoly.Points.Add(new Point(150, 0));
-            newPoly.Points.Add(new Point(200, 60));
-            newPoly.Points.Add(new Point(150, 120));
-            newPoly.Points.Add(new Point(50, 120));
-            newPoly.Points.Add(new Point(0, 60));
-
-            newPoly.Stroke = new SolidColorBrush(Colors.Wheat);
-
-            Canvas.SetLeft(newPoly, coord.X);
-            Canvas.SetTop(newPoly, coord.Y + HexagonalMap.HEXPIXELHEIGHTOFFSET);
-
-            //canvas.Children.Add(newPoly);
-
-            polygon = newPoly;
-        }
         private void IniCanvas()
         {
             var s = worldMap.GetSize();
@@ -85,67 +55,6 @@ namespace somerpg_uwp
                 CenterY = canvas.Height / 2
             };
         }
-
-        private void TestMethod()
-        {
-            canvas.Translation = new System.Numerics.Vector3(0, 0, 400);
-        }
-        private void DrawImages()
-        {
-            //var poly = new Polygon();
-            //poly.Points.Add(new Point(50, 0));
-            //poly.Points.Add(new Point(150, 0));
-            //poly.Points.Add(new Point(200, 60));
-            //poly.Points.Add(new Point(150, 120));
-            //poly.Points.Add(new Point(50, 120));
-            //poly.Points.Add(new Point(0, 60));
-
-            foreach (Tile item in worldMap)
-            {
-                var img = new Image();
-
-                //new Uri("ms-appx:///Textures/WorldFlatTile.png", UriKind.RelativeOrAbsolute)
-                img.Source = new BitmapImage(item.TextureUris[0]);
-
-                img.Width = 200;
-                img.Height = 200;
-
-                var pos = HexagonalMap.HexToPixel(item.Coord);
-
-                Canvas.SetLeft(img, pos.X);
-                Canvas.SetTop(img, pos.Y);
-
-                //img.Stroke = new SolidColorBrush(Colors.Wheat);
-
-                //canvas.Children.Add(img);
-            }
-        }
-        private void GenerateImages()
-        {
-            foreach (WorldTile item in worldMap)
-            {
-                var textures = item.TextureUris;
-                for (int i = 0; i < textures.Count; i++)
-                {
-                    Image img = new Image
-                    {
-                        Source = new BitmapImage(textures[i])
-                    };
-
-                    var pixelCoord = HexagonalMap.HexToPixel(item.Coord);
-
-                    Canvas.SetTop(img, pixelCoord.Y);
-                    Canvas.SetLeft(img, pixelCoord.X);
-
-                    //Panel.SetZIndex(img, i);
-
-                    //canvas.Children.Add(img);
-                }
-            }
-        }
-
-
-        Point rmbPressedPoint = new Point(0, 0);
 
         private void canvas_PointerMoved(object sender, PointerRoutedEventArgs e)
         {
@@ -199,11 +108,11 @@ namespace somerpg_uwp
                 float scale;
                 if (e.GetCurrentPoint(maingrid).Properties.MouseWheelDelta < 0)
                 {
-                    scale = 0.99f;
+                    scale = 0.97f;
                 }
                 else
                 {
-                    scale = 1.01f;
+                    scale = 1.03f;
                 }
 
 
@@ -211,7 +120,7 @@ namespace somerpg_uwp
                 s.ScaleX *= scale;
                 s.ScaleY *= scale;
 
-                canvas.Invalidate();
+                //canvas.Invalidate();
 
             }
         }
@@ -220,40 +129,12 @@ namespace somerpg_uwp
         {
             var point = e.GetCurrentPoint(canvas);
 
-            var hex = HexagonalMap.PixelToHex(new System.Drawing.Point(Convert.ToInt32(point.Position.X), Convert.ToInt32(point.Position.Y)));
-
-            DrawHighlightPolygon(hex);
+            highlightPoint = HexagonalMap.HexToPixel(HexagonalMap.PixelToHex(new System.Drawing.Point(Convert.ToInt32(point.Position.X), Convert.ToInt32(point.Position.Y))));
         }
-
 
         private void canvas_CreateResources(CanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.CanvasCreateResourcesEventArgs args)
         {
             args.TrackAsyncAction(CreateResourcesAsync(sender).AsAsyncAction());
         }
-
-
-        CanvasBitmap canvasImage;
-        async Task CreateResourcesAsync(CanvasAnimatedControl sender)
-        {
-
-            canvasImage = await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Textures/FlatTile.png", UriKind.RelativeOrAbsolute));
-
-        }
-
-        private void canvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
-        {
-            for (int i = 0; i < worldMap.GetSize().X; i++)
-            {
-                for (int j = 0; j < worldMap.GetSize().Y; j++)
-                {
-                    //var item = canvasImages[i, j];
-                    var coord = HexagonalMap.HexToPixel(new System.Drawing.Point(i, j));
-
-                    args.DrawingSession.DrawImage(canvasImage, coord.X, coord.Y);
-                    //args.DrawingSession.DrawImage(canvasImages[i, j], coord.X, coord.Y);
-                }
-            }
-        }
-
     }
 }

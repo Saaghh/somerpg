@@ -201,61 +201,70 @@ namespace somerpg_uwp
 
     public class WorldMap : HexagonalMap
     {
-        public WorldMap() : base(100, 100)
+        readonly Random r;
+        public WorldMap(int seed) : base(100, 100)
         {
+            r = new Random(seed);
             IniTiles();
+
+            //AddRivers(7);
         }
 
         void IniTiles()
         {
-            Random r = new Random();
             for (int i = 0; i < GetSize().X; i++)
             {
                 for (int j = 0; j < GetSize().Y; j++)
                 {
-                    if (r.Next(2) == 1)
+                    switch (r.Next(20))
                     {
-                        this[i, j] = Tiles.FlatTile;
+                        case 1:
+                        case 3:
+                        case 4:
+                        case 6:
+                        case 7:
+                            this[i, j] = Tiles.ForestTile;
+                            break;
+                        
+                        case 5:
+                            this[i, j] = Tiles.MountainTile;
+                            break;
+                        
+                        default:
+                            this[i, j] = Tiles.FlatTile;
+                            break;
+                        
                     }
-                    else
-                    {
-                        this[i, j] = Tiles.ForestTile;
-
-                    }
+                    //if (r.Next(2) == 1)
+                    //{
+                    //    this[i, j] = Tiles.FlatTile;
+                    //}
+                    //else
+                    //{
+                    //    this[i, j] = Tiles.ForestTile;
+                    //}
                     this[i, j].Coord = new Point(i, j);
-
                 }
             }
         }
 
-        //void IniTiles(Point size)
-        //{
+        void AddRivers(int amount)
+        {
+            for (int i = 0; i < amount; i++)
+            {
+                Point point0 = new Point(r.Next(100), r.Next(100));
+                Point point1 = new Point(r.Next(100), r.Next(100));
 
-        //    Tiles = new Tile[size.X, size.Y];
-        //    for (int i = 0; i < Tiles.GetLength(0); i++)
-        //    {
-        //        for (int j = 0; j < Tiles.GetLength(1); j++)
-        //        {
-        //            Tiles[i, j] = new WorldTile(new Point(i, j));
-        //        }
-        //    }
-        //}
+                var points = AStar.FindPath(this, point0, point1, false);
 
-        //public Bitmap GetMapTexture()
-        //{
-        //    var size = GetMapPixelSize((Tiles.GetLength(0), Tiles.GetLength(0)));
-        //    var bitmap = new Bitmap(size.width, size.height);
-
-        //    Graphics g = Graphics.FromImage(bitmap);
-
-        //    foreach (Tile item in Tiles)
-        //    {
-        //        var pixelCoord = HexToPixel(item.Coord);
-        //        g.DrawImage(item.Terrain.bitmapTexture, pixelCoord);
-        //    }
-
-        //    return bitmap;
-        //}
+                if (points != null)
+                {
+                    foreach (var item in points)
+                    {
+                        this[item.X, item.Y] = Tiles.WaterTile;
+                    }
+                }
+            }
+        }
     }
 }
-//var s = Imaging.CreateBitmapSourceFromHBitmap(tiles.GetMapTexture().GetHbitmap(), IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());

@@ -4,12 +4,24 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI;
+using Windows;
+using Color = Windows.UI.Color;
 
 namespace somerpg_uwp
 {
     public class Tile
     {
+        static Random r = new Random(10000);
+
         Point coord;
+        Point drawPoint;
+
+        public Tile()
+        {
+            WorldLevel = r.Next(5) - 2;
+        }
+
         public virtual List<Uri> TextureUris
         {
             get
@@ -19,9 +31,22 @@ namespace somerpg_uwp
                 return list;
             }
         }
+        public Point DrawPoint
+        {
+            get
+            {
+                if (drawPoint == Point.Empty)
+                {
+                    drawPoint = HexagonalMap.HexToPixel(coord);
+                }
 
+                return drawPoint;
+            }
+        }
         public Point Coord { get => coord; set => coord = value; }
         public Terrain Terrain { get; set; }
+        public int WorldLevel { get; set; }
+
     }
 
     public static class Tiles
@@ -46,41 +71,38 @@ namespace somerpg_uwp
                 };
             }
         }
-
+        public static Tile WaterTile
+        {
+            get
+            {
+                return new Tile
+                {
+                    Terrain = Terrain.WaterWorldTerrain
+                };
+            }
+        }
+        public static Tile MountainTile
+        {
+            get
+            {
+                return new Tile
+                {
+                    Terrain = Terrain.MountainWorldTerrain
+                };
+            }
+        }
     }
 
     public class WorldTile : Tile
     {
-        public readonly WordlTileContent content;
-        public bool HasContent
-        {
-            get
-            {
-                if (content == null) { return false; }
-                return true;
-            }
-        }
-        public override List<Uri> TextureUris
-        {
-            get
-            {
-                if (HasContent)
-                {
-                    var list = base.TextureUris;
-                    list.Add(content.textureUri);
-                    return list;
-                }
-                else
-                {
-                    return base.TextureUris;
-                }
-            }
-        }
         public WorldTile(Point coord)
         {
             Coord = coord;
             Terrain = Terrain.FlatWorldTerrain;
+
         }
+        
+
     }
 
     public class Terrain
@@ -97,7 +119,7 @@ namespace somerpg_uwp
                 return new Terrain
                 {
                     TextureUri = new Uri("ms-appx:///Textures/FlatTile.png", UriKind.RelativeOrAbsolute),
-                    Name = "FlatWorldTerrain",
+                    Name = "FlatTile",
                     MoveCost = 1,
                     IsWalkable = true
                 };
@@ -110,107 +132,37 @@ namespace somerpg_uwp
                 return new Terrain
                 {
                     TextureUri = new Uri("ms-appx:///Textures/Forest.png", UriKind.RelativeOrAbsolute),
-                    Name = "ForestWorldTerrain",
+                    Name = "Forest",
                     MoveCost = 2,
                     IsWalkable = true
                 };
             }
         }
-
-    }
-
-    public class WordlTileContent : ContentObject
-    {
-        public Uri textureUri;
-        public string name = "EmptyContent";
-
-        public WordlTileContent()
-        {
-            name = "EmptyContent";
-        }
-    }
-
-    public class Settlement : WordlTileContent
-    {
-        static protected int number = 0;
-
-        public List<Building> buildings;
-
-        public Settlement()
-        {
-            textureUri = new Uri("Resources/Village.png", UriKind.RelativeOrAbsolute);
-            name = "Settlement #" + ++number;
-        }
-    }
-
-    public class ContentObject : IEquatable<ContentObject>
-    {
-        private static int number = 0;
-        protected static int NextID
+        public static Terrain WaterWorldTerrain
         {
             get
             {
-                return number++;
+                return new Terrain
+                {
+                    TextureUri = new Uri("ms-appx:///Textures/Water.png", UriKind.RelativeOrAbsolute),
+                    Name = "Water",
+                    MoveCost = 10,
+                    IsWalkable = true
+                };
             }
         }
-
-        public string name = "Empty Name";
-        protected readonly int id;
-
-        public ContentObject()
+        public static Terrain MountainWorldTerrain
         {
-            id = NextID;
-        }
-        public override bool Equals(object obj)
-        {
-            return Equals(obj as ContentObject);
-        }
-        public bool Equals(ContentObject other)
-        {
-            return other != null &&
-                   id == other.id;
-        }
-        public override int GetHashCode()
-        {
-            return 1877310944 + id.GetHashCode();
-        }
-        public override string ToString()
-        {
-            return name;
-        }
-        public static bool operator ==(ContentObject left, ContentObject right)
-        {
-            return EqualityComparer<ContentObject>.Default.Equals(left, right);
-        }
-        public static bool operator !=(ContentObject left, ContentObject right)
-        {
-            return !(left == right);
-        }
-    }
-
-    public class TileResource : ContentObject
-    {
-        public TileResource(string name) : base()
-        {
-            this.name = name;
-        }
-    }
-
-    public class Building : ContentObject
-    {
-        public Building() : base()
-        {
-            name = "Building " + id;
-        }
-    }
-
-    public class City : Settlement
-    {
-        public static List<City> CitiesList = new List<City>();
-        public City() : base()
-        {
-            name = "City #" + ++number;
-            CitiesList.Add(this);
+            get
+            {
+                return new Terrain
+                {
+                    TextureUri = new Uri("ms-appx:///Textures/Mountain.png", UriKind.RelativeOrAbsolute),
+                    Name = "Mountain",
+                    MoveCost = 100,
+                    IsWalkable = false
+                };
+            }
         }
     }
 }

@@ -119,6 +119,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\MainPageDrawing.cs" />
     <Compile Include="Model\AStar.cs" />
     <Compile Include="Model\HexagonalMap.cs" />
     <Compile Include="Model\Tile.cs" />
@@ -126,6 +127,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View\MainPageResources.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -147,7 +149,12 @@
     <Content Include="Splash\SplashScreen.scale-200.png" />
     <Content Include="Splash\SplashScreen.scale-400.png" />
     <Content Include="Textures\FlatTile.png" />
+    <Content Include="Textures\FlatYellow.png" />
     <Content Include="Textures\Forest.png" />
+    <Content Include="Textures\Highlight.png" />
+    <Content Include="Textures\Mountain.png" />
+    <Content Include="Textures\PineForest.png" />
+    <Content Include="Textures\Water.png" />
     <Content Include="Textures\WorldFlatTile.png" />
   </ItemGroup>
   <ItemGroup>

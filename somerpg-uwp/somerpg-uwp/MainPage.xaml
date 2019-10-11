@@ -11,7 +11,8 @@
 
     <Grid x:Name="maingrid">
         <!--<Canvas x:Name="canvas2" PointerMoved="canvas_PointerMoved" CanDrag="False" PointerWheelChanged="canvas_PointerWheelChanged" PointerPressed="canvas_PointerPressed" />-->
-        <canvas:CanvasAnimatedControl x:Name="canvas" CreateResources="canvas_CreateResources" Draw="canvas_Draw" PointerMoved="canvas_PointerMoved" PointerWheelChanged="canvas_PointerWheelChanged" RenderTransformOrigin="0.5,0.5">
+        <!--<canvas:CanvasAnimatedControl x:Name="canvas" CreateResources="canvas_CreateResources"></canvas:CanvasAnimatedControl>-->
+        <canvas:CanvasAnimatedControl x:Name="canvas" CreateResources="canvas_CreateResources" Draw="canvas_Draw" PointerMoved="canvas_PointerMoved" PointerWheelChanged="canvas_PointerWheelChanged" PointerPressed="canvas_PointerPressed">
         </canvas:CanvasAnimatedControl>
     </Grid>
 </Page>
