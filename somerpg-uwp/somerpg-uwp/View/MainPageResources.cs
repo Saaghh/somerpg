@@ -17,7 +17,9 @@ namespace somerpg_uwp
     {
         Dictionary<string, CanvasBitmap> images = new Dictionary<string, CanvasBitmap>();
         Dictionary<int, CanvasSolidColorBrush> brushes = new Dictionary<int, CanvasSolidColorBrush>();
+        List<CanvasGeometry> innerTriangles = new List<CanvasGeometry>();
         CanvasGeometry hex;
+        CanvasSolidColorBrush blackBrush;
         
         //Add images to dictionary here
         async Task CreateResourcesAsync(CanvasAnimatedControl sender)
@@ -28,7 +30,7 @@ namespace somerpg_uwp
                     "ms-appx:///Textures/FlatYellow.png", UriKind.RelativeOrAbsolute)));
             images.Add(
                 "Forest", await CanvasBitmap.LoadAsync(sender, new Uri(
-                    "ms-appx:///Textures/PineForest.png", UriKind.RelativeOrAbsolute)));
+                    "ms-appx:///Textures/Forest.png", UriKind.RelativeOrAbsolute)));
             images.Add(
                 "Highlight", await CanvasBitmap.LoadAsync(sender, new Uri(
                     "ms-appx:///Textures/Highlight.png", UriKind.RelativeOrAbsolute)));
@@ -50,12 +52,55 @@ namespace somerpg_uwp
                 new Vector2(0, 140)
             });
 
+
+            //Adding inner hex triangles
+            innerTriangles.Add(CanvasGeometry.CreatePolygon(sender, new Vector2[3]
+            {
+                new Vector2(50, 80),
+                new Vector2(100, 140),
+                new Vector2(0, 140)
+            }));
+
+            innerTriangles.Add(CanvasGeometry.CreatePolygon(sender, new Vector2[3]
+            {
+                new Vector2(50, 80),
+                new Vector2(100, 140),
+                new Vector2(150, 80)
+            }));
+            innerTriangles.Add(CanvasGeometry.CreatePolygon(sender, new Vector2[3]
+            {
+                new Vector2(200, 140),
+                new Vector2(100, 140),
+                new Vector2(150, 80)
+            }));
+            innerTriangles.Add(CanvasGeometry.CreatePolygon(sender, new Vector2[3]
+            {
+                new Vector2(50, 200),
+                new Vector2(100, 140),
+                new Vector2(0, 140)
+            }));
+            innerTriangles.Add(CanvasGeometry.CreatePolygon(sender, new Vector2[3]
+            {
+                new Vector2(200, 140),
+                new Vector2(100, 140),
+                new Vector2(150, 200)
+            }));
+            innerTriangles.Add(CanvasGeometry.CreatePolygon(sender, new Vector2[3]
+            {
+                new Vector2(100, 140),
+                new Vector2(50, 200),
+                new Vector2(150, 200)
+            }));
+
             //Brushes for level map mode
             brushes.Add(-2, new CanvasSolidColorBrush(sender, Colors.Red));
             brushes.Add(-1, new CanvasSolidColorBrush(sender, Colors.Orange));
             brushes.Add(0, new CanvasSolidColorBrush(sender, Colors.White));
             brushes.Add(1, new CanvasSolidColorBrush(sender, Colors.LightGreen));
             brushes.Add(2, new CanvasSolidColorBrush(sender, Colors.DarkGreen));
+
+            //Standart black brush
+            blackBrush = new CanvasSolidColorBrush(sender, Color.FromArgb(60, 0, 0, 0));
         }
     }
 }

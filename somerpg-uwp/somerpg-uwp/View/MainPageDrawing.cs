@@ -16,8 +16,10 @@ namespace somerpg_uwp
         //Canvas refresh cycle
         private void canvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
         {
-            DrawLevels(args);
-            //DrawStandart(args);
+            //DrawLevels(args);
+            DrawStandart(args);
+            //DrawInnerTriangles(args);
+            DrawPolygons(args);
             DrawHighLightedPolygon(args);
         }
 
@@ -37,6 +39,41 @@ namespace somerpg_uwp
                 {
                     var item = worldMap[i, j];
                     args.DrawingSession.FillGeometry(hex, new System.Numerics.Vector2(item.DrawPoint.X, item.DrawPoint.Y), brushes[item.WorldLevel]);
+                }
+            }
+        }
+
+        //Simple polygons drawing
+        private void DrawPolygons(CanvasAnimatedDrawEventArgs args)
+        {
+            foreach (Tile item in worldMap)
+            {
+                args.DrawingSession.DrawGeometry(hex, new System.Numerics.Vector2(item.DrawPoint.X, item.DrawPoint.Y), brushes[item.WorldLevel]);
+            }
+        }
+
+        //Draw inner triangles
+        private void DrawInnerTriangles(CanvasAnimatedDrawEventArgs args)
+        {
+            for (int j = 0; j < worldMap.GetSize().Y; j++)
+            {
+                //Two cycles for proper order
+                for (int i = 1; i < worldMap.GetSize().X; i += 2)
+                {
+                    var item = worldMap[i, j];
+                    foreach (var triangle in innerTriangles)
+                    {
+                        args.DrawingSession.DrawGeometry(triangle, new System.Numerics.Vector2(item.DrawPoint.X, item.DrawPoint.Y), blackBrush);
+                    }
+                }
+
+                for (int i = 0; i < worldMap.GetSize().X; i += 2)
+                {
+                    var item = worldMap[i, j];
+                    foreach (var triangle in innerTriangles)
+                    {
+                        args.DrawingSession.DrawGeometry(triangle, new System.Numerics.Vector2(item.DrawPoint.X, item.DrawPoint.Y), blackBrush);
+                    }
                 }
             }
         }
