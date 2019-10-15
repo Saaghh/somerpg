@@ -13,14 +13,17 @@ namespace somerpg_uwp
 {
     public sealed partial class MainPage : Page
     {
+        int globalOffsetX = 0;
+        int globalOffsetY = 0;
+
         //Canvas refresh cycle
         private void canvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
         {
-            //DrawLevels(args);
-            DrawStandart(args);
-            //DrawInnerTriangles(args);
-            DrawPolygons(args);
-            DrawHighLightedPolygon(args);
+            if (Settings.DrawStandart) { DrawStandart(args); }
+            //if (Settings.DrawLevels) { DrawLevels(args); }
+            //if (Settings.DrawInnerTriangles) { DrawInnerTriangles(args); }
+            //if (Settings.DrawPolygons) { DrawPolygons(args); }
+            //if (Settings.DrawHighlightedPolygon) { DrawHighlightedPolygon(args); }
         }
 
         //Draw map levels
@@ -63,7 +66,7 @@ namespace somerpg_uwp
                     var item = worldMap[i, j];
                     foreach (var triangle in innerTriangles)
                     {
-                        args.DrawingSession.DrawGeometry(triangle, new System.Numerics.Vector2(item.DrawPoint.X, item.DrawPoint.Y), blackBrush);
+                        args.DrawingSession.DrawGeometry(triangle, new System.Numerics.Vector2(item.DrawPoint.X + globalOffsetX, item.DrawPoint.Y + globalOffsetY), blackBrush);
                     }
                 }
 
@@ -72,7 +75,7 @@ namespace somerpg_uwp
                     var item = worldMap[i, j];
                     foreach (var triangle in innerTriangles)
                     {
-                        args.DrawingSession.DrawGeometry(triangle, new System.Numerics.Vector2(item.DrawPoint.X, item.DrawPoint.Y), blackBrush);
+                        args.DrawingSession.DrawGeometry(triangle, new System.Numerics.Vector2(item.DrawPoint.X + globalOffsetX, item.DrawPoint.Y + globalOffsetY), blackBrush);
                     }
                 }
             }
@@ -81,6 +84,9 @@ namespace somerpg_uwp
         //Standart canvas tiles draw
         private void DrawStandart(CanvasAnimatedDrawEventArgs args)
         {
+            int offsetX = globalOffsetX;
+            int offsetY = globalOffsetY;
+
             //Drawing tiles
             for (int j = 0; j < worldMap.GetSize().Y; j++)
             {
@@ -88,21 +94,39 @@ namespace somerpg_uwp
                 for (int i = 1; i < worldMap.GetSize().X; i += 2)
                 {
                     var item = worldMap[i, j];
-                    
-                    args.DrawingSession.DrawImage(images[item.Terrain.Name], item.DrawPoint.X, item.DrawPoint.Y);
+
+                    var x = item.DrawPoint.X + offsetX;
+                    var y = item.DrawPoint.Y + offsetY;
+
+                    if (x < 2000 && x > -HexagonalMap.HEXPIXELWIDTH && y < 2000 && y > -(HexagonalMap.HEXPIXELHEIGHT + HexagonalMap.HEXPIXELHEIGHTOFFSET))
+                    {
+                        args.DrawingSession.DrawImage(images[item.Terrain.Name], x, y);
+                    }
+
+                    //args.DrawingSession.DrawImage(images[item.Terrain.Name], item.DrawPoint.X + offsetX, item.DrawPoint.Y + offsetY);
                 }
 
                 for (int i = 0; i < worldMap.GetSize().X; i += 2)
                 {
+                    //var item = worldMap[i, j];
+
+                    //args.DrawingSession.DrawImage(images[item.Terrain.Name], item.DrawPoint.X + offsetX, item.DrawPoint.Y + offsetY);
+
                     var item = worldMap[i, j];
 
-                    args.DrawingSession.DrawImage(images[item.Terrain.Name], item.DrawPoint.X, item.DrawPoint.Y);
+                    var x = item.DrawPoint.X + offsetX;
+                    var y = item.DrawPoint.Y + offsetY;
+
+                    if (x < 2000 && x > -HexagonalMap.HEXPIXELWIDTH && y < 2000 && y > -(HexagonalMap.HEXPIXELHEIGHT + HexagonalMap.HEXPIXELHEIGHTOFFSET))
+                    {
+                        args.DrawingSession.DrawImage(images[item.Terrain.Name], x, y);
+                    }
                 }
             }
         }
 
         //Draw highlighted polygon
-        private void DrawHighLightedPolygon(CanvasAnimatedDrawEventArgs args)
+        private void DrawHighlightedPolygon(CanvasAnimatedDrawEventArgs args)
         {
             //Drawing highlight polygon
             if (highlightPoint != null)

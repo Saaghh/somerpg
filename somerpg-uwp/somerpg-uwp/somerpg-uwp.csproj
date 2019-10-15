@@ -119,6 +119,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\Settings.cs" />
     <Compile Include="View\MainPageDrawing.cs" />
     <Compile Include="Model\AStar.cs" />
     <Compile Include="Model\HexagonalMap.cs" />
@@ -155,6 +156,8 @@
     <Content Include="Textures\Mountain.png" />
     <Content Include="Textures\PineForest.png" />
     <Content Include="Textures\Water.png" />
+    <Content Include="Textures\WaterFlat.png" />
+    <Content Include="Textures\WaterSharp.png" />
     <Content Include="Textures\WorldFlatTile.png" />
   </ItemGroup>
   <ItemGroup>

@@ -12,15 +12,8 @@ namespace somerpg_uwp
 {
     public class Tile
     {
-        static Random r = new Random(10000);
-
         Point coord;
         Point drawPoint;
-
-        public Tile()
-        {
-            WorldLevel = r.Next(5) - 2;
-        }
 
         public virtual List<Uri> TextureUris
         {
@@ -45,8 +38,67 @@ namespace somerpg_uwp
         }
         public Point Coord { get => coord; set => coord = value; }
         public Terrain Terrain { get; set; }
-        public int WorldLevel { get; set; }
+        public int WorldLevel { get; set; } = 0;
+        public List<Triangle> Triangles { get; } = new List<Triangle>();
 
+        public Tile()
+        {
+            Triangles.Add(new Triangle(TrianglePosition.TopLeft));
+            Triangles.Add(new Triangle(TrianglePosition.Top));
+            Triangles.Add(new Triangle(TrianglePosition.TopRight));
+            Triangles.Add(new Triangle(TrianglePosition.BottomRight));
+            Triangles.Add(new Triangle(TrianglePosition.Bottom));
+            Triangles.Add(new Triangle(TrianglePosition.BottomLeft));
+        }
+    }
+
+    public enum TrianglePosition { TopLeft, Top, TopRight, BottomRight, Bottom, BottomLeft }
+    public enum TriangleType { FlatTop, FlatBottom }
+
+    public class Triangle
+    {
+        public TrianglePosition Position { get; protected set; }
+        public TriangleType Type { get; protected set; }
+        public Point Offset { get; protected set; }
+        public bool IsEmpty { get; }
+
+        public Triangle (TrianglePosition position)
+        {
+            Position = position;
+
+            switch (Position)
+            {
+                case TrianglePosition.TopLeft:
+                    Type = TriangleType.FlatBottom;
+                    Offset = new Point(0, 0);
+                    break;
+
+                case TrianglePosition.Top:
+                    Type = TriangleType.FlatTop;
+                    Offset = new Point(0, 0);
+                    break;
+
+                case TrianglePosition.TopRight:
+                    Type = TriangleType.FlatBottom;
+                    Offset = new Point(100, 0);
+                    break;
+
+                case TrianglePosition.BottomRight:
+                    Type = TriangleType.FlatTop;
+                    Offset = new Point(50, 60);
+                    break;
+
+                case TrianglePosition.Bottom:
+                    Type = TriangleType.FlatBottom;
+                    Offset = new Point(50, 60);
+                    break;
+
+                case TrianglePosition.BottomLeft:
+                    Type = TriangleType.FlatTop;
+                    Offset = new Point(-50, 60);
+                    break;
+            }
+        }
     }
 
     public static class Tiles
@@ -93,18 +145,8 @@ namespace somerpg_uwp
         }
     }
 
-    public class WorldTile : Tile
-    {
-        public WorldTile(Point coord)
-        {
-            Coord = coord;
-            Terrain = Terrain.FlatWorldTerrain;
-
-        }
-        
-
-    }
-
+    
+    
     public class Terrain
     {
         public Uri TextureUri { get; set; }

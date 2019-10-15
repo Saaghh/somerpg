@@ -42,18 +42,28 @@ namespace somerpg_uwp
 
         private void IniCanvas()
         {
-            var s = worldMap.GetSize();
+            //var s = worldMap.GetSize();
 
-            var (width, height) = HexagonalMap.GetMapPixelSize((s.X, s.Y));
+            //var (width, height) = HexagonalMap.GetMapPixelSize((s.X, s.Y));
 
-            canvas.Width = width;
-            canvas.Height = height;
+            //canvas.Width = width;
+            //canvas.Height = height;
+
+            ResizeCanvas();
 
             canvas.RenderTransform = new ScaleTransform
             {
                 CenterX = canvas.Width / 2,
                 CenterY = canvas.Height / 2
             };
+        }
+
+        private void ResizeCanvas()
+        {
+            //canvas.Width = ActualWidth * 1.2f;
+            //canvas.Height = ActualHeight * 1.2f;
+
+            //canvas.Margin = new Thickness(ActualWidth * -0.1f, ActualHeight * -0.1f, 0, 0);
         }
 
         private void canvas_PointerMoved(object sender, PointerRoutedEventArgs e)
@@ -75,10 +85,13 @@ namespace somerpg_uwp
 
                     //canvas.Translation = new System.Numerics.Vector3(x, y, 0);
 
-                    var x = canvas.Margin.Left + xOffset;
-                    var y = canvas.Margin.Top + yOffset;
+                    //var x = canvas.Margin.Left + xOffset;
+                    //var y = canvas.Margin.Top + yOffset;
 
-                    canvas.Margin = new Thickness(x, y, 0, 0);
+                    //canvas.Margin = new Thickness(x, y, 0, 0);
+
+                    globalOffsetX += Convert.ToInt32(xOffset);
+                    globalOffsetY += Convert.ToInt32(yOffset);
 
                     //canvas.Invalidate();
                 }
@@ -135,6 +148,41 @@ namespace somerpg_uwp
         private void canvas_CreateResources(CanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.CanvasCreateResourcesEventArgs args)
         {
             args.TrackAsyncAction(CreateResourcesAsync(sender).AsAsyncAction());
+        }
+
+        private void toggleSwitch_Toggled(object sender, RoutedEventArgs e)
+        {
+            var s = sender as ToggleSwitch;
+            Settings.DrawLevels = s.IsOn;
+        }
+
+        private void toggleSwitch1_Toggled(object sender, RoutedEventArgs e)
+        {
+            var s = sender as ToggleSwitch;
+            Settings.DrawStandart = s.IsOn;
+        }
+
+        private void toggleSwitch2_Toggled(object sender, RoutedEventArgs e)
+        {
+            var s = sender as ToggleSwitch;
+            Settings.DrawInnerTriangles = s.IsOn;
+        }
+
+        private void toggleSwitch3_Toggled(object sender, RoutedEventArgs e)
+        {
+            var s = sender as ToggleSwitch;
+            Settings.DrawPolygons = s.IsOn;
+        }
+
+        private void toggleSwitch4_Toggled(object sender, RoutedEventArgs e)
+        {
+            var s = sender as ToggleSwitch;
+            Settings.DrawHighlightedPolygon = s.IsOn;
+        }
+
+        private void canvas_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            ResizeCanvas();
         }
     }
 }

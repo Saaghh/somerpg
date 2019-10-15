@@ -60,7 +60,6 @@ namespace somerpg_uwp
                 new Vector2(100, 140),
                 new Vector2(0, 140)
             }));
-
             innerTriangles.Add(CanvasGeometry.CreatePolygon(sender, new Vector2[3]
             {
                 new Vector2(50, 80),

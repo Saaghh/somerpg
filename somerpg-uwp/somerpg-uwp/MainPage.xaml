@@ -1,4 +1,4 @@
-﻿<Page
+﻿<Page x:Name="page"
     x:Class="somerpg_uwp.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -12,7 +12,14 @@
     <Grid x:Name="maingrid">
         <!--<Canvas x:Name="canvas2" PointerMoved="canvas_PointerMoved" CanDrag="False" PointerWheelChanged="canvas_PointerWheelChanged" PointerPressed="canvas_PointerPressed" />-->
         <!--<canvas:CanvasAnimatedControl x:Name="canvas" CreateResources="canvas_CreateResources"></canvas:CanvasAnimatedControl>-->
-        <canvas:CanvasAnimatedControl x:Name="canvas" CreateResources="canvas_CreateResources" Draw="canvas_Draw" PointerMoved="canvas_PointerMoved" PointerWheelChanged="canvas_PointerWheelChanged" PointerPressed="canvas_PointerPressed">
-        </canvas:CanvasAnimatedControl>
+        <!--<canvas:CanvasAnimatedControl x:Name="canvas" CreateResources="canvas_CreateResources"></canvas:CanvasAnimatedControl>-->
+        <canvas:CanvasAnimatedControl x:Name="canvas" CreateResources="canvas_CreateResources" Draw="canvas_Draw" PointerMoved="canvas_PointerMoved" PointerWheelChanged="canvas_PointerWheelChanged" PointerPressed="canvas_PointerPressed" SizeChanged="canvas_SizeChanged" />
+        <Grid>
+            <ToggleSwitch x:Name="toggleSwitch" Header="Draw Map Levels" VerticalAlignment="Top" HorizontalAlignment="Right" Toggled="toggleSwitch_Toggled"/>
+            <ToggleSwitch x:Name="toggleSwitch1" Header="Draw Standart Tiles" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,55,0,0" IsOn="True" Toggled="toggleSwitch1_Toggled"/>
+            <ToggleSwitch x:Name="toggleSwitch2" Header="Draw Ornament" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,110,0,0" Toggled="toggleSwitch2_Toggled"/>
+            <ToggleSwitch x:Name="toggleSwitch3" Header="Draw Borders" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,165,0,0" Toggled="toggleSwitch3_Toggled"/>
+            <ToggleSwitch x:Name="toggleSwitch4" Header="Draw Highlight" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,220,0,0" IsOn="True" Toggled="toggleSwitch4_Toggled"/>
+        </Grid>
     </Grid>
 </Page>
