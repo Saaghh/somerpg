@@ -49,7 +49,7 @@ namespace somerpg_uwp
             //canvas.Width = width;
             //canvas.Height = height;
 
-            ResizeCanvas();
+            canvas.TargetElapsedTime = new TimeSpan(133333);
 
             canvas.RenderTransform = new ScaleTransform
             {
@@ -58,13 +58,6 @@ namespace somerpg_uwp
             };
         }
 
-        private void ResizeCanvas()
-        {
-            //canvas.Width = ActualWidth * 1.2f;
-            //canvas.Height = ActualHeight * 1.2f;
-
-            //canvas.Margin = new Thickness(ActualWidth * -0.1f, ActualHeight * -0.1f, 0, 0);
-        }
 
         private void canvas_PointerMoved(object sender, PointerRoutedEventArgs e)
         {
@@ -182,7 +175,21 @@ namespace somerpg_uwp
 
         private void canvas_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            ResizeCanvas();
+            RefreshWindowSizeData();
+        }
+
+        private void page_Loaded(object sender, RoutedEventArgs e)
+        {
+            RefreshWindowSizeData();
+            canvas.Paused = false;
+        }
+        
+        private void RefreshWindowSizeData()
+        {
+            var w = Window.Current.Content.ActualSize;
+
+            windowHeight = Convert.ToInt32(w.Y);
+            windowWidth = Convert.ToInt32(w.X);
         }
     }
 }

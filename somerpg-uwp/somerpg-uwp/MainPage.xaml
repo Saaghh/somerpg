@@ -7,13 +7,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Loaded="page_Loaded">
 
     <Grid x:Name="maingrid">
         <!--<Canvas x:Name="canvas2" PointerMoved="canvas_PointerMoved" CanDrag="False" PointerWheelChanged="canvas_PointerWheelChanged" PointerPressed="canvas_PointerPressed" />-->
         <!--<canvas:CanvasAnimatedControl x:Name="canvas" CreateResources="canvas_CreateResources"></canvas:CanvasAnimatedControl>-->
         <!--<canvas:CanvasAnimatedControl x:Name="canvas" CreateResources="canvas_CreateResources"></canvas:CanvasAnimatedControl>-->
-        <canvas:CanvasAnimatedControl x:Name="canvas" CreateResources="canvas_CreateResources" Draw="canvas_Draw" PointerMoved="canvas_PointerMoved" PointerWheelChanged="canvas_PointerWheelChanged" PointerPressed="canvas_PointerPressed" SizeChanged="canvas_SizeChanged" />
+        <canvas:CanvasAnimatedControl x:Name="canvas" CreateResources="canvas_CreateResources" Draw="canvas_Draw" PointerMoved="canvas_PointerMoved" PointerWheelChanged="canvas_PointerWheelChanged" PointerPressed="canvas_PointerPressed" SizeChanged="canvas_SizeChanged" Paused="True" />
         <Grid>
             <ToggleSwitch x:Name="toggleSwitch" Header="Draw Map Levels" VerticalAlignment="Top" HorizontalAlignment="Right" Toggled="toggleSwitch_Toggled"/>
             <ToggleSwitch x:Name="toggleSwitch1" Header="Draw Standart Tiles" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,55,0,0" IsOn="True" Toggled="toggleSwitch1_Toggled"/>

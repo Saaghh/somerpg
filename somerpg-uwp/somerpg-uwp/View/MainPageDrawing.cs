@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using Microsoft.Graphics.Canvas.Brushes;
+using Windows.UI.Xaml;
 
 namespace somerpg_uwp
 {
@@ -15,6 +16,9 @@ namespace somerpg_uwp
     {
         int globalOffsetX = 0;
         int globalOffsetY = 0;
+
+        int windowWidth;
+        int windowHeight;
 
         //Canvas refresh cycle
         private void canvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
@@ -98,7 +102,11 @@ namespace somerpg_uwp
                     var x = item.DrawPoint.X + offsetX;
                     var y = item.DrawPoint.Y + offsetY;
 
-                    if (x < 2000 && x > -HexagonalMap.HEXPIXELWIDTH && y < 2000 && y > -(HexagonalMap.HEXPIXELHEIGHT + HexagonalMap.HEXPIXELHEIGHTOFFSET))
+                    //Window.Current.Content.ActualSize.X;
+
+                    var t = Window.Current;
+
+                    if (x < windowWidth && x > -HexagonalMap.HEXPIXELWIDTH && y < windowHeight && y > -(HexagonalMap.HEXPIXELHEIGHT + HexagonalMap.HEXPIXELHEIGHTOFFSET))
                     {
                         args.DrawingSession.DrawImage(images[item.Terrain.Name], x, y);
                     }
@@ -117,7 +125,7 @@ namespace somerpg_uwp
                     var x = item.DrawPoint.X + offsetX;
                     var y = item.DrawPoint.Y + offsetY;
 
-                    if (x < 2000 && x > -HexagonalMap.HEXPIXELWIDTH && y < 2000 && y > -(HexagonalMap.HEXPIXELHEIGHT + HexagonalMap.HEXPIXELHEIGHTOFFSET))
+                    if (x < windowWidth && x > -HexagonalMap.HEXPIXELWIDTH && y < windowHeight && y > -(HexagonalMap.HEXPIXELHEIGHT + HexagonalMap.HEXPIXELHEIGHTOFFSET))
                     {
                         args.DrawingSession.DrawImage(images[item.Terrain.Name], x, y);
                     }
