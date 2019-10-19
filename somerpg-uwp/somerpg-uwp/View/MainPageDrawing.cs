@@ -99,6 +99,7 @@ namespace somerpg_uwp
 
                 bool cycleEnd = false;
                 bool odd = true;
+
                 //Drawing odd tiles first
                 while (!cycleEnd)
                 {
@@ -109,9 +110,7 @@ namespace somerpg_uwp
 
                     if (x < windowWidth && x > -HexagonalMap.HEXPIXELWIDTH && y < windowHeight && y > -(HexagonalMap.HEXPIXELHEIGHT + HexagonalMap.HEXPIXELHEIGHTOFFSET))
                     {
-                        //args.DrawingSession.DrawImage(images[item.Terrain.Name], x, y);
-
-                        DrawTile(item, x, y, args);
+                        if (Settings.DrawStandart) { item.Draw(args, offsetX, offsetY); }
                     }
 
                     k += 2;
@@ -141,18 +140,13 @@ namespace somerpg_uwp
             //args.DrawingSession.FillGeometry(innerTriangles[0], 400, 400, blackBrush);
         }
 
-        private void DrawTile(Tile tile, int x, int y, CanvasAnimatedDrawEventArgs args)
-        {
-            args.DrawingSession.DrawImage(images[tile.Terrain.Name], x, y);
-        }
-
         //Draw highlighted polygon
         private void DrawHighlightedPolygon(CanvasAnimatedDrawEventArgs args)
         {
             //Drawing highlight polygon
             if (highlightPoint != null)
             {
-                args.DrawingSession.DrawImage(images["Highlight"], highlightPoint.X, highlightPoint.Y);
+                args.DrawingSession.DrawImage(DrawingResources[ResourceKey.HighlightPolygonImage] as CanvasBitmap, highlightPoint.X, highlightPoint.Y);
             }
         }
     }

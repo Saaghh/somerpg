@@ -13,38 +13,71 @@ using Windows.UI;
 
 namespace somerpg_uwp
 {
+    public enum ResourceKey
+    {
+        //Terrains
+        GrasslandTerrain,
+        
+        //Landscapes
+        ForestLandscape,
+        MountainLandscape,
+        
+        //Geometries
+        HexGeometry,
+
+        TriangleTL,
+        TriangleT,
+        TriangleTR,
+        TriangleBR,
+        TriangleB,
+        TriangleBL,
+        
+        //Brushes
+        RedBrush,
+        OrangeBrush,
+        WhiteBrush,
+        LightGreenBrush,
+        DarkGreenBrush,
+        BlackBrush,
+        
+        //Misc
+        HighlightPolygonImage,
+        WaterImageBrush,
+        ErrorImage
+    }
+
     public sealed partial class MainPage : Page
     {
-        Dictionary<string, CanvasBitmap> images = new Dictionary<string, CanvasBitmap>();
-        Dictionary<int, CanvasSolidColorBrush> brushes = new Dictionary<int, CanvasSolidColorBrush>();
-        List<CanvasGeometry> innerTriangles = new List<CanvasGeometry>();
-        CanvasGeometry hex;
-        CanvasSolidColorBrush blackBrush;
+        //Dictionary<string, CanvasBitmap> images = new Dictionary<string, CanvasBitmap>();
+        //Dictionary<int, CanvasSolidColorBrush> brushes = new Dictionary<int, CanvasSolidColorBrush>();
+        //List<CanvasGeometry> innerTriangles = new List<CanvasGeometry>();
+        //CanvasGeometry hex;
+        //CanvasSolidColorBrush blackBrush;
 
-        public static Dictionary<string, object> DrawingResources { get; } = new Dictionary<string, object>();
+        public static Dictionary<ResourceKey, object> DrawingResources { get; } = new Dictionary<ResourceKey, object>();
 
         //Add images to dictionary here
         async Task CreateResourcesAsync(CanvasAnimatedControl sender)
         {
-            //Textures for standart mode
-            images.Add(
-                "FlatTile", await CanvasBitmap.LoadAsync(sender, new Uri(
-                    "ms-appx:///Textures/FlatYellow.png", UriKind.RelativeOrAbsolute)));
-            images.Add(
-                "Forest", await CanvasBitmap.LoadAsync(sender, new Uri(
-                    "ms-appx:///Textures/Forest.png", UriKind.RelativeOrAbsolute)));
-            images.Add(
-                "Highlight", await CanvasBitmap.LoadAsync(sender, new Uri(
-                    "ms-appx:///Textures/Highlight.png", UriKind.RelativeOrAbsolute)));
-            images.Add(
-                "Water", await CanvasBitmap.LoadAsync(sender, new Uri(
-                    "ms-appx:///Textures/Water.png", UriKind.RelativeOrAbsolute)));
-            images.Add(
-                "Mountain", await CanvasBitmap.LoadAsync(sender, new Uri(
-                    "ms-appx:///Textures/Mountain.png", UriKind.RelativeOrAbsolute)));
+            //Adding image textures
+            DrawingResources.Add(
+                ResourceKey.GrasslandTerrain, await CanvasBitmap.LoadAsync(sender, new Uri(
+                "ms-appx:///Textures/FlatYellow.png", UriKind.RelativeOrAbsolute)));
+            DrawingResources.Add(
+                ResourceKey.ForestLandscape, await CanvasBitmap.LoadAsync(sender, new Uri(
+                "ms-appx:///Textures/Forest.png", UriKind.RelativeOrAbsolute)));
+            DrawingResources.Add(
+                ResourceKey.HighlightPolygonImage, await CanvasBitmap.LoadAsync(sender, new Uri(
+                "ms-appx:///Textures/Highlight.png", UriKind.RelativeOrAbsolute)));
+            DrawingResources.Add(
+                ResourceKey.MountainLandscape, await CanvasBitmap.LoadAsync(sender, new Uri(
+                "ms-appx:///Textures/Mountain.png", UriKind.RelativeOrAbsolute)));
+            DrawingResources.Add(
+                ResourceKey.ErrorImage, await CanvasBitmap.LoadAsync(sender, new Uri(
+                "ms-appx:///Textures/Error.png", UriKind.RelativeOrAbsolute)));
 
             //Standart hex
-            hex = CanvasGeometry.CreatePolygon(sender, new Vector2[6]
+            DrawingResources.Add(ResourceKey.HexGeometry, CanvasGeometry.CreatePolygon(sender, new Vector2[6]
             {
                 new Vector2(50, 80),
                 new Vector2(150, 80),
@@ -52,41 +85,41 @@ namespace somerpg_uwp
                 new Vector2(150, 200),
                 new Vector2(50, 200),
                 new Vector2(0, 140)
-            });
+            }));
 
 
             //Adding inner hex triangles
-            innerTriangles.Add(CanvasGeometry.CreatePolygon(sender, new Vector2[3]
+            DrawingResources.Add(ResourceKey.TriangleTL, CanvasGeometry.CreatePolygon(sender, new Vector2[3]
             {
                 new Vector2(50, 80),
                 new Vector2(100, 140),
                 new Vector2(0, 140)
             }));
-            innerTriangles.Add(CanvasGeometry.CreatePolygon(sender, new Vector2[3]
+            DrawingResources.Add(ResourceKey.TriangleT , CanvasGeometry.CreatePolygon(sender, new Vector2[3]
             {
                 new Vector2(50, 80),
                 new Vector2(100, 140),
                 new Vector2(150, 80)
             }));
-            innerTriangles.Add(CanvasGeometry.CreatePolygon(sender, new Vector2[3]
+            DrawingResources.Add(ResourceKey.TriangleTR, CanvasGeometry.CreatePolygon(sender, new Vector2[3]
             {
                 new Vector2(200, 140),
                 new Vector2(100, 140),
                 new Vector2(150, 80)
             }));
-            innerTriangles.Add(CanvasGeometry.CreatePolygon(sender, new Vector2[3]
+            DrawingResources.Add(ResourceKey.TriangleBR, CanvasGeometry.CreatePolygon(sender, new Vector2[3]
             {
                 new Vector2(50, 200),
                 new Vector2(100, 140),
                 new Vector2(0, 140)
             }));
-            innerTriangles.Add(CanvasGeometry.CreatePolygon(sender, new Vector2[3]
+            DrawingResources.Add(ResourceKey.TriangleB , CanvasGeometry.CreatePolygon(sender, new Vector2[3]
             {
                 new Vector2(200, 140),
                 new Vector2(100, 140),
                 new Vector2(150, 200)
             }));
-            innerTriangles.Add(CanvasGeometry.CreatePolygon(sender, new Vector2[3]
+            DrawingResources.Add(ResourceKey.TriangleBL, CanvasGeometry.CreatePolygon(sender, new Vector2[3]
             {
                 new Vector2(100, 140),
                 new Vector2(50, 200),
@@ -94,23 +127,21 @@ namespace somerpg_uwp
             }));
 
             //Brushes for level map mode
-            brushes.Add(-2, new CanvasSolidColorBrush(sender, Colors.Red));
-            brushes.Add(-1, new CanvasSolidColorBrush(sender, Colors.Orange));
-            brushes.Add(0, new CanvasSolidColorBrush(sender, Colors.White));
-            brushes.Add(1, new CanvasSolidColorBrush(sender, Colors.LightGreen));
-            brushes.Add(2, new CanvasSolidColorBrush(sender, Colors.DarkGreen));
+            DrawingResources.Add(ResourceKey.RedBrush, new CanvasSolidColorBrush(sender, Colors.Red));
+            DrawingResources.Add(ResourceKey.OrangeBrush, new CanvasSolidColorBrush(sender, Colors.Orange));
+            DrawingResources.Add(ResourceKey.WhiteBrush, new CanvasSolidColorBrush(sender, Colors.White));
+            DrawingResources.Add(ResourceKey.LightGreenBrush, new CanvasSolidColorBrush(sender, Colors.LightGreen));
+            DrawingResources.Add(ResourceKey.DarkGreenBrush, new CanvasSolidColorBrush(sender, Colors.DarkGreen));
 
             //Standart black brush
-            blackBrush = new CanvasSolidColorBrush(sender, Color.FromArgb(60, 0, 0, 0));
+            DrawingResources.Add(ResourceKey.BlackBrush, new CanvasSolidColorBrush(sender, Color.FromArgb(60, 0, 0, 0)));
 
             //Adding water brush
-            DrawingResources.Add("WaterBrush", new CanvasImageBrush(sender, await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Textures/Water.png", UriKind.RelativeOrAbsolute)))
+            DrawingResources.Add(ResourceKey.WaterImageBrush, new CanvasImageBrush(sender, await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Textures/Water.png", UriKind.RelativeOrAbsolute)))
             {
                 ExtendX = CanvasEdgeBehavior.Mirror,
                 ExtendY = CanvasEdgeBehavior.Wrap
             });
-
-
         }
     }
 }

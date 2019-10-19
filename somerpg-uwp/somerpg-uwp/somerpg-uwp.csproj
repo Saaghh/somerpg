@@ -129,11 +129,19 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\TileModel\Buildings.cs" />
+    <Compile Include="Model\TileModel\Landscape.cs" />
     <Compile Include="Model\Settings.cs" />
+    <Compile Include="Model\TileModel\Terrain.cs" />
+    <Compile Include="Model\TileModel\TileLayer.cs" />
+    <Compile Include="Model\TileModel\Tiles.cs" />
+    <Compile Include="Model\TileModel\Underground.cs" />
+    <Compile Include="Model\TileModel\Water.cs" />
+    <Compile Include="View\IDrawableObject.cs" />
     <Compile Include="View\MainPageDrawing.cs" />
     <Compile Include="Model\AStar.cs" />
     <Compile Include="Model\HexagonalMap.cs" />
-    <Compile Include="Model\Tile.cs" />
+    <Compile Include="Model\TileModel\Tile.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -146,6 +154,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Model\TileModel\ClassDiagram1.cd" />
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="Bars\BadgeLogo.scale-100.png" />
     <Content Include="Bars\BadgeLogo.scale-125.png" />
@@ -210,6 +219,7 @@
     <Content Include="Splash\SplashScreen.scale-150.png" />
     <Content Include="Splash\SplashScreen.scale-200.png" />
     <Content Include="Splash\SplashScreen.scale-400.png" />
+    <Content Include="Textures\Error.png" />
     <Content Include="Textures\FlatTile.png" />
     <Content Include="Textures\FlatYellow.png" />
     <Content Include="Textures\Forest.png" />

@@ -81,7 +81,7 @@ namespace somerpg_uwp
 
         private static int GetDistanceBetweenNeighbours(Point to, HexagonalMap field)
         {
-            return Convert.ToInt32(field.GetTileFromPoint(to).Terrain.MoveCost);
+            return Convert.ToInt32(field.GetTileFromPoint(to).MoveCost);
         }
 
         private static int GetHeuristicPathLength(Point from, Point to)
@@ -106,7 +106,7 @@ namespace somerpg_uwp
                 if (point.Y < 0 || point.Y >= field.GetSize().Y)
                     continue;
                 // Проверяем, что по клетке можно ходить.
-                if (!field[point.X, point.Y].Terrain.IsWalkable)
+                if (field[point.X, point.Y].MoveCost != -1)
                     continue;
                 // Заполняем данные для точки маршрута.
                 var neighbourNode = new PathNode()
