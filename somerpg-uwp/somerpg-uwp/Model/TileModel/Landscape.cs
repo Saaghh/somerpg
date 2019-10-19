@@ -6,20 +6,56 @@ namespace somerpg_uwp
 {
     public class Landscape : TileLayer, IDrawableObject
     {
-        public Landscape()
-        {
-            DrawingResourceKey = ResourceKey.ForestLandscape;
-        }
+        public bool IsEmpty { get; set; } = true;
+
+        protected Landscape() { }
 
         public void Draw(CanvasAnimatedDrawEventArgs args, int x, int y)
         {
-            if (args != null)
+            if (!IsEmpty)
             {
-                args.DrawingSession.DrawImage(MainPage.DrawingResources[DrawingResourceKey] as CanvasBitmap, x, y);
+                if (args != null)
+                {
+                    args.DrawingSession.DrawImage(MainPage.DrawingResources[DrawingResourceKey] as CanvasBitmap, x, y);
+                }
+                else
+                {
+                    throw new ArgumentException();
+                }
             }
-            else
+        }
+
+
+        //Static constructors
+        public static Landscape ForestLandscape
+        {
+            get
             {
-                throw new ArgumentException();
+                return new Landscape()
+                {
+                    DrawingResourceKey = ResourceKey.ForestLandscape,
+                    IsEmpty = false,
+                    MoveCost = 3
+                };
+            }
+        }
+        public static Landscape EmptyLandscape
+        {
+            get
+            {
+                return new Landscape();
+            }
+        }
+        public static Landscape MountainLandscape
+        {
+            get
+            {
+                return new Landscape()
+                {
+                    DrawingResourceKey = ResourceKey.MountainLandscape,
+                    IsEmpty = false,
+                    MoveCost = 10
+                };
             }
         }
     }

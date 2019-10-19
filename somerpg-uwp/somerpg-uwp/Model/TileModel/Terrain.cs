@@ -7,10 +7,7 @@ namespace somerpg_uwp
     public class Terrain : TileLayer, IDrawableObject
     {
 
-        public Terrain()
-        {
-            DrawingResourceKey = ResourceKey.GrasslandTerrain;
-        }
+        protected Terrain() { }
 
         public void Draw(CanvasAnimatedDrawEventArgs args, int x, int y)
         {
@@ -21,6 +18,19 @@ namespace somerpg_uwp
             else
             {
                 throw new ArgumentException();
+            }
+        }
+
+
+        //Static constructors
+        public static Terrain GrasslandTerrain
+        {
+            get
+            {
+                return new Terrain()
+                {
+                    DrawingResourceKey = ResourceKey.GrasslandTerrain
+                };
             }
         }
     }

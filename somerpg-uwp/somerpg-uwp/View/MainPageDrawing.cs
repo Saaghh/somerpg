@@ -23,70 +23,47 @@ namespace somerpg_uwp
         //Canvas refresh cycle
         private void canvas_Draw(ICanvasAnimatedControl sender, CanvasAnimatedDrawEventArgs args)
         {
-            if (Settings.DrawStandart) { DrawStandart(args); }
-            //if (Settings.DrawLevels) { DrawLevels(args); }
-            //if (Settings.DrawInnerTriangles) { DrawInnerTriangles(args); }
-            //if (Settings.DrawPolygons) { DrawPolygons(args); }
-            //if (Settings.DrawHighlightedPolygon) { DrawHighlightedPolygon(args); }
+            if (Settings.DrawStandart) { DrawTiles(args); }
+            if (Settings.DrawHighlightedPolygon) { DrawHighlightedPolygon(args); }
         }
 
-        //Draw map levels
-        private void DrawLevels(CanvasAnimatedDrawEventArgs args)
+        private void DrawTileBorder(CanvasAnimatedDrawEventArgs args, int x, int y, Tile tile)
         {
-            for (int j = 0; j < worldMap.GetSize().Y; j++)
+            CanvasSolidColorBrush brush;
+            switch (tile.WorldLevel)
             {
-                //Two cycles for proper order
-                for (int i = 1; i < worldMap.GetSize().X; i += 2)
-                {
-                    var item = worldMap[i, j];
-                    args.DrawingSession.FillGeometry(hex, new System.Numerics.Vector2(item.DrawPoint.X, item.DrawPoint.Y), brushes[item.WorldLevel]);
-                }
-
-                for (int i = 0; i < worldMap.GetSize().X; i += 2)
-                {
-                    var item = worldMap[i, j];
-                    args.DrawingSession.FillGeometry(hex, new System.Numerics.Vector2(item.DrawPoint.X, item.DrawPoint.Y), brushes[item.WorldLevel]);
-                }
+                case -2:
+                    brush = DrawingResources[ResourceKey.RedBrush] as CanvasSolidColorBrush;
+                    break;
+                case -1:
+                    brush = DrawingResources[ResourceKey.OrangeBrush] as CanvasSolidColorBrush;
+                    break;
+                case 1:
+                    brush = DrawingResources[ResourceKey.LightGreenBrush] as CanvasSolidColorBrush;
+                    break;
+                case 2:
+                    brush = DrawingResources[ResourceKey.DarkGreenBrush] as CanvasSolidColorBrush;
+                    break;
+                default:
+                    brush = DrawingResources[ResourceKey.WhiteBrush] as CanvasSolidColorBrush;
+                    break;
             }
-        }
-
-        //Simple polygons drawing
-        private void DrawPolygons(CanvasAnimatedDrawEventArgs args)
-        {
-            foreach (Tile item in worldMap)
-            {
-                args.DrawingSession.DrawGeometry(hex, new System.Numerics.Vector2(item.DrawPoint.X, item.DrawPoint.Y), brushes[item.WorldLevel]);
-            }
+            args.DrawingSession.DrawGeometry(DrawingResources[ResourceKey.HexGeometry] as CanvasGeometry, x, y, brush, 3f);
         }
 
         //Draw inner triangles
-        private void DrawInnerTriangles(CanvasAnimatedDrawEventArgs args)
+        private void DrawOrnament(CanvasAnimatedDrawEventArgs args, int x, int y)
         {
-            for (int j = 0; j < worldMap.GetSize().Y; j++)
-            {
-                //Two cycles for proper order
-                for (int i = 1; i < worldMap.GetSize().X; i += 2)
-                {
-                    var item = worldMap[i, j];
-                    foreach (var triangle in innerTriangles)
-                    {
-                        args.DrawingSession.DrawGeometry(triangle, new System.Numerics.Vector2(item.DrawPoint.X + globalOffsetX, item.DrawPoint.Y + globalOffsetY), blackBrush);
-                    }
-                }
-
-                for (int i = 0; i < worldMap.GetSize().X; i += 2)
-                {
-                    var item = worldMap[i, j];
-                    foreach (var triangle in innerTriangles)
-                    {
-                        args.DrawingSession.DrawGeometry(triangle, new System.Numerics.Vector2(item.DrawPoint.X + globalOffsetX, item.DrawPoint.Y + globalOffsetY), blackBrush);
-                    }
-                }
-            }
+            args.DrawingSession.DrawGeometry(DrawingResources[ResourceKey.TriangleTL] as CanvasGeometry, x, y, DrawingResources[ResourceKey.BlackBrush] as CanvasSolidColorBrush);
+            args.DrawingSession.DrawGeometry(DrawingResources[ResourceKey.TriangleT ] as CanvasGeometry, x, y, DrawingResources[ResourceKey.BlackBrush] as CanvasSolidColorBrush);
+            args.DrawingSession.DrawGeometry(DrawingResources[ResourceKey.TriangleTR] as CanvasGeometry, x, y, DrawingResources[ResourceKey.BlackBrush] as CanvasSolidColorBrush);
+            args.DrawingSession.DrawGeometry(DrawingResources[ResourceKey.TriangleBR] as CanvasGeometry, x, y, DrawingResources[ResourceKey.BlackBrush] as CanvasSolidColorBrush);
+            args.DrawingSession.DrawGeometry(DrawingResources[ResourceKey.TriangleB ] as CanvasGeometry, x, y, DrawingResources[ResourceKey.BlackBrush] as CanvasSolidColorBrush);
+            args.DrawingSession.DrawGeometry(DrawingResources[ResourceKey.TriangleBL] as CanvasGeometry, x, y, DrawingResources[ResourceKey.BlackBrush] as CanvasSolidColorBrush);
         }
         
         //Standart canvas tiles draw
-        private void DrawStandart(CanvasAnimatedDrawEventArgs args)
+        private void DrawTiles(CanvasAnimatedDrawEventArgs args)
         {
             int offsetX = globalOffsetX;
             int offsetY = globalOffsetY;
@@ -110,7 +87,10 @@ namespace somerpg_uwp
 
                     if (x < windowWidth && x > -HexagonalMap.HEXPIXELWIDTH && y < windowHeight && y > -(HexagonalMap.HEXPIXELHEIGHT + HexagonalMap.HEXPIXELHEIGHTOFFSET))
                     {
+                        //Drawing each tile
                         if (Settings.DrawStandart) { item.Draw(args, offsetX, offsetY); }
+                        if (Settings.DrawInnerTriangles) { DrawOrnament(args, x, y); }
+                        if (Settings.DrawPolygons) { DrawTileBorder(args, x, y, item); }
                     }
 
                     k += 2;
@@ -146,8 +126,30 @@ namespace somerpg_uwp
             //Drawing highlight polygon
             if (highlightPoint != null)
             {
-                args.DrawingSession.DrawImage(DrawingResources[ResourceKey.HighlightPolygonImage] as CanvasBitmap, highlightPoint.X, highlightPoint.Y);
+                args.DrawingSession.DrawImage(DrawingResources[ResourceKey.HighlightPolygonImage] as CanvasBitmap, highlightPoint.X + globalOffsetX, highlightPoint.Y + globalOffsetY);
             }
         }
+        
+        //Draw map levels
+        //private void DrawLevels(CanvasAnimatedDrawEventArgs args)
+        //{
+        //    for (int j = 0; j < worldMap.GetSize().Y; j++)
+        //    {
+        //        //Two cycles for proper order
+        //        for (int i = 1; i < worldMap.GetSize().X; i += 2)
+        //        {
+        //            var item = worldMap[i, j];
+        //            args.DrawingSession.FillGeometry(hex, new System.Numerics.Vector2(item.DrawPoint.X, item.DrawPoint.Y), brushes[item.WorldLevel]);
+        //        }
+
+        //        for (int i = 0; i < worldMap.GetSize().X; i += 2)
+        //        {
+        //            var item = worldMap[i, j];
+        //            args.DrawingSession.FillGeometry(hex, new System.Numerics.Vector2(item.DrawPoint.X, item.DrawPoint.Y), brushes[item.WorldLevel]);
+        //        }
+        //    }
+        //}
+
+        //Simple polygons drawing
     }
 }

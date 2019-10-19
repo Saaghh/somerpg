@@ -10,6 +10,12 @@ using Microsoft.Graphics.Canvas.UI.Xaml;
 
 namespace somerpg_uwp
 {
+    public enum InitialTileType
+    {
+        Flat,
+        Forest,
+        Mountain
+    }
     public class Tile : IDrawableObject
     {
         Point drawPoint;
@@ -52,15 +58,33 @@ namespace somerpg_uwp
                 return x;
             }
         }
-
         public int WorldLevel { get; set; } = 0;
+        public InitialTileType InitialTileType { get; private set; }
 
-        public Tile()
+        public Tile(InitialTileType initialTileType)
         {
+            InitialTileType = initialTileType;
+
+            //Making standart tile terrain
+            terrain = Terrain.GrasslandTerrain;
+
+            //Switching initial tile types
+            switch (initialTileType)
+            {
+                case InitialTileType.Forest:
+                    landscape = Landscape.ForestLandscape;
+                    break;
+                case InitialTileType.Mountain:
+                    landscape = Landscape.MountainLandscape;
+                    break;
+                default:
+                    landscape = Landscape.EmptyLandscape;
+                    break;
+            }
+
+            //Generating other layers
             underground = new Underground();
-            terrain = new Terrain();
             water = new Water();
-            landscape = new Landscape();
             buildings = new Buildings();
         }
 

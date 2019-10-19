@@ -134,7 +134,6 @@
     <Compile Include="Model\Settings.cs" />
     <Compile Include="Model\TileModel\Terrain.cs" />
     <Compile Include="Model\TileModel\TileLayer.cs" />
-    <Compile Include="Model\TileModel\Tiles.cs" />
     <Compile Include="Model\TileModel\Underground.cs" />
     <Compile Include="Model\TileModel\Water.cs" />
     <Compile Include="View\IDrawableObject.cs" />
@@ -154,7 +153,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Model\TileModel\ClassDiagram1.cd" />
+    <None Include="Model\TileModel\TileDiagram.cd" />
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="Bars\BadgeLogo.scale-100.png" />
     <Content Include="Bars\BadgeLogo.scale-125.png" />

@@ -149,9 +149,12 @@ namespace somerpg_uwp
         {
             var point = e.GetCurrentPoint(canvas);
 
+            var x = Convert.ToInt32(point.Position.X) - globalOffsetX;
+            var y = Convert.ToInt32(point.Position.Y) - globalOffsetY;
+
             //Console.WriteLine(point.Position);
 
-            highlightPoint = HexagonalMap.HexToPixel(HexagonalMap.PixelToHex(new System.Drawing.Point(Convert.ToInt32(point.Position.X), Convert.ToInt32(point.Position.Y))));
+            highlightPoint = HexagonalMap.HexToPixel(HexagonalMap.PixelToHex(new System.Drawing.Point(x, y)));
         }
 
         private void canvas_CreateResources(CanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.CanvasCreateResourcesEventArgs args)

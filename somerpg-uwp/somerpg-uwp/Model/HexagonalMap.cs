@@ -223,15 +223,15 @@ namespace somerpg_uwp
                         case 4:
                         case 6:
                         case 7:
-                            this[i, j] = Tiles.ForestTile;
+                            this[i, j] = new Tile(InitialTileType.Forest);
                             break;
                         
                         case 5:
-                            this[i, j] = Tiles.MountainTile;
+                            this[i, j] = new Tile(InitialTileType.Mountain);
                             break;
                         
                         default:
-                            this[i, j] = Tiles.FlatTile;
+                            this[i, j] = new Tile(InitialTileType.Flat);
                             break;
                         
                     }
@@ -261,7 +261,7 @@ namespace somerpg_uwp
                 {
                     foreach (var item in points)
                     {
-                        this[item.X, item.Y] = Tiles.WaterTile;
+                        //this[item.X, item.Y] = Tiles.WaterTile;
                     }
                 }
             }

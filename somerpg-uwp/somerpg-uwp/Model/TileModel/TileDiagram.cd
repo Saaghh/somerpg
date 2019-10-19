@@ -11,7 +11,7 @@
   <Class Name="somerpg_uwp.Landscape">
     <Position X="11.75" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AABAAAAACAAgAgAAAAAAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\TileModel\Landscape.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -19,7 +19,7 @@
   <Class Name="somerpg_uwp.Terrain">
     <Position X="16.25" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAQAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\TileModel\Terrain.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -27,7 +27,7 @@
   <Class Name="somerpg_uwp.Tile" BaseTypeListCollapsed="true">
     <Position X="18.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>EBACAAAAAgAAAgAAAAAAAAAAAgAIAAAAYAAAAABQAAA=</HashCode>
+      <HashCode>EBACAAAAAgAAAgAAAAAAAAAAAgAIAAEAYAAAAABQAAA=</HashCode>
       <FileName>Model\TileModel\Tile.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -37,13 +37,6 @@
     <TypeIdentifier>
       <HashCode>ABAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
       <FileName>Model\TileModel\TileLayer.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="somerpg_uwp.Tiles">
-    <Position X="20.5" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAEAAEAAACAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Model\TileModel\Tiles.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="somerpg_uwp.Underground">
