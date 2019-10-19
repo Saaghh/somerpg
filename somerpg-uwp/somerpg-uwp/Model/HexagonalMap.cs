@@ -202,7 +202,7 @@ namespace somerpg_uwp
     public class WorldMap : HexagonalMap
     {
         readonly Random r;
-        public WorldMap(int seed) : base(100, 100)
+        public WorldMap(int seed) : base(300, 300)
         {
             r = new Random(seed);
             IniTiles();

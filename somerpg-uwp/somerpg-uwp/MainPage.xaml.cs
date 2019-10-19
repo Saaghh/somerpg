@@ -49,13 +49,16 @@ namespace somerpg_uwp
             //canvas.Width = width;
             //canvas.Height = height;
 
+            canvas.Width = 3000;
+            canvas.Height = 3000;
+
             canvas.TargetElapsedTime = new TimeSpan(133333);
 
-            canvas.RenderTransform = new ScaleTransform
-            {
-                CenterX = canvas.Width / 2,
-                CenterY = canvas.Height / 2
-            };
+            //canvas.RenderTransform = new ScaleTransform
+            //{
+            //    CenterX = canvas.Width / 2,
+            //    CenterY = canvas.Height / 2
+            //};
         }
 
 
@@ -121,10 +124,21 @@ namespace somerpg_uwp
                     scale = 1.03f;
                 }
 
+                //ScaleTransform s = (ScaleTransform)canvas.RenderTransform;
+                //s.ScaleX *= scale;
+                //s.ScaleY *= scale;
 
-                ScaleTransform s = (ScaleTransform)canvas.RenderTransform;
-                s.ScaleX *= scale;
-                s.ScaleY *= scale;
+                //canvas.Scale *= scale;
+
+                //canvas.Size *= scale;
+
+                //canvas.Height = 5000;
+                //canvas.Width = 5000;
+
+
+                //RefreshWindowSizeData();
+
+
 
                 //canvas.Invalidate();
 
@@ -134,6 +148,8 @@ namespace somerpg_uwp
         private void canvas_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
             var point = e.GetCurrentPoint(canvas);
+
+            //Console.WriteLine(point.Position);
 
             highlightPoint = HexagonalMap.HexToPixel(HexagonalMap.PixelToHex(new System.Drawing.Point(Convert.ToInt32(point.Position.X), Convert.ToInt32(point.Position.Y))));
         }
@@ -186,6 +202,8 @@ namespace somerpg_uwp
         
         private void RefreshWindowSizeData()
         {
+            //ScaleTransform s = (ScaleTransform)canvas.RenderTransform;
+
             var w = Window.Current.Content.ActualSize;
 
             windowHeight = Convert.ToInt32(w.Y);

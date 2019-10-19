@@ -91,46 +91,59 @@ namespace somerpg_uwp
             int offsetX = globalOffsetX;
             int offsetY = globalOffsetY;
 
+
             //Drawing tiles
             for (int j = 0; j < worldMap.GetSize().Y; j++)
             {
-                //Two cycles for proper order
-                for (int i = 1; i < worldMap.GetSize().X; i += 2)
+                int k = 1;
+
+                bool cycleEnd = false;
+                bool odd = true;
+                //Drawing odd tiles first
+                while (!cycleEnd)
                 {
-                    var item = worldMap[i, j];
+                    var item = worldMap[k, j];
 
                     var x = item.DrawPoint.X + offsetX;
                     var y = item.DrawPoint.Y + offsetY;
 
-                    //Window.Current.Content.ActualSize.X;
-
-                    var t = Window.Current;
-
                     if (x < windowWidth && x > -HexagonalMap.HEXPIXELWIDTH && y < windowHeight && y > -(HexagonalMap.HEXPIXELHEIGHT + HexagonalMap.HEXPIXELHEIGHTOFFSET))
                     {
-                        args.DrawingSession.DrawImage(images[item.Terrain.Name], x, y);
+                        //args.DrawingSession.DrawImage(images[item.Terrain.Name], x, y);
+
+                        DrawTile(item, x, y, args);
                     }
 
-                    //args.DrawingSession.DrawImage(images[item.Terrain.Name], item.DrawPoint.X + offsetX, item.DrawPoint.Y + offsetY);
-                }
+                    k += 2;
 
-                for (int i = 0; i < worldMap.GetSize().X; i += 2)
-                {
-                    //var item = worldMap[i, j];
-
-                    //args.DrawingSession.DrawImage(images[item.Terrain.Name], item.DrawPoint.X + offsetX, item.DrawPoint.Y + offsetY);
-
-                    var item = worldMap[i, j];
-
-                    var x = item.DrawPoint.X + offsetX;
-                    var y = item.DrawPoint.Y + offsetY;
-
-                    if (x < windowWidth && x > -HexagonalMap.HEXPIXELWIDTH && y < windowHeight && y > -(HexagonalMap.HEXPIXELHEIGHT + HexagonalMap.HEXPIXELHEIGHTOFFSET))
+                    if (k >= worldMap.GetSize().X)
                     {
-                        args.DrawingSession.DrawImage(images[item.Terrain.Name], x, y);
+                        if (odd)
+                        {
+                            k = 0;
+                            odd = false;
+                        }
+                        else
+                        {
+                            cycleEnd = true;
+                        }
                     }
                 }
             }
+
+            //args.DrawingSession.FillGeometry(innerTriangles[0], 500, 400, DrawingResources["WaterBrush"] as ICanvasBrush);
+            //args.DrawingSession.FillGeometry(innerTriangles[1], 500, 400, DrawingResources["WaterBrush"] as ICanvasBrush);
+            //args.DrawingSession.FillGeometry(innerTriangles[2], 500, 400, DrawingResources["WaterBrush"] as ICanvasBrush);
+            //args.DrawingSession.FillGeometry(innerTriangles[3], 500, 400, DrawingResources["WaterBrush"] as ICanvasBrush);
+            //args.DrawingSession.FillGeometry(innerTriangles[4], 500, 400, DrawingResources["WaterBrush"] as ICanvasBrush);
+            //args.DrawingSession.FillGeometry(innerTriangles[5], 500, 400, DrawingResources["WaterBrush"] as ICanvasBrush);
+            //args.DrawingSession.FillGeometry(hex, 175, 0, DrawingResources["WaterBrush"] as ICanvasBrush);
+            //args.DrawingSession.FillGeometry(innerTriangles[0], 400, 400, blackBrush);
+        }
+
+        private void DrawTile(Tile tile, int x, int y, CanvasAnimatedDrawEventArgs args)
+        {
+            args.DrawingSession.DrawImage(images[tile.Terrain.Name], x, y);
         }
 
         //Draw highlighted polygon

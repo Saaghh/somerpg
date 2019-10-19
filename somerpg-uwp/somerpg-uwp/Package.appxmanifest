@@ -7,16 +7,16 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="35c76c6e-41a6-4974-9e66-4efcb13c3d91"
-    Publisher="CN=ssa2g"
-    Version="1.0.0.0" />
+    Name="33315Saagh.291469A699F45"
+    Publisher="CN=B6F9BD24-3043-4A92-AFA2-8DCE40FF6AE9"
+    Version="1.0.8.0" />
 
-  <mp:PhoneIdentity PhoneProductId="35c76c6e-41a6-4974-9e66-4efcb13c3d91" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="e1304f9d-28f7-4c9a-9c36-2e615c3198da" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>somerpg-uwp</DisplayName>
+    <DisplayName>SOMERPG</DisplayName>
     <PublisherDisplayName>Saagh</PublisherDisplayName>
-    <Logo>Assets\StoreLogo.png</Logo>
+    <Logo>Bars\StoreLogo.png</Logo>
   </Properties>
 
   <Dependencies>
@@ -32,13 +32,20 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="somerpg_uwp.App">
       <uap:VisualElements
-        DisplayName="somerpg-uwp"
-        Square150x150Logo="Assets\Square150x150Logo.png"
-        Square44x44Logo="Assets\Square44x44Logo.png"
+        DisplayName="SOMERPG"
+        Square150x150Logo="Bars\Square150x150Logo.png"
+        Square44x44Logo="Bars\Square44x44Logo.png"
         Description="somerpg-uwp"
         BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
+        <uap:DefaultTile Wide310x150Logo="Bars\Wide310x150Logo.png" Square71x71Logo="Bars\SmallTile.png" Square310x310Logo="Bars\LargeTile.png" ShortName="SOMERPG">
+          <uap:ShowNameOnTiles>
+            <uap:ShowOn Tile="square310x310Logo"/>
+            <uap:ShowOn Tile="wide310x150Logo"/>
+            <uap:ShowOn Tile="square150x150Logo"/>
+          </uap:ShowNameOnTiles>
+        </uap:DefaultTile >
         <uap:SplashScreen Image="Splash\SplashScreen.png" BackgroundColor="black"/>
+        <uap:LockScreen BadgeLogo="Bars\BadgeLogo.png" Notification="badgeAndTileText"/>
       </uap:VisualElements>
     </Application>
   </Applications>

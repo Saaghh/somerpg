@@ -20,7 +20,9 @@ namespace somerpg_uwp
         List<CanvasGeometry> innerTriangles = new List<CanvasGeometry>();
         CanvasGeometry hex;
         CanvasSolidColorBrush blackBrush;
-        
+
+        public static Dictionary<string, object> DrawingResources { get; } = new Dictionary<string, object>();
+
         //Add images to dictionary here
         async Task CreateResourcesAsync(CanvasAnimatedControl sender)
         {
@@ -100,6 +102,15 @@ namespace somerpg_uwp
 
             //Standart black brush
             blackBrush = new CanvasSolidColorBrush(sender, Color.FromArgb(60, 0, 0, 0));
+
+            //Adding water brush
+            DrawingResources.Add("WaterBrush", new CanvasImageBrush(sender, await CanvasBitmap.LoadAsync(sender, new Uri("ms-appx:///Textures/Water.png", UriKind.RelativeOrAbsolute)))
+            {
+                ExtendX = CanvasEdgeBehavior.Mirror,
+                ExtendY = CanvasEdgeBehavior.Wrap
+            });
+
+
         }
     }
 }
