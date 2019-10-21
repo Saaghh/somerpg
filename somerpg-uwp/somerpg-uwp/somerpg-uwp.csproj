@@ -153,6 +153,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <None Include="AppDiagram.cd" />
     <None Include="Model\TileModel\TileDiagram.cd" />
     <None Include="Package.StoreAssociation.xml" />
     <Content Include="Bars\BadgeLogo.scale-100.png" />
@@ -218,6 +219,7 @@
     <Content Include="Splash\SplashScreen.scale-150.png" />
     <Content Include="Splash\SplashScreen.scale-200.png" />
     <Content Include="Splash\SplashScreen.scale-400.png" />
+    <Content Include="Textures\ColorfulForest.png" />
     <Content Include="Textures\Error.png" />
     <Content Include="Textures\FlatTile.png" />
     <Content Include="Textures\FlatYellow.png" />

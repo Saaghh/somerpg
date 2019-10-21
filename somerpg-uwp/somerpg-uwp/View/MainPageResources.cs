@@ -21,6 +21,7 @@ namespace somerpg_uwp
         //Landscapes
         ForestLandscape,
         MountainLandscape,
+        ColorfulForestLandscape,
         
         //Geometries
         HexGeometry,
@@ -39,6 +40,7 @@ namespace somerpg_uwp
         LightGreenBrush,
         DarkGreenBrush,
         BlackBrush,
+        BlueBrush,
         
         //Misc
         HighlightPolygonImage,
@@ -48,12 +50,6 @@ namespace somerpg_uwp
 
     public sealed partial class MainPage : Page
     {
-        //Dictionary<string, CanvasBitmap> images = new Dictionary<string, CanvasBitmap>();
-        //Dictionary<int, CanvasSolidColorBrush> brushes = new Dictionary<int, CanvasSolidColorBrush>();
-        //List<CanvasGeometry> innerTriangles = new List<CanvasGeometry>();
-        //CanvasGeometry hex;
-        //CanvasSolidColorBrush blackBrush;
-
         public static Dictionary<ResourceKey, object> DrawingResources { get; } = new Dictionary<ResourceKey, object>();
 
         //Add images to dictionary here
@@ -75,6 +71,9 @@ namespace somerpg_uwp
             DrawingResources.Add(
                 ResourceKey.ErrorImage, await CanvasBitmap.LoadAsync(sender, new Uri(
                 "ms-appx:///Textures/Error.png", UriKind.RelativeOrAbsolute)));
+            DrawingResources.Add(
+                ResourceKey.ColorfulForestLandscape, await CanvasBitmap.LoadAsync(sender, new Uri(
+                "ms-appx:///Textures/ColorfulForest.png", UriKind.RelativeOrAbsolute)));
 
             //Standart hex
             DrawingResources.Add(ResourceKey.HexGeometry, CanvasGeometry.CreatePolygon(sender, new Vector2[6]
@@ -132,6 +131,7 @@ namespace somerpg_uwp
             DrawingResources.Add(ResourceKey.WhiteBrush, new CanvasSolidColorBrush(sender, Colors.White));
             DrawingResources.Add(ResourceKey.LightGreenBrush, new CanvasSolidColorBrush(sender, Colors.LightGreen));
             DrawingResources.Add(ResourceKey.DarkGreenBrush, new CanvasSolidColorBrush(sender, Colors.DarkGreen));
+            DrawingResources.Add(ResourceKey.BlueBrush, new CanvasSolidColorBrush(sender, Colors.DodgerBlue));
 
             //Standart black brush
             DrawingResources.Add(ResourceKey.BlackBrush, new CanvasSolidColorBrush(sender, Color.FromArgb(60, 0, 0, 0)));

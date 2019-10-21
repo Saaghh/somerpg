@@ -84,7 +84,7 @@ namespace somerpg_uwp
 
             //Generating other layers
             underground = new Underground();
-            water = new Water();
+            water =  Water.EmptyWater;
             buildings = new Buildings();
         }
 
@@ -96,6 +96,8 @@ namespace somerpg_uwp
             underground.Draw(args, x, y);
             terrain.Draw(args, x, y);
             water.Draw(args, x, y);
+            if (Settings.DrawInnerTriangles) { MainPage.DrawOrnament(args, x, y); }
+            if (Settings.DrawPolygons) { MainPage.DrawTileBorder(args, x, y, this); }
             landscape.Draw(args, x, y);
             buildings.Draw(args, x, y);
         }

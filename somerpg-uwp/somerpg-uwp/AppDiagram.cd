@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="somerpg_uwp.PathNode" Collapsed="true">
+    <Position X="24" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAgAAAAAAAgAgAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>Model\AStar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="somerpg_uwp.AStar" Collapsed="true">
+    <Position X="20.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAABAAEAAIAAAAAAIAAAAgA=</HashCode>
+      <FileName>Model\AStar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="somerpg_uwp.HexagonalMap">
+    <Position X="8.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAABCJCAAAiAAIAgAAAgIAAACAQABgAgA=</HashCode>
+      <FileName>Model\HexagonalMap.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="somerpg_uwp.WorldMap">
+    <Position X="8.75" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAABAAAAAAAAAAAABAAAAAAA=</HashCode>
+      <FileName>Model\HexagonalMap.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="somerpg_uwp.Settings" Collapsed="true">
+    <Position X="20.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAQAAAAAAAABAAAAAAIAAAgAAAAAAA=</HashCode>
+      <FileName>Model\Settings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="somerpg_uwp.Buildings">
+    <Position X="9" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\TileModel\Buildings.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="somerpg_uwp.Landscape">
+    <Position X="13.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAACAAgAgAAAAAAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\TileModel\Landscape.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="somerpg_uwp.Terrain">
+    <Position X="18" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\TileModel\Terrain.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="somerpg_uwp.Tile" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="22.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EBACAAAAAgAAAgAAAAAAAAAAAgAIAAEAYAAAAABQAAA=</HashCode>
+      <FileName>Model\TileModel\Tile.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="somerpg_uwp.TileLayer">
+    <Position X="13.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>Model\TileModel\TileLayer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="somerpg_uwp.Underground">
+    <Position X="11.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\TileModel\Underground.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="somerpg_uwp.Water">
+    <Position X="15.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Model\TileModel\Water.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="somerpg_uwp.MainPage" BaseTypeListCollapsed="true">
+    <Position X="25.75" Y="0.5" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AIAABAAQAQAwAAQYAoAgAAAQICgYIQkAAAAUEAAAAYA=</HashCode>
+      <FileName>MainPage.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Interface Name="somerpg_uwp.IDrawableObject" Collapsed="true">
+    <Position X="20.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>View\IDrawableObject.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="somerpg_uwp.InitialTileType" Collapsed="true">
+    <Position X="20.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAACAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\TileModel\Tile.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="somerpg_uwp.TrianglePosition" Collapsed="true">
+    <Position X="24" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAIAAAAABAAAAAQAAAAAAAIAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>Model\TileModel\Tile.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="somerpg_uwp.TriangleType" Collapsed="true">
+    <Position X="20.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAE=</HashCode>
+      <FileName>Model\TileModel\Tile.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="somerpg_uwp.ResourceKey" Collapsed="true">
+    <Position X="22.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEIQAABABAghAQXAAAAAAAAAAAABAAIAAAAAAAAAAA=</HashCode>
+      <FileName>View\MainPageResources.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

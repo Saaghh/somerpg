@@ -42,23 +42,7 @@ namespace somerpg_uwp
 
         private void IniCanvas()
         {
-            //var s = worldMap.GetSize();
-
-            //var (width, height) = HexagonalMap.GetMapPixelSize((s.X, s.Y));
-
-            //canvas.Width = width;
-            //canvas.Height = height;
-
-            canvas.Width = 3000;
-            canvas.Height = 3000;
-
             canvas.TargetElapsedTime = new TimeSpan(133333);
-
-            //canvas.RenderTransform = new ScaleTransform
-            //{
-            //    CenterX = canvas.Width / 2,
-            //    CenterY = canvas.Height / 2
-            //};
         }
 
 
@@ -151,8 +135,6 @@ namespace somerpg_uwp
 
             var x = Convert.ToInt32(point.Position.X) - globalOffsetX;
             var y = Convert.ToInt32(point.Position.Y) - globalOffsetY;
-
-            //Console.WriteLine(point.Position);
 
             highlightPoint = HexagonalMap.HexToPixel(HexagonalMap.PixelToHex(new System.Drawing.Point(x, y)));
         }
